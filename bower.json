@@ -1,0 +1,25 @@
+{
+  "name": "q2a-medium-editor",
+  "authors": [
+    "yaimapp"
+  ],
+  "description": "medium editor plugin for question2answer",
+  "main": "",
+  "keywords": [
+    "editor"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "medium-editor-insert-plugin": "~2.4.0",
+    "medium-editor": "~5.22.0"
+  }
+}
