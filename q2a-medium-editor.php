@@ -144,6 +144,11 @@ class qa_medium_editor
                     },
                 },
             });
+            $('.editable').focus(function(){
+                $(this).animate({
+                    height: '550px',
+                }, 'slow' );
+            });
         });
         function get_content() {
             var allContents = editor.serialize();
