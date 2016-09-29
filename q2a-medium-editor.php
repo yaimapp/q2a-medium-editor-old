@@ -119,7 +119,7 @@ class qa_medium_editor
         <script type=\"text/javascript\">
         var editor = new MediumEditor('.editable', {
             placeholder: {
-                text: '".qa_lang_html('q2a_medium_editor_lang/place_holder')."',
+                text: '".qa_lang_html('q2a_medium_editor_lang/placeholder')."',
                 hydOnClick: true
             },
             paste: {
@@ -137,6 +137,10 @@ class qa_medium_editor
                             url: '".qa_opt('site_url').'medium-editor-upload'."',
                             acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i
                         },
+                    },
+                    embeds: {
+                        placeholder: '".qa_lang_html('q2a_medium_editor_lang/placeholder_embed')."',
+                        captions:false,
                     },
                 },
             });
@@ -170,8 +174,6 @@ class qa_medium_editor
     public function read_post($fieldname)
     {
         $html = qa_post_text($fieldname);
-        // $pat = '/<div class="medium-insert-buttons".*<\/div>/si';
-        // $html = preg_replace($pat, '', $html);
         return array(
             'format' => 'html',
             'content' => qa_sanitize_html($html, false, true),
