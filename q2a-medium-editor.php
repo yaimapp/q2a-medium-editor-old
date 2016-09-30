@@ -138,10 +138,7 @@ class qa_medium_editor
                             acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i
                         },
                     },
-                    embeds: {
-                        placeholder: '".qa_lang_html('q2a_medium_editor_lang/placeholder_embed')."',
-                        captions:false,
-                    },
+                    embeds: false,
                 },
             });
             $('.editable').focus(function(){
