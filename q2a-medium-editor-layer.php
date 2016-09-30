@@ -5,9 +5,9 @@
 */
 
 
-class qa_html_theme_layer extends qa_html_theme_base {
+class qa_html_theme_layer extends qa_html_theme_base
+{
 
-    private $components = QA_HTML_THEME_LAYER_URLTOROOT . 'bower_components/';
     const EDITOR_NAME = 'Medium Editor';
 
     function head_script()
@@ -23,15 +23,16 @@ class qa_html_theme_layer extends qa_html_theme_base {
 
     private function output_css()
     {
+        $components = QA_HTML_THEME_LAYER_URLTOROOT . 'bower_components/';
         // CSS files
-        $this->output('<link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">');
+        $this->output('<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">');
         $css_files = array(
             'medium-editor/dist/css/medium-editor.min.css',
             'medium-editor/dist/css/themes/default.min.css',
             'medium-editor-insert-plugin/dist/css/medium-editor-insert-plugin.min.css'
         );
         foreach ($css_files as $css) {
-            $this->output('<link rel="stylesheet" type="text/css" href="' . $this->components . $css .'" />');
+            $this->output('<link rel="stylesheet" type="text/css" href="' . $components . $css .'" />');
         }
         $editor_height = qa_opt('medium_editor_height');
         $default_height = <<<EOS
@@ -47,6 +48,7 @@ EOS;
 
     private function output_js()
     {
+        $components = QA_HTML_THEME_LAYER_URLTOROOT . 'bower_components/';
         // JS files
         $js_files = array(
             'medium-editor/dist/js/medium-editor.js',
@@ -59,7 +61,7 @@ EOS;
             'medium-editor-insert-plugin/dist/js/medium-editor-insert-plugin.min.js',
         );
         foreach ($js_files as $js) {
-            $this->output('<script src="'. $this->components . $js . '"></script>');
+            $this->output('<script src="'. $components . $js . '"></script>');
         }
     }
 
