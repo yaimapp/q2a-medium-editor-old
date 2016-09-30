@@ -142,9 +142,12 @@ class qa_medium_editor
                 },
             });
             $('.editable').focus(function(){
-                $(this).animate({
-                    height: '550px',
-                }, 'slow' );
+                var height = $(this).height();
+                if (height <= 550) {
+                    $(this).animate({
+                        height: '550px',
+                    }, 'slow' );
+                }
             });
         });
         function get_content() {
