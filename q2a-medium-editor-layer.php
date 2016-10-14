@@ -63,6 +63,7 @@ EOS;
         foreach ($js_files as $js) {
             $this->output('<script src="'. $components . $js . '"></script>');
         }
+        $this->output('<script src="'. QA_HTML_THEME_LAYER_URLTOROOT . 'js/q2a-embeds.js' . '"></script>');
     }
 
 } // end qa_html_theme_layer
