@@ -9,6 +9,21 @@
 .medium-insert-images figure img, .mediumInsert figure img {
   max-width: 400px;
 }
+
+/* custom embed addon */
+.medium-insert-embed .plain_url {
+  display: none;
+}
+.medium-insert-embeds.medium-insert-embeds-left, .medium-insert-embeds-left.mediumInsert-embeds {
+    float: none;
+    text-align: left;
+    width: 100%;
+}
+.medium-insert-embeds.medium-insert-embeds-right, .medium-insert-embeds-right.mediumInsert-embeds {
+    float: none;
+    text-align: right;
+    width: 100%;
+}
 /*
 .medium-editor-insert-plugin .medium-insert-buttons .medium-insert-buttons-addons li:nth-child(2) button{
   display: none;
