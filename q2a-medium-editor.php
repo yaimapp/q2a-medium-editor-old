@@ -111,6 +111,7 @@ class qa_medium_editor
     {
         $html = '';
 
+        $content = $this->embed_replace($content);
         if(empty($format)) {
             $content = nl2br($content);
         }
@@ -139,7 +140,7 @@ class qa_medium_editor
                         },
                     },
                     embeds: false,
-                    embeds2: {},
+                    embeds2: true,
                 },
             });
             $('.editable').focus(function(){
@@ -154,7 +155,10 @@ class qa_medium_editor
         function get_content() {
             var allContents = editor.serialize();
             var editorId = editor.elements[0].id;
-            return allContents[editorId].value;
+            var content = allContents[editorId].value;
+            content = content.replace(/<div class=\"video video-youtube\">.*?<\/div>/g, '');
+            content = content.replace(/medium-insert-embeds-selected/g, '');
+            return content;
         }
         </script>";
         return array(
@@ -184,6 +188,28 @@ class qa_medium_editor
             'format' => 'html',
             'content' => qa_sanitize_html($html, false, true),
         );
+    }
+    
+    private function embed_replace($text)
+    {
+        $types = array(
+            'youtube' => array(
+                array(
+                    '(https{0,1}:\/\/w{0,3}\.*youtube\.com\/watch\?\S*v=([A-Za-z0-9_-]+))[^< ]*',
+                    '<div class="video video-youtube"><iframe width="420" height="315" src="http://www.youtube.com/embed/$2" frameborder="0" allowfullscreen></iframe></div><div class="plain_url">$1</div>'
+                ),
+                array(
+                    'https{0,1}:\/\/w{0,3}\.*youtu\.be\/([A-Za-z0-9_-]+)[^< ]*',
+                    '<div class="video video-youtube"><iframe width="420" height="315" src="http://www.youtube.com/embed/$2" frameborder="0" allowfullscreen></iframe></div><div class="plain_url">$1</div>'
+                ),
+            ),
+        );
+        foreach($types as $t => $ra) {
+            foreach($ra as $r) {
+                $text = preg_replace('/<div class="plain_url">'.$r[0].'<\/div>/i',$r[1],$text);
+            }
+        }
+        return $text;
     }
 }
 
