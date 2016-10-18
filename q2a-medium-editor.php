@@ -125,7 +125,8 @@ class qa_medium_editor
             },
             paste: {
                 forcePlainText: true,
-            }
+            },
+            spellcheck: false,
         });
         $(function() {
             $('.editable').mediumInsert({
