@@ -20,6 +20,30 @@ class qa_html_theme_layer extends qa_html_theme_base
             $this->output_js();
         }
     }
+    
+    function q_view_content($q_view)
+    {
+        if (isset($q_view['content'])){
+            $q_view['content'] = $this->embed_replace($q_view['content']);
+        }
+        qa_html_theme_base::q_view_content($q_view);
+    }
+    
+    function a_item_content($a_item)
+    {
+        if (isset($a_item['content'])) {
+            $a_item['content'] = $this->embed_replace($a_item['content']);
+        }
+        qa_html_theme_base::a_item_content($a_item);
+    }
+    
+    function c_item_content($c_item)
+    {
+        if (isset($c_item['content'])) {
+            $c_item['content'] = $this->embed_replace($c_item['content']);
+        }
+        qa_html_theme_base::c_item_content($c_item);
+    }
 
     private function output_css()
     {
@@ -63,6 +87,32 @@ EOS;
         foreach ($js_files as $js) {
             $this->output('<script src="'. $components . $js . '"></script>');
         }
+        $this->output('<script src="'. QA_HTML_THEME_LAYER_URLTOROOT . 'js/q2a-embeds.js' . '"></script>');
+    }
+    
+    function embed_replace($text)
+    {
+        $types = array(
+            'youtube' => array(
+                array(
+                    'https{0,1}:\/\/w{0,3}\.*youtube\.com\/watch\?\S*v=([A-Za-z0-9_-]+)[^< ]*',
+                    '<iframe width="420" height="315" src="//www.youtube.com/embed/$1" frameborder="0" allowfullscreen></iframe>'
+                ),
+                array(
+                    'https{0,1}:\/\/w{0,3}\.*youtu\.be\/([A-Za-z0-9_-]+)[^< ]*',
+                    '<iframe width="420" height="315" src="//www.youtube.com/embed/$1" frameborder="0" allowfullscreen></iframe>'
+                ),
+            ),
+        );
+
+        foreach($types as $t => $ra) {
+            foreach($ra as $r) {
+                $text = preg_replace('/<a[^>]+>'.$r[0].'<\/a>/i',$r[1],$text);
+                $text = preg_replace('/(?<![\'"=])'.$r[0].'/i',$r[1],$text);
+            }
+        }
+        $text = preg_replace('/class="plain_url"/i','class="video video-youtube"',$text);
+        return $text;
     }
 
 } // end qa_html_theme_layer

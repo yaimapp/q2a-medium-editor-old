@@ -9,6 +9,21 @@
 .medium-insert-images figure img, .mediumInsert figure img {
   max-width: 400px;
 }
+
+/* custom embed addon */
+.medium-insert-embed .plain_url {
+  display: none;
+}
+
+iframe {
+  width: 400px;
+}
+
+.medium-editor-element {
+  overflow-y: auto;
+  resize: none;
+}
+
 /*
 .medium-editor-insert-plugin .medium-insert-buttons .medium-insert-buttons-addons li:nth-child(2) button{
   display: none;
