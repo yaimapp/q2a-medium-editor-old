@@ -141,7 +141,9 @@ class qa_medium_editor
                         },
                     },
                     embeds: false,
-                    embeds2: true,
+                    embeds2: {
+                        styles: null
+                    },
                 },
             });
             $('.editable').focus(function(){
