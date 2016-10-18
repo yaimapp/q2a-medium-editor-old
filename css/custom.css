@@ -14,16 +14,16 @@
 .medium-insert-embed .plain_url {
   display: none;
 }
-.medium-insert-embeds.medium-insert-embeds-left, .medium-insert-embeds-left.mediumInsert-embeds {
-    float: none;
-    text-align: left;
-    width: 100%;
+
+iframe {
+  width: 400px;
 }
-.medium-insert-embeds.medium-insert-embeds-right, .medium-insert-embeds-right.mediumInsert-embeds {
-    float: none;
-    text-align: right;
-    width: 100%;
+
+.medium-editor-element {
+  overflow-y: auto;
+  resize: none;
 }
+
 /*
 .medium-editor-insert-plugin .medium-insert-buttons .medium-insert-buttons-addons li:nth-child(2) button{
   display: none;
