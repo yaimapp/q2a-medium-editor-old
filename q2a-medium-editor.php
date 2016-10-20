@@ -115,6 +115,8 @@ class qa_medium_editor
         if(empty($format)) {
             $content = nl2br($content);
         }
+        $maxfilesize = qa_opt('medium_editor_upload_max_size');
+        $filesize = $this->bytes_to_mega_html($maxfilesize)."MB";
         $html = '<textarea name="'.$fieldname.'" id="'.$fieldname.'"  class="editable qa-form-tall-text">'.$content.'</textarea>';
         $html .= "
         <script type=\"text/javascript\">
@@ -137,8 +139,13 @@ class qa_medium_editor
                         captions:false,
                         fileUploadOptions: {
                             url: '".qa_opt('site_url').'medium-editor-upload'."',
-                            acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i
+                            acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
+                            maxFileSize: " .$maxfilesize. ",
                         },
+                        messages: {
+                            acceptFileTypesError: 'サポートしていないフォーマットです: ',
+                            maxFileSizeError: 'ファイルサイズが大きすぎます\\n".$filesize."以下でお願いします: '
+                        }
                     },
                     embeds: false,
                     embeds2: {
