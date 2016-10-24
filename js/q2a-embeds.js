@@ -43,7 +43,7 @@
         };
 
     /**
-     * Q2AEmbeds object
+     * Embeds2 object
      *
      * Sets options, variables and calls init() function
      *
@@ -53,7 +53,7 @@
      * @return {void}
      */
 
-    function Q2AEmbeds (el, options) {
+    function Embeds2 (el, options) {
         this.el = el;
         this.$el = $(el);
         this.templates = window.MediumInsert.Templates;
@@ -61,15 +61,15 @@
 
         this.options = $.extend(true, {}, defaults, options);
         
+        this._defaults = defaults;
+        this._name = pluginName;
+        
         // Extend editor's functions
         if (this.core.getEditor()) {
             this.core.getEditor()._serializePreEmbeds = this.core.getEditor().serialize;
             this.core.getEditor().serialize = this.editorSerialize;
         }
         
-        this._defaults = defaults;
-        this._name = pluginName;
-
         this.init();
     }
 
@@ -79,7 +79,7 @@
      * @return {void}
      */
 
-    Q2AEmbeds.prototype.init = function () {
+    Embeds2.prototype.init = function () {
         var $embeds = this.$el.find('.medium-insert-embeds');
         
         $embeds.attr('contenteditable', false);
@@ -99,7 +99,7 @@
      * @return {void}
      */
 
-    Q2AEmbeds.prototype.events = function () {
+    Embeds2.prototype.events = function () {
         $(document)
             .on('click', $.proxy(this, 'unselectEmbed'))
             .on('keydown', $.proxy(this, 'removeEmbed'))
@@ -128,7 +128,7 @@
      * @return {void}
      */
 
-    Q2AEmbeds.prototype.backwardsCompatibility = function () {
+    Embeds2.prototype.backwardsCompatibility = function () {
         var that = this;
 
         this.$el.find('.mediumInsert-embeds')
@@ -151,7 +151,7 @@
      * @return {object} Serialized data
      */
 
-    Q2AEmbeds.prototype.editorSerialize = function () {
+    Embeds2.prototype.editorSerialize = function () {
         var data = this._serializePreEmbeds();
 
         $.each(data, function (key) {
@@ -172,7 +172,7 @@
      * @return {void}
      */
 
-    Q2AEmbeds.prototype.add = function () {
+    Embeds2.prototype.add = function () {
         var $place = this.$el.find('.medium-insert-active');
 
         // Fix #132
@@ -202,7 +202,7 @@
      * @return {void}
      */
 
-    Q2AEmbeds.prototype.togglePlaceholder = function (e) {
+    Embeds2.prototype.togglePlaceholder = function (e) {
         var $place = $(e.target),
             selection = window.getSelection(),
             range, $current, text;
@@ -246,7 +246,7 @@
      * @return {void}
      */
 
-    Q2AEmbeds.prototype.fixRightClickOnPlaceholder = function (e) {
+    Embeds2.prototype.fixRightClickOnPlaceholder = function (e) {
         this.core.moveCaret($(e.target));
     };
 
@@ -257,7 +257,7 @@
      * @return {void}
      */
 
-    Q2AEmbeds.prototype.processLink = function (e) {
+    Embeds2.prototype.processLink = function (e) {
         var $place = this.$el.find('.medium-insert-embeds-active'),
             url;
 
@@ -288,7 +288,7 @@
      * @return {void}
      */
 
-    Q2AEmbeds.prototype.processPasted = function (e) {
+    Embeds2.prototype.processPasted = function (e) {
         var pastedUrl, linkRegEx;
         if ($(".medium-insert-embeds-active").length) {
             return;
@@ -297,7 +297,7 @@
         pastedUrl = e.originalEvent.clipboardData.getData('text');
         linkRegEx = new RegExp('^(http(s?):)?\/\/','i');
         if (linkRegEx.test(pastedUrl)) {
-            this.parseUrl(pastedUrl, true);            
+            this.parseUrl(pastedUrl, true);
         }
     };
     
@@ -309,7 +309,7 @@
      * @return {void}
      */
 
-    Q2AEmbeds.prototype.parseUrl = function (url, pasted) {
+    Embeds2.prototype.parseUrl = function (url, pasted) {
         var html;
 
         if (!(new RegExp(['youtube', 'youtu.be', 'vimeo', 'instagram', 'twitter', 'facebook'].join('|')).test(url))) {
@@ -349,7 +349,7 @@
      * @return {void}
      */
 
-    Q2AEmbeds.prototype.embed = function (html, pastedUrl) {
+    Embeds2.prototype.embed = function (html, pastedUrl) {
         var $place = this.$el.find('.medium-insert-embeds-active'),
             $div;
 
@@ -407,7 +407,7 @@
      *
      * @return {void}
      */
-    Q2AEmbeds.prototype.convertBadEmbed = function (content) {
+    Embeds2.prototype.convertBadEmbed = function (content) {
         var $place, $empty, $content,
             emptyTemplate = this.templates['src/js/templates/core-empty-line.hbs']().trim();
 
@@ -435,7 +435,7 @@
      * @returns {void}
      */
 
-    Q2AEmbeds.prototype.selectEmbed = function (e) {
+    Embeds2.prototype.selectEmbed = function (e) {
         var that = this,
             $embed;
         if (this.core.options.enabled) {
@@ -460,7 +460,7 @@
      * @returns {void}
      */
 
-    Q2AEmbeds.prototype.unselectEmbed = function (e) {
+    Embeds2.prototype.unselectEmbed = function (e) {
         var $el = $(e.target).hasClass('medium-insert-embeds') ? $(e.target) : $(e.target).closest('.medium-insert-embeds'),
             $embed = this.$el.find('.medium-insert-embeds-selected');
 
@@ -493,7 +493,7 @@
      * @returns {void}
      */
 
-    Q2AEmbeds.prototype.removeEmbed = function (e) {
+    Embeds2.prototype.removeEmbed = function (e) {
         var $embed, $empty;
 
         if (e.which === 8 || e.which === 46) {
@@ -523,7 +523,7 @@
      * @returns {void}
      */
 
-    Q2AEmbeds.prototype.addToolbar = function () {
+    Embeds2.prototype.addToolbar = function () {
         var $embed = this.$el.find('.medium-insert-embeds-selected'),
             active = false,
             $toolbar, $toolbar2, mediumEditor, toolbarContainer;
@@ -559,14 +559,14 @@
         $toolbar2.fadeIn();
     };
 
-    Q2AEmbeds.prototype.autoRepositionToolbars = function () {
+    Embeds2.prototype.autoRepositionToolbars = function () {
         setTimeout(function () {
             this.repositionToolbars();
             this.repositionToolbars();
         }.bind(this), 0);
     };
 
-    Q2AEmbeds.prototype.repositionToolbars = function () {
+    Embeds2.prototype.repositionToolbars = function () {
         var $toolbar = $('.medium-insert-embeds-toolbar'),
             $toolbar2 = $('.medium-insert-embeds-toolbar2'),
             $embed = this.$el.find('.medium-insert-embeds-selected'),
@@ -617,7 +617,7 @@
      * @returns {void}
      */
 
-    Q2AEmbeds.prototype.toolbarAction = function (e) {
+    Embeds2.prototype.toolbarAction = function (e) {
         var $button = $(e.target).is('button') ? $(e.target) : $(e.target).closest('button'),
             $li = $button.closest('li'),
             $ul = $li.closest('ul'),
@@ -656,7 +656,7 @@
      * @returns {void}
      */
 
-    Q2AEmbeds.prototype.toolbar2Action = function (e) {
+    Embeds2.prototype.toolbar2Action = function (e) {
         var $button = $(e.target).is('button') ? $(e.target) : $(e.target).closest('button'),
             callback = this.options.actions[$button.data('action')].clicked;
 
@@ -672,7 +672,7 @@
     $.fn[pluginName + addonName] = function (options) {
         return this.each(function () {
             if (!$.data(this, 'plugin_' + pluginName + addonName)) {
-                $.data(this, 'plugin_' + pluginName + addonName, new Q2AEmbeds(this, options));
+                $.data(this, 'plugin_' + pluginName + addonName, new Embeds2(this, options));
             }
         });
     };
