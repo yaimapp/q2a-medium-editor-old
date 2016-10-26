@@ -25,7 +25,13 @@ class qa_medium_editor_upload
         if(is_array($_FILES) && count($_FILES)) {
             $filename = $_FILES['files']['name'][0];
             $filetype = $_FILES['files']['type'][0];
+            $filetmp = $_FILES['files']['tmp_name'][0];
 
+            // ファイルサイズを取得してログに出力
+            $filebytes = filesize($filetmp);
+            $fileMB = number_format($filebytes/1048576, 1);
+            error_log('upload_file_size: '. $fileMB .'MB');
+            
             require_once QA_INCLUDE_DIR.'qa-app-upload.php';
             $img_maxwidth = qa_opt('medium_editor_upload_maximgwidth');
             if($filetype === 'image/gif') {
@@ -36,8 +42,8 @@ class qa_medium_editor_upload
             }
             $upload_max_size = qa_opt('medium_editor_upload_max_size');
             $upload = qa_upload_file(
-                $_FILES['files']['tmp_name'][0],
-                $_FILES['files']['name'][0],
+                $filetmp,
+                $filename,
                 $upload_max_size,
                 false,
                 qa_opt('medium_editor_upload_images') ?
