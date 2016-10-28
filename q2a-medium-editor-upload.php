@@ -51,9 +51,9 @@ class qa_medium_editor_upload
                 null
             );
 
-            $errormessage = $upload['error'];
-            $url = $upload['bloburl'];
-            $format = $upload['format'];
+            $errormessage = isset($upload['error']) ? $upload['error'] : '';
+            $url = isset($upload['bloburl']) ? $upload['bloburl'] : '';
+            $format = isset($upload['format']) ? $upload['format'] : '';
 
         }
 
