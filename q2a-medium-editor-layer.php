@@ -88,6 +88,9 @@ EOS;
             $this->output('<script src="'. $components . $js . '"></script>');
         }
         $this->output('<script src="'. QA_HTML_THEME_LAYER_URLTOROOT . 'js/q2a-embeds.js' . '"></script>');
+        if (strpos(qa_opt('site_theme'), 'q2a-material-lite') !== false) {
+            $this->output('<script src="'. QA_HTML_THEME_LAYER_URLTOROOT . 'js/q2a-images.js' . '"></script>');
+        }
     }
     
     function embed_replace($text)

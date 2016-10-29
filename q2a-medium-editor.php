@@ -133,8 +133,16 @@ class qa_medium_editor
         $(function() {
             $('.editable').mediumInsert({
                 editor: editor,
-                addons: {
-                    images: {
+                addons: {";
+        if (strpos(qa_opt('site_theme'), 'q2a-material-lite') !== false) {
+            $html .= "
+                    images: false,
+                    images2: {";
+        } else {
+            $html .= "
+                    images: {";
+        }
+        $html .= "
                         preview:false,
                         captions:false,
                         fileUploadOptions: {
