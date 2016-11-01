@@ -110,11 +110,21 @@ class qa_medium_editor
     public function get_field(&$qa_content, $content, $format, $fieldname, $rows)
     {
         $html = '';
-
+        $placeholder = '';
+        
         $content = $this->embed_replace($content);
         if(empty($format)) {
             $content = nl2br($content);
         }
+        if (strpos($fieldname, 'a_') !== false) {
+            $placeholder = qa_lang_html('q2a_medium_editor_lang/placeholder_a');
+        } elseif (preg_match("/^c\d+/", $fieldname) > 0) {
+            $placeholder = qa_lang_html('q2a_medium_editor_lang/placeholder_c');
+        } else {
+            $placeholder = qa_lang_html('q2a_medium_editor_lang/placeholder');
+        }
+        $embed_placeholder = qa_lang_html('q2a_medium_editor_lang/placeholder_embed');
+        
         $maxfilesize = qa_opt('medium_editor_upload_max_size');
         $filesize = $this->bytes_to_mega_html($maxfilesize)."MB";
         $html = '<textarea name="'.$fieldname.'" id="'.$fieldname.'"  class="editable qa-form-tall-text">'.$content.'</textarea>';
@@ -122,7 +132,7 @@ class qa_medium_editor
         <script type=\"text/javascript\">
         var editor = new MediumEditor('.editable', {
             placeholder: {
-                text: '".qa_lang_html('q2a_medium_editor_lang/placeholder')."',
+                text: '". $placeholder ."',
                 hydOnClick: true
             },
             paste: {
@@ -157,7 +167,8 @@ class qa_medium_editor
                     },
                     embeds: false,
                     embeds2: {
-                        styles: null
+                        styles: null,
+                        placeholder: '". $embed_placeholder ."',
                     },
                 },
             });
