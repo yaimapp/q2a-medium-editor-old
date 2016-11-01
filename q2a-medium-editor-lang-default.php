@@ -10,8 +10,10 @@ return array(
     'upload_images' => '画像のアップロードを許可',
     'upload_max_size' => '最大アップロードファイルサイズ:',
     'upload_max_img_width' => '最大アップロード画像横幅:',
-    'placeholder' => '詳細を記載してください。画像も投稿できます。(＋)ボタンを押してください。',
-    'placeholder_embed' => '動画サイト(Youtube, Vimeo 等)のURLを貼り付けてエンターキーを押してください',
+    'placeholder' => '詳細を記載してください。画像も投稿できます。\n(＋)ボタンを押してください。',
+    'placeholder_a' => '回答を記入してください。',
+    'placeholder_c' => 'コメントを記入してください。',
+    'placeholder_embed' => 'YoutubeのURLを貼り付けてエンターキーを押してください',
 );
 
 /*
