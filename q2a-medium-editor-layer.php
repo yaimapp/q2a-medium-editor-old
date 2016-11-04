@@ -44,6 +44,17 @@ class qa_html_theme_layer extends qa_html_theme_base
         }
         qa_html_theme_base::c_item_content($c_item);
     }
+    
+    function body_footer()
+    {
+        if(($this->template === 'ask' && qa_opt('editor_for_qs') === self::EDITOR_NAME)
+        || ($this->template === 'question' && qa_opt('editor_for_as') === self::EDITOR_NAME)
+        || ($this->template === 'question' && qa_opt('editor_for_cs') === self::EDITOR_NAME)) {
+            if (strpos(qa_opt('site_theme'), 'q2a-material-lite') !== false) {
+                $this->output_dialog();
+            }
+        }
+    }
 
     private function output_css()
     {
@@ -116,6 +127,33 @@ EOS;
         }
         $text = preg_replace('/class="plain_url"/i','class="video video-youtube"',$text);
         return $text;
+    }
+    
+    function output_dialog()
+    {
+        $html = <<<EOT
+<dialog id="editor-error" class="mdl-dialog">
+    <h4 class="mdl-dialog__title">エラータイトル</h4>
+    <div class="mdl-dialog__content">
+        <p>
+        エラー本文
+        </p>
+    </div>
+    <div class="mdl-dialog__actions">
+        <button type="button" class="mdl-button ok">OK</button>
+    </div>
+</dialog>
+<script>
+    var errDialog = document.querySelector('#editor-error');
+    if (! errDialog.showModal) {
+        dialogPolyfill.registerDialog(errDialog);
+    }
+    errDialog.querySelector('.ok').addEventListener('click', function() {
+        errDialog.close();
+    });
+</script>
+EOT;
+        $this->output($html);
     }
 
 } // end qa_html_theme_layer

@@ -145,10 +145,12 @@ class qa_medium_editor
                 editor: editor,
                 addons: {";
         if (strpos(qa_opt('site_theme'), 'q2a-material-lite') !== false) {
+            $mdl = 'true';
             $html .= "
                     images: false,
                     images2: {";
         } else {
+            $mdl = 'false';
             $html .= "
                     images: {";
         }
@@ -162,7 +164,8 @@ class qa_medium_editor
                         },
                         messages: {
                             acceptFileTypesError: 'サポートしていないフォーマットです: ',
-                            maxFileSizeError: 'ファイルサイズが大きすぎます\\n".$filesize."以下でお願いします: '
+                            maxFileSizeError: 'ファイルサイズが大きすぎます\\n".$filesize."以下でお願いします: ',
+                            mdlThemeDialog: ". $mdl ."
                         }
                     },
                     embeds: false,
