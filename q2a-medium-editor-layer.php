@@ -47,6 +47,7 @@ class qa_html_theme_layer extends qa_html_theme_base
     
     function body_footer()
     {
+        qa_html_theme_base::body_footer();
         if(($this->template === 'ask' && qa_opt('editor_for_qs') === self::EDITOR_NAME)
         || ($this->template === 'question' && qa_opt('editor_for_as') === self::EDITOR_NAME)
         || ($this->template === 'question' && qa_opt('editor_for_cs') === self::EDITOR_NAME)) {
