@@ -71,7 +71,8 @@
             },
             messages: {
                 acceptFileTypesError: 'This file is not in a supported format: ',
-                maxFileSizeError: 'This file is too big: '
+                maxFileSizeError: 'This file is too big: ',
+                mdlThemeDialog: false,
             }
             // uploadError: function($el, data) {}
             // uploadCompleted: function ($el, data) {}
@@ -243,10 +244,13 @@
             acceptFileTypes = this.options.fileUploadOptions.acceptFileTypes,
             maxFileSize = this.options.fileUploadOptions.maxFileSize,
             reader;
+        var errorTitle;
 
         if (acceptFileTypes && !acceptFileTypes.test(file.type)) {
+            errorTitle = '画像ファイルではありません';
             uploadErrors.push(this.options.messages.acceptFileTypesError + file.name);
         } else if (maxFileSize && file.size > maxFileSize) {
+            errorTitle = 'ファルサイズが大きすぎます'
             uploadErrors.push(this.options.messages.maxFileSizeError + file.name);
         }
         if (uploadErrors.length > 0) {
@@ -255,9 +259,14 @@
 
                 return;
             }
-
-            alert(uploadErrors.join("\n"));
-
+            
+            if (this.options.messages.mdlThemeDialog) {
+              errDialog.querySelector('.mdl-dialog__title').textContent = errorTitle;
+              errDialog.querySelector('.mdl-dialog__content p').textContent = uploadErrors.join("\n");
+              errDialog.showModal();
+            } else {
+              alert(uploadErrors.join("\n"));
+            }
             return;
         }
 
