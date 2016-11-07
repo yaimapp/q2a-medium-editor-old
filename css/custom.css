@@ -24,6 +24,16 @@ iframe {
   resize: none;
 }
 
+/* error dialog */
+dialog#editor-error {
+  width: 350px;
+  height: 250px;
+  left: 50%;
+  top: 50%;
+  margin-left: -175px;
+  margin-top: -125px;
+}
+
 /*
 .medium-editor-insert-plugin .medium-insert-buttons .medium-insert-buttons-addons li:nth-child(2) button{
   display: none;
