@@ -184,12 +184,20 @@ class qa_medium_editor
                 }
             });
         });
-        function get_content() {
-            var allContents = editor.serialize();
-            var editorId = editor.elements[0].id;
-            var content = allContents[editorId].value;
-            content = content.replace(/<div class=\"video video-youtube\">.*?<\/div>/g, '');
-            content = content.replace(/medium-insert-embeds-selected/g, '');
+        function get_content(name) {
+            var editor_elm = document.getElementsByName(name);
+            
+            if (editor_elm.length > 0) {
+                var target = MediumEditor.getEditorFromElement(editor_elm[0]);
+                console.log('target'+target);
+                var allContents = target.serialize();
+                var editorId = target.elements[0].id;
+                var content = allContents[editorId].value;
+                content = content.replace(/<div class=\"video video-youtube\">.*?<\/div>/g, '');
+                content = content.replace(/medium-insert-embeds-selected/g, '');
+            } else {
+                content = '';
+            }
             return content;
         }
         </script>";
@@ -207,7 +215,7 @@ class qa_medium_editor
     function update_script($fieldname)
     {
         // write html text from sceditor-iframe to textarea - important!
-        $jscode = "$('textarea[name=\'".$fieldname."\']').val(get_content());";
+        $jscode = "$('textarea[name=\'".$fieldname."\']').val(get_content('".$fieldname."'));";
         // debugging:
         // $jscode .= "console.log( 'textfield: '+ $('textarea[name=\'".$fieldname."\']').val() ); return false;";
         return $jscode;
