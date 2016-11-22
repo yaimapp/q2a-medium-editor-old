@@ -79,7 +79,9 @@ class qa_html_theme_layer extends qa_html_theme_base
     </style>
 EOS;
         $this->output($default_height);
-        $this->output('<link rel="stylesheet" type="text/css" href="'.QA_HTML_THEME_LAYER_URLTOROOT.'css/custom.css" />');
+        $this->output('<link rel="stylesheet" type="text/css" href="'.QA_HTML_THEME_LAYER_URLTOROOT.'css/custom.css" />');if (strpos(qa_opt('site_theme'), 'q2a-material-lite') !== false) {
+            $this->output('<link rel="stylesheet" type="text/css" href="'.QA_HTML_THEME_LAYER_URLTOROOT.'css/dialog-polyfill.css" />');
+        }
     }
 
     private function output_js()
@@ -102,6 +104,7 @@ EOS;
         $this->output('<script src="'. QA_HTML_THEME_LAYER_URLTOROOT . 'js/q2a-embeds.js' . '"></script>');
         if (strpos(qa_opt('site_theme'), 'q2a-material-lite') !== false) {
             $this->output('<script src="'. QA_HTML_THEME_LAYER_URLTOROOT . 'js/q2a-images.js' . '"></script>');
+            $this->output('<script src="'. QA_HTML_THEME_LAYER_URLTOROOT . 'js/dialog-polyfill.js' . '"></script>');
         }
     }
     
@@ -134,10 +137,10 @@ EOS;
     {
         $html = <<<EOT
 <dialog id="editor-error" class="mdl-dialog">
-    <h4 class="mdl-dialog__title">エラータイトル</h4>
+    <h4 class="mdl-dialog__title"></h4>
     <div class="mdl-dialog__content">
         <p>
-        エラー本文
+        
         </p>
     </div>
     <div class="mdl-dialog__actions">
