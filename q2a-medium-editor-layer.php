@@ -10,17 +10,27 @@ class qa_html_theme_layer extends qa_html_theme_base
 
     const EDITOR_NAME = 'Medium Editor';
 
+    private function is_medium_editor_active() {
+      if(($this->template === 'ask' && qa_opt('editor_for_qs') === self::EDITOR_NAME)
+        || ($this->template === 'question' && qa_opt('editor_for_as') === self::EDITOR_NAME)
+        || ($this->template === 'question' && qa_opt('editor_for_cs') === self::EDITOR_NAME)
+        || ($this->template === 'blog-new' && qa_opt('qas_blog_editor_for_ps') === self::EDITOR_NAME)
+        || ($this->template === 'blog' && qa_opt('qas_blog_editor_for_cs') === self::EDITOR_NAME)) {
+          return true;
+      }
+      return false;
+
+    }
+
     function head_script()
     {
         qa_html_theme_base::head_script();
-        if(($this->template === 'ask' && qa_opt('editor_for_qs') === self::EDITOR_NAME)
-        || ($this->template === 'question' && qa_opt('editor_for_as') === self::EDITOR_NAME)
-        || ($this->template === 'question' && qa_opt('editor_for_cs') === self::EDITOR_NAME)) {
-            $this->output_css();
-            $this->output_js();
+        if($this->is_medium_editor_active()) {
+          $this->output_css();
+          $this->output_js();
         }
     }
-    
+
     function q_view_content($q_view)
     {
         if (isset($q_view['content'])){
@@ -28,7 +38,7 @@ class qa_html_theme_layer extends qa_html_theme_base
         }
         qa_html_theme_base::q_view_content($q_view);
     }
-    
+
     function a_item_content($a_item)
     {
         if (isset($a_item['content'])) {
@@ -36,7 +46,7 @@ class qa_html_theme_layer extends qa_html_theme_base
         }
         qa_html_theme_base::a_item_content($a_item);
     }
-    
+
     function c_item_content($c_item)
     {
         if (isset($c_item['content'])) {
@@ -44,13 +54,12 @@ class qa_html_theme_layer extends qa_html_theme_base
         }
         qa_html_theme_base::c_item_content($c_item);
     }
-    
+
     function body_footer()
     {
         qa_html_theme_base::body_footer();
-        if(($this->template === 'ask' && qa_opt('editor_for_qs') === self::EDITOR_NAME)
-        || ($this->template === 'question' && qa_opt('editor_for_as') === self::EDITOR_NAME)
-        || ($this->template === 'question' && qa_opt('editor_for_cs') === self::EDITOR_NAME)) {
+
+        if($this->is_medium_editor_active()) {
             if (strpos(qa_opt('site_theme'), 'q2a-material-lite') !== false) {
                 $this->output_dialog();
             }
@@ -107,7 +116,7 @@ EOS;
             $this->output('<script src="'. QA_HTML_THEME_LAYER_URLTOROOT . 'js/dialog-polyfill.js' . '"></script>');
         }
     }
-    
+
     function embed_replace($text)
     {
         $types = array(
@@ -132,7 +141,7 @@ EOS;
         $text = preg_replace('/class="plain_url"/i','class="video video-youtube"',$text);
         return $text;
     }
-    
+
     function output_dialog()
     {
         $html = <<<EOT
@@ -140,7 +149,7 @@ EOS;
     <h4 class="mdl-dialog__title"></h4>
     <div class="mdl-dialog__content">
         <p>
-        
+
         </p>
     </div>
     <div class="mdl-dialog__actions">
