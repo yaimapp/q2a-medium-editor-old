@@ -111,7 +111,7 @@ class qa_medium_editor
     {
         $html = '';
         $placeholder = '';
-        
+
         $content = $this->embed_replace($content);
         if(empty($format)) {
             $content = nl2br($content);
@@ -124,7 +124,7 @@ class qa_medium_editor
             $placeholder = qa_lang_html('q2a_medium_editor_lang/placeholder');
         }
         $embed_placeholder = qa_lang_html('q2a_medium_editor_lang/placeholder_embed');
-        
+
         $maxfilesize = qa_opt('medium_editor_upload_max_size');
         $filesize = $this->bytes_to_mega_html($maxfilesize)."MB";
         $html = '<textarea name="'.$fieldname.'" id="'.$fieldname.'"  class="editable qa-form-tall-text">'.$content.'</textarea>';
@@ -175,18 +175,10 @@ class qa_medium_editor
                     },
                 },
             });
-            $('.editable').focus(function(){
-                var height = $(this).height();
-                if (height <= 550) {
-                    $(this).animate({
-                        height: '550px',
-                    }, 'slow' );
-                }
-            });
         });
         function get_content(name) {
             var editor_elm = document.getElementsByName(name);
-            
+
             if (editor_elm.length > 0) {
                 var target = MediumEditor.getEditorFromElement(editor_elm[0]);
                 // console.log('target'+target);
@@ -229,7 +221,7 @@ class qa_medium_editor
             'content' => qa_sanitize_html($html, false, true),
         );
     }
-    
+
     private function embed_replace($text)
     {
         $types = array(
