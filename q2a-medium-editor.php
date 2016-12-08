@@ -22,8 +22,6 @@ class qa_medium_editor
         switch($option) {
             case 'medium_editor_enabled':
                 return 1; // true
-            case 'medium_editor_height':
-                return 350;
             case 'medium_editor_upload_images':
                 return 1;
             case 'medium_editor_upload_maximgwidth':
@@ -46,7 +44,6 @@ class qa_medium_editor
         $ok = null;
         if (qa_clicked('medium_editor_save')) {
 
-            qa_opt('medium_editor_height', (int)qa_post_text('medium_editor_height'));
             qa_opt('medium_editor_upload_images', (bool)qa_post_text('medium_editor_upload_images'));
             qa_opt('medium_editor_upload_max_size', min(qa_get_max_upload_size(), 1048576*(float)qa_post_text('medium_editor_upload_max_size')));
             qa_opt('medium_editor_upload_maximgwidth', (int)qa_post_text('medium_editor_upload_maximgwidth'));
@@ -54,13 +51,6 @@ class qa_medium_editor
             $ok = qa_lang('admin/options_saved');
         }
         $fields = array();
-        $fields[] = array(
-            'type' => 'number',
-            'label' => qa_lang('q2a_medium_editor_lang/default_height'),
-            'suffix' => 'px',
-            'tags' => 'name="medium_editor_height"',
-            'value' => (int)qa_opt('medium_editor_height'),
-        );
         $fields[] = array(
             'type' => 'checkbox',
             'id' => 'medium_editor_upload_images',

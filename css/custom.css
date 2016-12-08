@@ -22,6 +22,7 @@ iframe {
 .medium-editor-element {
   overflow-y: auto;
   resize: none;
+  min-height: 200px;
 }
 
 /* error dialog */
