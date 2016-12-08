@@ -22,7 +22,21 @@ iframe {
 .medium-editor-element {
   overflow-y: auto;
   resize: none;
-  min-height: 200px;
+}
+
+/* form height of question and blog*/
+.qa-part-form .editable {
+  min-height: 250px;
+}
+
+/* form height of answer */
+.qa-a-form .editable {
+  min-height: 100px;
+}
+
+/* form height of comment */ 
+.qa-c-form .editable {
+  min-height: 40px;
 }
 
 /* error dialog */
