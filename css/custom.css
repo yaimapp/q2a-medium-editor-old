@@ -24,6 +24,21 @@ iframe {
   resize: none;
 }
 
+/* form height of question and blog*/
+.qa-part-form .editable {
+  min-height: 250px;
+}
+
+/* form height of answer */
+.qa-a-form .editable {
+  min-height: 100px;
+}
+
+/* form height of comment */ 
+.qa-c-form .editable {
+  min-height: 40px;
+}
+
 /* error dialog */
 dialog#editor-error {
   width: 350px;

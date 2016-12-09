@@ -22,8 +22,6 @@ class qa_medium_editor
         switch($option) {
             case 'medium_editor_enabled':
                 return 1; // true
-            case 'medium_editor_height':
-                return 350;
             case 'medium_editor_upload_images':
                 return 1;
             case 'medium_editor_upload_maximgwidth':
@@ -46,7 +44,6 @@ class qa_medium_editor
         $ok = null;
         if (qa_clicked('medium_editor_save')) {
 
-            qa_opt('medium_editor_height', (int)qa_post_text('medium_editor_height'));
             qa_opt('medium_editor_upload_images', (bool)qa_post_text('medium_editor_upload_images'));
             qa_opt('medium_editor_upload_max_size', min(qa_get_max_upload_size(), 1048576*(float)qa_post_text('medium_editor_upload_max_size')));
             qa_opt('medium_editor_upload_maximgwidth', (int)qa_post_text('medium_editor_upload_maximgwidth'));
@@ -54,13 +51,6 @@ class qa_medium_editor
             $ok = qa_lang('admin/options_saved');
         }
         $fields = array();
-        $fields[] = array(
-            'type' => 'number',
-            'label' => qa_lang('q2a_medium_editor_lang/default_height'),
-            'suffix' => 'px',
-            'tags' => 'name="medium_editor_height"',
-            'value' => (int)qa_opt('medium_editor_height'),
-        );
         $fields[] = array(
             'type' => 'checkbox',
             'id' => 'medium_editor_upload_images',
@@ -111,7 +101,7 @@ class qa_medium_editor
     {
         $html = '';
         $placeholder = '';
-        
+
         $content = $this->embed_replace($content);
         if(empty($format)) {
             $content = nl2br($content);
@@ -124,7 +114,7 @@ class qa_medium_editor
             $placeholder = qa_lang_html('q2a_medium_editor_lang/placeholder');
         }
         $embed_placeholder = qa_lang_html('q2a_medium_editor_lang/placeholder_embed');
-        
+
         $maxfilesize = qa_opt('medium_editor_upload_max_size');
         $filesize = $this->bytes_to_mega_html($maxfilesize)."MB";
         $html = '<textarea name="'.$fieldname.'" id="'.$fieldname.'"  class="editable qa-form-tall-text">'.$content.'</textarea>';
@@ -175,18 +165,10 @@ class qa_medium_editor
                     },
                 },
             });
-            $('.editable').focus(function(){
-                var height = $(this).height();
-                if (height <= 550) {
-                    $(this).animate({
-                        height: '550px',
-                    }, 'slow' );
-                }
-            });
         });
         function get_content(name) {
             var editor_elm = document.getElementsByName(name);
-            
+
             if (editor_elm.length > 0) {
                 var target = MediumEditor.getEditorFromElement(editor_elm[0]);
                 // console.log('target'+target);
@@ -229,7 +211,7 @@ class qa_medium_editor
             'content' => qa_sanitize_html($html, false, true),
         );
     }
-    
+
     private function embed_replace($text)
     {
         $types = array(

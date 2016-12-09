@@ -79,15 +79,6 @@ class qa_html_theme_layer extends qa_html_theme_base
         foreach ($css_files as $css) {
             $this->output('<link rel="stylesheet" type="text/css" href="' . $components . $css .'" />');
         }
-        $editor_height = qa_opt('medium_editor_height');
-        $default_height = <<<EOS
-    <style>
-        .medium-editor-element {
-            min-height: {$editor_height}px;
-        }
-    </style>
-EOS;
-        $this->output($default_height);
         $this->output('<link rel="stylesheet" type="text/css" href="'.QA_HTML_THEME_LAYER_URLTOROOT.'css/custom.css" />');if (strpos(qa_opt('site_theme'), 'q2a-material-lite') !== false) {
             $this->output('<link rel="stylesheet" type="text/css" href="'.QA_HTML_THEME_LAYER_URLTOROOT.'css/dialog-polyfill.css" />');
         }
@@ -111,6 +102,7 @@ EOS;
             $this->output('<script src="'. $components . $js . '"></script>');
         }
         $this->output('<script src="'. QA_HTML_THEME_LAYER_URLTOROOT . 'js/q2a-embeds.js' . '"></script>');
+        $this->output('<script src="'. QA_HTML_THEME_LAYER_URLTOROOT . 'js/q2a-editor.js' . '"></script>');
         if (strpos(qa_opt('site_theme'), 'q2a-material-lite') !== false) {
             $this->output('<script src="'. QA_HTML_THEME_LAYER_URLTOROOT . 'js/q2a-images.js' . '"></script>');
             $this->output('<script src="'. QA_HTML_THEME_LAYER_URLTOROOT . 'js/dialog-polyfill.js' . '"></script>');
