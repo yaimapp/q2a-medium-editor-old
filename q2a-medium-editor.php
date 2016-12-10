@@ -120,7 +120,7 @@ class qa_medium_editor
         $html = '<textarea name="'.$fieldname.'" id="'.$fieldname.'"  class="editable qa-form-tall-text">'.$content.'</textarea>';
         $html .= "
         <script type=\"text/javascript\">
-        var editor = new MediumEditor('.editable', {
+        var editor = new MediumEditor('#" . $fieldname . "', {
             placeholder: {
                 text: '". $placeholder ."',
                 hydOnClick: true
@@ -131,7 +131,7 @@ class qa_medium_editor
             spellcheck: false,
         });
         $(function() {
-            $('.editable').mediumInsert({
+            $('#" . $fieldname . "').mediumInsert({
                 editor: editor,
                 addons: {";
         if (strpos(qa_opt('site_theme'), 'q2a-material-lite') !== false) {
