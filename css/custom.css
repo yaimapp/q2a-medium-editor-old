@@ -49,6 +49,11 @@ dialog#editor-error {
   margin-top: -125px;
 }
 
+/* medium insert plugin */
+.medium-editor-insert-plugin .medium-insert-buttons button {
+    color: #5f5f5f;
+    border: 1px solid #5f5f5f;
+}
 /*
 .medium-editor-insert-plugin .medium-insert-buttons .medium-insert-buttons-addons li:nth-child(2) button{
   display: none;
