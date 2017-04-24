@@ -36,7 +36,7 @@ class qa_html_theme_layer extends qa_html_theme_base
     function q_view_content($q_view)
     {
         if (isset($q_view['content'])){
-            $q_view['content'] = $this->embed_replace($q_view['content']);
+            $q_view['content'] = $this->medium_editor_embed_replace($q_view['content']);
         }
         qa_html_theme_base::q_view_content($q_view);
     }
@@ -44,7 +44,7 @@ class qa_html_theme_layer extends qa_html_theme_base
     function a_item_content($a_item)
     {
         if (isset($a_item['content'])) {
-            $a_item['content'] = $this->embed_replace($a_item['content']);
+            $a_item['content'] = $this->medium_editor_embed_replace($a_item['content']);
         }
         qa_html_theme_base::a_item_content($a_item);
     }
@@ -52,7 +52,7 @@ class qa_html_theme_layer extends qa_html_theme_base
     function c_item_content($c_item)
     {
         if (isset($c_item['content'])) {
-            $c_item['content'] = $this->embed_replace($c_item['content']);
+            $c_item['content'] = $this->medium_editor_embed_replace($c_item['content']);
         }
         qa_html_theme_base::c_item_content($c_item);
     }
@@ -111,7 +111,7 @@ class qa_html_theme_layer extends qa_html_theme_base
         }
     }
 
-    function embed_replace($text)
+    function medium_editor_embed_replace($text)
     {
         $types = array(
             'youtube' => array(
