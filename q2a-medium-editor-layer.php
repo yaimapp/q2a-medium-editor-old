@@ -15,7 +15,9 @@ class qa_html_theme_layer extends qa_html_theme_base
         || ($this->template === 'question' && qa_opt('editor_for_as') === self::EDITOR_NAME)
         || ($this->template === 'question' && qa_opt('editor_for_cs') === self::EDITOR_NAME)
         || ($this->template === 'blog-new' && qa_opt('qas_blog_editor_for_ps') === self::EDITOR_NAME)
-        || ($this->template === 'blog' && qa_opt('qas_blog_editor_for_cs') === self::EDITOR_NAME)) {
+        || ($this->template === 'blog' && qa_opt('qas_blog_editor_for_cs') === self::EDITOR_NAME)
+        || ($this->template === 'message'))
+        {
           return true;
       }
       return false;
@@ -34,7 +36,7 @@ class qa_html_theme_layer extends qa_html_theme_base
     function q_view_content($q_view)
     {
         if (isset($q_view['content'])){
-            $q_view['content'] = $this->embed_replace($q_view['content']);
+            $q_view['content'] = $this->medium_editor_embed_replace($q_view['content']);
         }
         qa_html_theme_base::q_view_content($q_view);
     }
@@ -42,7 +44,7 @@ class qa_html_theme_layer extends qa_html_theme_base
     function a_item_content($a_item)
     {
         if (isset($a_item['content'])) {
-            $a_item['content'] = $this->embed_replace($a_item['content']);
+            $a_item['content'] = $this->medium_editor_embed_replace($a_item['content']);
         }
         qa_html_theme_base::a_item_content($a_item);
     }
@@ -50,7 +52,7 @@ class qa_html_theme_layer extends qa_html_theme_base
     function c_item_content($c_item)
     {
         if (isset($c_item['content'])) {
-            $c_item['content'] = $this->embed_replace($c_item['content']);
+            $c_item['content'] = $this->medium_editor_embed_replace($c_item['content']);
         }
         qa_html_theme_base::c_item_content($c_item);
     }
@@ -109,7 +111,7 @@ class qa_html_theme_layer extends qa_html_theme_base
         }
     }
 
-    function embed_replace($text)
+    function medium_editor_embed_replace($text)
     {
         $types = array(
             'youtube' => array(
@@ -136,28 +138,7 @@ class qa_html_theme_layer extends qa_html_theme_base
 
     function output_dialog()
     {
-        $html = <<<EOT
-<dialog id="editor-error" class="mdl-dialog">
-    <h4 class="mdl-dialog__title"></h4>
-    <div class="mdl-dialog__content">
-        <p>
-
-        </p>
-    </div>
-    <div class="mdl-dialog__actions">
-        <button type="button" class="mdl-button ok">OK</button>
-    </div>
-</dialog>
-<script>
-    var errDialog = document.querySelector('#editor-error');
-    if (! errDialog.showModal) {
-        dialogPolyfill.registerDialog(errDialog);
-    }
-    errDialog.querySelector('.ok').addEventListener('click', function() {
-        errDialog.close();
-    });
-</script>
-EOT;
+        $html = file_get_contents(MEDIUM_EDITOR_DIR . '/html/image-error-dialog.html');
         $this->output($html);
     }
 

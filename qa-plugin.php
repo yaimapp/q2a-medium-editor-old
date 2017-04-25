@@ -19,6 +19,8 @@
         exit;
     }
 
+    @define( 'MEDIUM_EDITOR_DIR', dirname( __FILE__ ) );
+
     // editor module
     qa_register_plugin_module('editor', 'q2a-medium-editor.php', 'qa_medium_editor', 'Medium Editor');
 
