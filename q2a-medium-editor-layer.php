@@ -104,7 +104,10 @@ class qa_html_theme_layer extends qa_html_theme_base
             $this->output('<script src="'. $components . $js . '"></script>');
         }
         $this->output('<script src="'. QA_HTML_THEME_LAYER_URLTOROOT . 'js/q2a-embeds.js' . '"></script>');
+        $this->output('<script src="'. QA_HTML_THEME_LAYER_URLTOROOT . 'js/q2a-videos.js' . '"></script>');
         $this->output('<script src="'. QA_HTML_THEME_LAYER_URLTOROOT . 'js/q2a-editor.js' . '"></script>');
+        $this->output('<script src="//assets.transloadit.com/js/jquery.transloadit2-v2-latest.js"></script>');
+        $this->output('<script src="'. QA_HTML_THEME_LAYER_URLTOROOT . 'js/transloadit.js' . '"></script>');
         if (strpos(qa_opt('site_theme'), 'q2a-material-lite') !== false) {
             $this->output('<script src="'. QA_HTML_THEME_LAYER_URLTOROOT . 'js/q2a-images.js' . '"></script>');
             $this->output('<script src="'. QA_HTML_THEME_LAYER_URLTOROOT . 'js/dialog-polyfill.js' . '"></script>');
@@ -113,6 +116,7 @@ class qa_html_theme_layer extends qa_html_theme_base
 
     function medium_editor_embed_replace($text)
     {
+        $videoPlayer = file_get_contents(MEDIUM_EDITOR_DIR . '/html/video-player.html');
         $types = array(
             'youtube' => array(
                 array(
@@ -124,21 +128,31 @@ class qa_html_theme_layer extends qa_html_theme_base
                     '<iframe width="420" height="315" src="//www.youtube.com/embed/$1" frameborder="0" allowfullscreen></iframe>'
                 ),
             ),
+            'video' => array(
+                array(
+                    '\[uploaded-video=\"([A-Za-z0-9_-]+)\"\]',
+                    $videoPlayer
+                ),
+            ),
         );
+
 
         foreach($types as $t => $ra) {
             foreach($ra as $r) {
                 $text = preg_replace('/<a[^>]+>'.$r[0].'<\/a>/i',$r[1],$text);
-                $text = preg_replace('/(?<![\'"=])'.$r[0].'/i',$r[1],$text);
+                $text = preg_replace('/<a[^>]+>'.$r[0].'<\/a>/i',$r[1],$text);
+                $text = preg_replace('/'.$r[0].'/i',$r[1],$text);
             }
         }
         $text = preg_replace('/class="plain_url"/i','class="video video-youtube"',$text);
+        $text = preg_replace('/class="video-transloadit-id"/i','',$text);
         return $text;
     }
 
     function output_dialog()
     {
         $html = file_get_contents(MEDIUM_EDITOR_DIR . '/html/image-error-dialog.html');
+        $html .= file_get_contents(MEDIUM_EDITOR_DIR . '/html/video-dialog.html');
         $this->output($html);
     }
 

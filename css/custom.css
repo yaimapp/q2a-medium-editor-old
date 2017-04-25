@@ -34,7 +34,7 @@ iframe {
   min-height: 100px;
 }
 
-/* form height of comment */ 
+/* form height of comment */
 .qa-c-form .editable {
   min-height: 40px;
 }
@@ -66,3 +66,7 @@ dialog#editor-error {
   display: none;
 }
 */
+
+.video-transloadit-id {
+  display: none;
+}

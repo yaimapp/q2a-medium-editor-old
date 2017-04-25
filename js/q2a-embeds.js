@@ -6,7 +6,7 @@
     var pluginName = 'mediumInsert',
         addonName = 'Embeds2', // first char is uppercase
         defaults = {
-            label: '<span class="fa fa-youtube-play"></span>',
+            label: '<span class="fa fa-youtube"></span>',
             placeholder: 'YouTubeの動画URLを貼ってください。',
             captions: false,
             captionPlaceholder: 'Type caption (optional)',
@@ -60,16 +60,16 @@
         this.core = this.$el.data('plugin_'+ pluginName);
 
         this.options = $.extend(true, {}, defaults, options);
-        
+
         this._defaults = defaults;
         this._name = pluginName;
-        
+
         // Extend editor's functions
         if (this.core.getEditor()) {
             this.core.getEditor()._serializePreEmbeds = this.core.getEditor().serialize;
             this.core.getEditor().serialize = this.editorSerialize;
         }
-        
+
         this.init();
     }
 
@@ -81,7 +81,7 @@
 
     Embeds2.prototype.init = function () {
         var $embeds = this.$el.find('.medium-insert-embeds');
-        
+
         $embeds.attr('contenteditable', false);
         $embeds.each(function () {
             if ($(this).find('.medium-insert-embeds-overlay').length === 0) {
@@ -121,7 +121,7 @@
             .on('resize', $.proxy(this, 'autoRepositionToolbars'));
 
     };
-    
+
     /**
      * Replace v0.* class names with new ones, wrap embedded content to new structure
      *
@@ -144,7 +144,7 @@
             }
         });
     };
-    
+
     /**
      * Extend editor's serialize function
      *
@@ -165,7 +165,7 @@
 
         return data;
     };
-    
+
     /**
      * Add embedded element
      *
@@ -194,7 +194,7 @@
         $place.click();
         this.core.hideButtons();
     };
-    
+
     /**
      * Toggles placeholder
      *
@@ -238,7 +238,7 @@
             this.$el.find('.medium-insert-embeds-active').remove();
         }
     };
-    
+
     /**
      * Right click on placeholder in Chrome selects whole line. Fix this by placing caret at the end of line
      *
@@ -300,7 +300,7 @@
             this.parseUrl(pastedUrl, true);
         }
     };
-    
+
     /**
      * Get HTML using regexp
      *
@@ -317,7 +317,7 @@
             return false;
         }
         var plain_url = '<div class="plain_url">'+url+'</div>';
-        
+
         html = url.replace(/\n?/g, '')
             .replace(/^((http(s)?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/(watch\?v=|v\/)?)([a-zA-Z0-9\-_]+)(.*)?$/, '<div class="video video-youtube"><iframe width="420" height="315" src="//www.youtube.com/embed/$7" frameborder="0" allowfullscreen></iframe></div>')
             .replace(/^https?:\/\/vimeo\.com(\/.+)?\/([0-9]+)$/, '<div class="video video-vimeo"><iframe src="//player.vimeo.com/video/$2" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe></div>')
@@ -516,7 +516,7 @@
             }
         }
     };
-    
+
     /**
      * Adds embed toolbar to editor
      *
@@ -666,7 +666,7 @@
 
         this.core.triggerInput();
     };
-    
+
     /** Addon initialization */
 
     $.fn[pluginName + addonName] = function (options) {
