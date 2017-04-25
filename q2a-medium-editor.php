@@ -116,74 +116,20 @@ class qa_medium_editor
         $embed_placeholder = qa_lang_html('q2a_medium_editor_lang/placeholder_embed');
 
         $maxfilesize = qa_opt('medium_editor_upload_max_size');
-        $filesize = $this->bytes_to_mega_html($maxfilesize)."MB";
-        $html = '<textarea name="'.$fieldname.'" id="'.$fieldname.'"  class="editable qa-form-tall-text">'.$content.'</textarea>';
-        $html .= "
-        <script type=\"text/javascript\">
-        var editor = new MediumEditor('#" . $fieldname . "', {
-            placeholder: {
-                text: '". $placeholder ."',
-                hydOnClick: true
-            },
-            paste: {
-                forcePlainText: true,
-            },
-            spellcheck: false,
-        });
-        $(function() {
-            $('#" . $fieldname . "').mediumInsert({
-                editor: editor,
-                addons: {";
-        if (strpos(qa_opt('site_theme'), 'q2a-material-lite') !== false) {
-            $mdl = 'true';
-            $html .= "
-                    images: false,
-                    images2: {";
-        } else {
-            $mdl = 'false';
-            $html .= "
-                    images: {";
-        }
-        $html .= "
-                        preview:false,
-                        captions:false,
-                        fileUploadOptions: {
-                            url: '".qa_opt('site_url').'medium-editor-upload'."',
-                            acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
-                            maxFileSize: " .$maxfilesize. ",
-                        },
-                        messages: {
-                            acceptFileTypesError: 'サポートしていないフォーマットです: ',
-                            maxFileSizeError: 'ファイルサイズが大きすぎます\\n".$filesize."以下でお願いします: ',
-                            mdlThemeDialog: ". $mdl ."
-                        }
-                    },
-                    videos: true,
-                    embeds: false,
-                    embeds2: {
-                        styles: null,
-                        placeholder: '". $embed_placeholder ."',
-                    },
-                },
-            });
-        });
-        function get_content(name) {
-            var editor_elm = document.getElementsByName(name);
+        $filesize =
+        $params = array(
+          '^fieldname' => $fieldname,
+          '^placeholder' => $placeholder,
+          '^embed_placeholder' => $embed_placeholder,
+          '^is_mdl' => 'true',
+          '^max_image_filesize' => $maxfilesize,
+          '^max_image_filesize_mb' => $this->bytes_to_mega_html($maxfilesize),
+          '^site_url' => qa_opt('site_url'),
+        );
 
-            if (editor_elm.length > 0) {
-                var target = MediumEditor.getEditorFromElement(editor_elm[0]);
-                // console.log('target'+target);
-                var allContents = target.serialize();
-                var editorId = target.elements[0].id;
-                var content = allContents[editorId].value;
-                content = content.replace(/<div class=\"video video-youtube\">.*?<\/div>/g, '');
-                content = content.replace(/medium-insert-embeds-selected/g, '');
-            } else {
-                content = '';
-            }
-            return content;
-        }
-        </script>";
+        $js = file_get_contents(MEDIUM_EDITOR_DIR . '/html/medium-editor-settings.js');
+        $html = '<textarea name="'.$fieldname.'" id="'.$fieldname.'"  class="editable qa-form-tall-text">'.$content.'</textarea>';
+        $html .= "<script type=\"text/javascript\">" . strtr($js, $params) . "</script>";
         return array(
             'type' => 'custom',
             'html' => $html,
