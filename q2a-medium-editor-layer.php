@@ -107,7 +107,6 @@ class qa_html_theme_layer extends qa_html_theme_base
         $this->output('<script src="'. QA_HTML_THEME_LAYER_URLTOROOT . 'js/q2a-videos.js' . '"></script>');
         $this->output('<script src="'. QA_HTML_THEME_LAYER_URLTOROOT . 'js/q2a-editor.js' . '"></script>');
         $this->output('<script src="//assets.transloadit.com/js/jquery.transloadit2-v2-latest.js"></script>');
-        $this->output('<script src="'. QA_HTML_THEME_LAYER_URLTOROOT . 'js/transloadit.js' . '"></script>');
         if (strpos(qa_opt('site_theme'), 'q2a-material-lite') !== false) {
             $this->output('<script src="'. QA_HTML_THEME_LAYER_URLTOROOT . 'js/q2a-images.js' . '"></script>');
             $this->output('<script src="'. QA_HTML_THEME_LAYER_URLTOROOT . 'js/dialog-polyfill.js' . '"></script>');
@@ -151,9 +150,12 @@ class qa_html_theme_layer extends qa_html_theme_base
 
     function output_dialog()
     {
-        $html = file_get_contents(MEDIUM_EDITOR_DIR . '/html/image-error-dialog.html');
-        $html .= file_get_contents(MEDIUM_EDITOR_DIR . '/html/video-dialog.html');
-        $this->output($html);
+        $imageErrorDialog = file_get_contents(MEDIUM_EDITOR_DIR . '/html/image-error-dialog.html');
+        $videoDialog= strtr(
+          file_get_contents(MEDIUM_EDITOR_DIR . '/html/video-dialog.html'),
+          array('^maxFileSizeMB' => 100)
+        );
+        $this->output($imageErrorDialog . $videoDialog);
     }
 
 } // end qa_html_theme_layer
