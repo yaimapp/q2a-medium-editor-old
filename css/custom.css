@@ -70,3 +70,15 @@ dialog#editor-error {
 .video-transloadit-id {
   display: none;
 }
+
+#video-dialog {
+  width: 740px;
+}
+
+.video-step {
+  font-weight: bold;
+}
+
+#video-size-error {
+  color: #ff0000;
+}

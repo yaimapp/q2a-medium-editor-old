@@ -1,32 +1,39 @@
 <dialog id="video-dialog" class="mdl-dialog">
     <h4 class="mdl-dialog__title">動画の公開</h4>
     <div class="mdl-dialog__content">
-        <p>動画の最大サイズは^maxFileSizeMB MBです。動画は非常にサイズが大きいため30秒以内の動画をお勧めします。アップロードには10分程度かかる場合があります</p>
-        <h7>スマホから投稿される方へ</h7>
+        <p>動画の最大サイズは<strong>^maxFileSizeMB MB</strong>です(30秒程度)。アップロードには<strong>10分程度</strong>かかる場合があります</p>
+        <h6>スマホから投稿される方へ</h6>
         <p>スマホで撮影した動画を簡単にアップロードできます。データ通信量が大変大きいため、<strong>WiFi</strong>に接続の上、ご投稿ください。</p>
         <div id="upload-section">
             <form id="upload-form" action="" enctype="multipart/form-data" method="POST" onsubmit="return false">
                 <div>
                     <span class="video-step">1. ファイルを選択してください。</span>
                     <div>
-                        <input type="file" id="movie-file" name="my_file" accept="video/*" />
+                        動画ファイル: <input type="file" id="movie-file" name="my_file" accept="video/*" />
                     </div>
-                    <div id="video-size-section">
+                    <div id="video-size-section" style="display:none;">
                         動画サイズ: <span id="video-size">0</span> MB (最大 ^maxFileSizeMB MB)
                         <span id="video-size-error"></span>
                     </div>
                 </div>
                 <br/>
                 <div>
-                    <span class="video-step">2. 動画サイズを確認の上、アップロードしてください</span>
-                    <span class="video-step"></span>
-                    <button id="upload-button" type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" disabled>
+                    <div>
+                        <span class="video-step">2. 動画サイズを確認の上、アップロードしてください</span>
+                    </div>
+                    <button id="upload-button" type="submit" class="mdl-button mdl-js-button mdl-js-repple-effect mdl-color-text--white mdl-button--raised mdl-button--colored" data-upgraded=",MaterialButton" disabled>
                         アップロードする
                     </button>
                 </div>
             </form>
-            <div id="v-upload-progress" class="mdl-progress mdl-js-progress"></div>
-            <div id="v-upload-message"></div>
+            <br/>
+            <div id="video-progress-section" style="display:none;">
+              <span class="video-step">3. 処理中。しばらくお待ちください。</span>
+              <div>
+                  <span id="v-upload-message"></span>
+              </div>
+              <div id="v-upload-progress" class="mdl-progress mdl-js-progress"></div>
+            </div>
         </div>
     </div>
     <div class="mdl-dialog__actions">
@@ -36,10 +43,19 @@
 <script>
 $(function() {
     var videoDialog = document.querySelector('#video-dialog');
+    $videoEl = $('#movie-file');
+    $videoSizeError = $('#video-size-error');
+    $videoSize = $('#video-size');
+    $vUploadMessage = $('#v-upload-message');
+    $videoProgressSection = $('#video-progress-section');
+    $uploadButton = $('#upload-button');
+
     if (!videoDialog.showModal) {
         dialogPolyfill.registerDialog(errDialog);
     }
     videoDialog.querySelector('.ok').addEventListener('click', function() {
+        $videoFormEl.transloadit('stop');
+        resetDialog();
         videoDialog.close();
     });
 
@@ -48,26 +64,32 @@ $(function() {
     var uploadedData = {};
 
     var uploadDisableFlg = true;
-    $videoEl = $('#movie-file')
     $videoEl.on('change', function() {
         console.log('file changed');
+        $('#video-size-section').show();
         var file = this.files[0];
         if (file) {
             console.log('file size:' + file.size);
             console.log('limit:' + Const.MAX_FILE_SIZE_MB * 1024 * 1024);
             var fileSizeMB = (file.size / (1024 * 1024)).toFixed(0);
-            $('#video-size').text(fileSizeMB);
+            $videoSize.text(fileSizeMB);
             if (file.size > Const.MAX_FILE_SIZE_MB * 1024 * 1024) {
-                $('#video-size-error').text('サイズが大きすぎます。');
+                $videoSizeError.text('サイズが大きすぎます。');
                 uploadDisableFlg = true;
             } else {
                 uploadDisableFlg = false;
-                $('#video-size-error').text('');
+                $videoSizeError.text('');
             }
         } else {
             uploadDisableFlg = true;
         }
-        $('#upload-button').prop('disabled', uploadDisableFlg);
+        $uploadButton.prop('disabled', uploadDisableFlg);
+    });
+    $uploadButton.click(function(){
+        $videoProgressSection.show();
+
+        $vUploadMessage.text('アップロードの準備をしています...(数分かかることがあります)');
+        $('#v-upload-progress').addClass("mdl-progress__indeterminate");
     });
 
     $videoFormEl = $('#upload-form');
@@ -85,7 +107,9 @@ $(function() {
         },
         onStart: function(assembly) {
             console.log(">>> onStart", assembly);
-            $('#v-upload-message').text('アップロード中です。');
+            $vUploadMessage.text('アップロード中です。');
+            $uploadButton.prop('disabled', true);
+            $('#v-upload-progress').removeClass("mdl-progress__indeterminate");
         },
         onProgress: function(bytesIn, totalBytes) {
             console.log('>>>onProgress', bytesIn, totalBytes);
@@ -101,7 +125,7 @@ $(function() {
         onSuccess: function(assembly) {
             progressbar = document.querySelector('#v-upload-progress');
             progressbar.parentNode.removeChild(progressbar);
-            $('#v-upload-message').text('');
+            $vUploadMessage.text('');
 
             console.log('Assembly finished successfully with', assembly.ok);
             console.log(assembly);
@@ -121,7 +145,7 @@ $(function() {
         onUpload: function(uploadedFile) {
             console.log('>>Upload added', uploadedFile);
             $('#v-upload-progress').addClass("mdl-progress__indeterminate");
-            $('#v-upload-message').text('アップロードが完了しました。動画を処理しています。この処理には数分かかることがあります');
+            $vUploadMessage.text('アップロードが完了しました。動画を処理しています。この処理には数分かかることがあります');
         },
         onResult: function(stepName, result) {
             console.log('Result added', stepName, result);
@@ -135,18 +159,14 @@ $(function() {
             console.log('Reconnected!');
         }
     });
+
+    function resetDialog() {
+        $('#v-upload-progress').removeClass("mdl-progress__indeterminate");
+        $uploadButton.prop('disabled', true);
+        $vUploadMessage.text('')
+        $videoSize.text('')
+        $videoSizeError.text('')
+        $videoProgressSection.hide();
+    }
 });
 </script>
-<style>
-    dialog#video-dialog {
-        min-width: 350px;
-    }
-
-    #video-size-section {}
-
-    #video-size {}
-
-    #video-size-error {
-        color: #ff0000;
-    }
-</style>
