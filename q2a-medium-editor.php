@@ -159,9 +159,14 @@ class qa_medium_editor
         );
     }
 
+    /**
+     * 編集時に動画を変換する
+     * @param  [type] $text [description]
+     * @return [type]       [description]
+     */
     private function embed_replace($text)
     {
-        $types = array(
+        $embedTypes = array(
             'youtube' => array(
                 array(
                     '(https{0,1}:\/\/w{0,3}\.*youtube\.com\/watch\?\S*v=([A-Za-z0-9_-]+))[^< ]*',
@@ -173,11 +178,21 @@ class qa_medium_editor
                 ),
             ),
         );
-        foreach($types as $t => $ra) {
+        foreach($embedTypes as $t => $ra) {
             foreach($ra as $r) {
                 $text = preg_replace('/<div class="plain_url">'.$r[0].'<\/div>/i',$r[1],$text);
             }
         }
+
+        $videoPlayer = file_get_contents(MEDIUM_EDITOR_DIR . '/html/video-player.html');
+        $video = array(
+          '\[uploaded-video=\"([A-Za-z0-9_-]+)\"\]',
+          $videoPlayer
+        );
+
+        $text = preg_replace('/' . $video[0] . '/i',$video[1],$text);
+        $text = preg_replace('/class="video-transloadit-id"/i','',$text);
+
         return $text;
     }
 }

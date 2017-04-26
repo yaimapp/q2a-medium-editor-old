@@ -82,3 +82,21 @@ dialog#editor-error {
 #video-size-error {
   color: #ff0000;
 }
+
+/*
+  hide video download button(chrome)
+  @see http://stackoverflow.com/questions/41115801/in-chrome-55-prevent-showing-download-button-for-html-5-video
+ */
+
+*/
+video::-internal-media-controls-download-button {
+    display:none;
+}
+
+video::-webkit-media-controls-enclosure {
+    overflow:hidden;
+}
+
+video::-webkit-media-controls-panel {
+    width: calc(100% + 30px); /* Adjust as needed */
+}
