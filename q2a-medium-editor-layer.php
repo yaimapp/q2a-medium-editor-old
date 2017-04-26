@@ -129,7 +129,7 @@ class qa_html_theme_layer extends qa_html_theme_base
             ),
             'video' => array(
                 array(
-                    '\[uploaded-video=\"([A-Za-z0-9_-]+)\"\]',
+                    '\<div class=\"video-transloadit-id\"\>\[uploaded-video=\"([A-Za-z0-9_-]+)\"\]\<\/div\>',
                     $videoPlayer
                 ),
             ),
@@ -144,7 +144,6 @@ class qa_html_theme_layer extends qa_html_theme_base
             }
         }
         $text = preg_replace('/class="plain_url"/i','class="video video-youtube"',$text);
-        $text = preg_replace('/class="video-transloadit-id"/i','',$text);
         return $text;
     }
 

@@ -42,7 +42,6 @@ function get_content(name) {
 
     if (editor_elm.length > 0) {
         var target = MediumEditor.getEditorFromElement(editor_elm[0]);
-        // console.log('target'+target);
         var allContents = target.serialize();
         var editorId = target.elements[0].id;
         var content = allContents[editorId].value;

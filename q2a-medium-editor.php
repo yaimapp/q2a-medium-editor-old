@@ -186,13 +186,11 @@ class qa_medium_editor
 
         $videoPlayer = file_get_contents(MEDIUM_EDITOR_DIR . '/html/video-player.html');
         $video = array(
-          '\[uploaded-video=\"([A-Za-z0-9_-]+)\"\]',
+          '\<div class=\"video-transloadit-id\"\>\[uploaded-video=\"([A-Za-z0-9_-]+)\"\]\<\/div\>',
           $videoPlayer
         );
 
         $text = preg_replace('/' . $video[0] . '/i',$video[1],$text);
-        $text = preg_replace('/class="video-transloadit-id"/i','',$text);
-
         return $text;
     }
 }
