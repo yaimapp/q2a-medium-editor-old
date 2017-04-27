@@ -127,7 +127,7 @@ class qa_medium_editor
           '^site_url' => qa_opt('site_url'),
         );
 
-        $js = file_get_contents(MEDIUM_EDITOR_DIR . '/html/medium-editor-settings.js');
+        $js = file_get_contents(MEDIUM_EDITOR_DIR . '/js/medium-editor-settings.js');
         $html = '<textarea name="'.$fieldname.'" id="'.$fieldname.'"  class="editable qa-form-tall-text">'.$content.'</textarea>';
         $html .= "<script type=\"text/javascript\">" . strtr($js, $params) . "</script>";
         return array(

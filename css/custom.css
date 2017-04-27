@@ -75,6 +75,12 @@ dialog#editor-error {
   width: 740px;
 }
 
+@media (max-width: 415px) {
+  #video-dialog {
+    width: 100%;
+  }
+}
+
 .video-step {
   font-weight: bold;
 }
@@ -86,8 +92,6 @@ dialog#editor-error {
 /*
   hide video download button(chrome)
   @see http://stackoverflow.com/questions/41115801/in-chrome-55-prevent-showing-download-button-for-html-5-video
- */
-
 */
 video::-internal-media-controls-download-button {
     display:none;

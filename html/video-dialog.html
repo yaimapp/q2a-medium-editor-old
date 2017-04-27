@@ -29,7 +29,7 @@
             </form>
             <br/>
             <div id="video-progress-section" style="display:none;">
-                <span class="video-step">3. 処理中。しばらくお待ちください。</span>
+                <span class="video-step">3. アップロード中 (完了すると自動でダイアログを閉じます)</span>
                 <div>
                     <span id="v-upload-message"></span>
                 </div>
@@ -54,7 +54,7 @@
         $uploadSection = $('#upload-section');
 
         if (!videoDialog.showModal) {
-            dialogPolyfill.registerDialog(errDialog);
+            dialogPolyfill.registerDialog(videoDialog);
         }
         videoDialog.querySelector('.ok').addEventListener('click', function() {
             $videoFormEl.transloadit('stop');
@@ -112,27 +112,26 @@
                 },
                 onStart: function(assembly) {
                     console.log(">>> onStart", assembly);
-                    $vUploadMessage.text('アップロード中です。');
+                    $vUploadMessage.text('アップロード中です。数分かかることがあります。');
                     $uploadButton.prop('disabled', true);
                     $('#v-upload-progress').removeClass("mdl-progress__indeterminate");
                 },
                 onProgress: function(bytesIn, totalBytes) {
                     console.log('>>>onProgress', bytesIn, totalBytes);
                     var progress = (bytesIn / totalBytes * 100).toFixed(2);
-                    if (progress == 100) {
-                        return;
+                    var bafferLevel = 87;
+                    if (bafferLevel> 87) {
+                        progressbar.MaterialProgress.setBuffer(bafferLevel);
                     }
-
                     progressbar = document.querySelector('#v-upload-progress');
                     progressbar.MaterialProgress.setProgress(progress);
-                    progressbar.MaterialProgress.setBuffer(87);
                 },
                 onSuccess: function(assembly) {
                     resetDialog();
                     console.log('Assembly finished successfully with', assembly.ok);
                     console.log(assembly);
                     $('.medium-editor-insert-plugin .medium-insert-videos').html(
-                        '<figure><video class="video-js" controls preload="auto" width="400" poster="' + uploadedData['image_thumb'] + '" data-setup="{}">' +
+                        '<figure><video class="video-js" controls preload="auto" width="90%" poster="' + uploadedData['image_thumb'] + '" data-setup="{}">' +
                         '<source id="mp4-source" type="video/mp4" src="' + uploadedData['video_mp4'] + '">' +
                         '<source id="webm-source" src="' + uploadedData['video_webm'] + '" type="video/webm">' +
                         '</video>' +
@@ -154,9 +153,14 @@
                     console.log('Result added', stepName, result);
                     uploadedData[stepName] = result['ssl_url'];
                 },
-                onError: function(error) {},
+                onError: function(error) {
+                  $vUploadMessage.text('エラーが発生しました。通信環境の良い場所でもう一度お試しいただくか、運営にお問い合わせください。')
+                  $('#v-upload-progress').hide();
+                },
                 onDisconnect: function() {
                     console.log('Disconnected!');
+                    $vUploadMessage.text('インターネット接続が失われました。通信環境の良い場所で再度お試しください。')
+                    $('#v-upload-progress').hide();
                 },
                 onReconnect: function(error) {
                     console.log('Reconnected!');

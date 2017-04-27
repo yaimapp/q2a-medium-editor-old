@@ -99,24 +99,6 @@
         $place.addClass('medium-insert-videos');
         var videoDialog = document.querySelector('#video-dialog');
         videoDialog.showModal();
-        /*
-        var uploadedData = {};
-        uploadedData['image_thumb'] =  'https://s3-ap-northeast-1.amazonaws.com/test.transloadit.38qa.net/71349b002a5111e79a838156ee3fb127/image_thumb.jpg';
-        uploadedData['video_mp4'] = 'https://s3-ap-northeast-1.amazonaws.com/test.transloadit.38qa.net/71349b002a5111e79a838156ee3fb127/video_mp4.mp4';
-        uploadedData['video_webm'] = 'https://s3-ap-northeast-1.amazonaws.com/test.transloadit.38qa.net/71349b002a5111e79a838156ee3fb127/video_webm.webm';
-
-        $('.medium-editor-insert-plugin .medium-insert-videos').html(
-          '<video class="video-js" controls preload="auto" width="640" poster="' + uploadedData['image_thumb'] + '" data-setup="{}">' +
-          '<source id="mp4-source" type="video/mp4" src="' + uploadedData['video_mp4'] + '">' +
-          '<source id="webm-source" src="' + uploadedData['video_webm'] + '" type="video/webm">' +
-          '</video>' +
-          '<div class="video-transloadit-id">[uploaded-video="71349b002a5111e79a838156ee3fb127"]</div>'
-        );
-        */
-
-
-
-
         this.core.hideButtons();
     };
 
