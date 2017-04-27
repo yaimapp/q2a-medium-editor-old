@@ -6,20 +6,21 @@
 
 class qa_medium_editor
 {
-    var $urltoroot;
+    public $urltoroot;
 
-    function load_module($directory, $urltoroot)
+    public function load_module($directory, $urltoroot)
     {
-        $this->urltoroot=$urltoroot;
+        $this->urltoroot = $urltoroot;
     }
 
-    function option_default($option)
+    public function option_default($option)
     {
-        if ($option=='medium_editor_upload_max_size') {
+        if ($option == 'medium_editor_upload_max_size') {
             require_once QA_INCLUDE_DIR.'qa-app-upload.php';
+
             return min(qa_get_max_upload_size(), 1048576);
         }
-        switch($option) {
+        switch ($option) {
             case 'medium_editor_enabled':
                 return 1; // true
             case 'medium_editor_upload_images':
@@ -27,26 +28,24 @@ class qa_medium_editor
             case 'medium_editor_upload_maximgwidth':
                 return 600;
             default:
-                return null;
+                return;
         }
-
     }
 
-    function bytes_to_mega_html($bytes)
+    public function bytes_to_mega_html($bytes)
     {
-        return qa_html(number_format($bytes/1048576, 1));
+        return qa_html(number_format($bytes / 1048576, 1));
     }
 
-    function admin_form($qa_content)
+    public function admin_form($qa_content)
     {
         require_once QA_INCLUDE_DIR.'qa-app-upload.php';
 
         $ok = null;
         if (qa_clicked('medium_editor_save')) {
-
-            qa_opt('medium_editor_upload_images', (bool)qa_post_text('medium_editor_upload_images'));
-            qa_opt('medium_editor_upload_max_size', min(qa_get_max_upload_size(), 1048576*(float)qa_post_text('medium_editor_upload_max_size')));
-            qa_opt('medium_editor_upload_maximgwidth', (int)qa_post_text('medium_editor_upload_maximgwidth'));
+            qa_opt('medium_editor_upload_images', (bool) qa_post_text('medium_editor_upload_images'));
+            qa_opt('medium_editor_upload_max_size', min(qa_get_max_upload_size(), 1048576 * (float) qa_post_text('medium_editor_upload_max_size')));
+            qa_opt('medium_editor_upload_maximgwidth', (int) qa_post_text('medium_editor_upload_maximgwidth'));
 
             $ok = qa_lang('admin/options_saved');
         }
@@ -56,7 +55,7 @@ class qa_medium_editor
             'id' => 'medium_editor_upload_images',
             'label' => qa_lang('q2a_medium_editor_lang/upload_images'),
             'tags' => 'name="medium_editor_upload_images" id="medium_editor_upload_images"',
-            'value' => (int)qa_opt('medium_editor_upload_images'),
+            'value' => (int) qa_opt('medium_editor_upload_images'),
         );
         $fields[] = array(
             'type' => 'number',
@@ -72,8 +71,9 @@ class qa_medium_editor
             'label' => qa_lang('q2a_medium_editor_lang/upload_max_img_width'),
             'suffix' => 'px',
             'tags' => 'name="medium_editor_upload_maximgwidth" id="medium_editor_upload_maximgwidth"',
-            'value' => (int)qa_opt('medium_editor_upload_maximgwidth'),
+            'value' => (int) qa_opt('medium_editor_upload_maximgwidth'),
         );
+
         return array(
             'ok' => ($ok && !isset($error)) ? $ok : null,
             'fields' => $fields,
@@ -88,11 +88,13 @@ class qa_medium_editor
 
     public function calc_quality($content, $format)
     {
-        if ($format == '')
+        if ($format == '') {
             return 0.8;
+        }
 
-        if ($format == 'html')
+        if ($format == 'html') {
             return 1.0;
+        }
 
         return 0;
     }
@@ -102,8 +104,8 @@ class qa_medium_editor
         $html = '';
         $placeholder = '';
 
-        $content = medium_editor_embed_replace($content);
-        if(empty($format)) {
+        $content = $this->embed_replace($content);
+        if (empty($format)) {
             $content = nl2br($content);
         }
         if (strpos($fieldname, 'a_') !== false) {
@@ -126,9 +128,10 @@ class qa_medium_editor
           '^site_url' => qa_opt('site_url'),
         );
 
-        $js = file_get_contents(MEDIUM_EDITOR_DIR . '/js/medium-editor-settings.js');
+        $js = file_get_contents(MEDIUM_EDITOR_DIR.'/js/medium-editor-settings.js');
         $html = '<textarea name="'.$fieldname.'" id="'.$fieldname.'"  class="editable qa-form-tall-text">'.$content.'</textarea>';
-        $html .= "<script type=\"text/javascript\">" . strtr($js, $params) . "</script>";
+        $html .= '<script type="text/javascript">'.strtr($js, $params).'</script>';
+
         return array(
             'type' => 'custom',
             'html' => $html,
@@ -140,7 +143,7 @@ class qa_medium_editor
         // return "document.getElementById('" . $fieldname . "').focus();";
     }
 
-    function update_script($fieldname)
+    public function update_script($fieldname)
     {
         // write html text from sceditor-iframe to textarea - important!
         $jscode = "$('textarea[name=\'".$fieldname."\']').val(get_content('".$fieldname."'));";
@@ -149,10 +152,40 @@ class qa_medium_editor
         return $jscode;
     }
 
+    public function embed_replace($text)
+    {
+        $types = array(
+          'youtube' => array(
+            array(
+              '(https{0,1}:\/\/w{0,3}\.*youtube\.com\/watch\?\S*v=([A-Za-z0-9_-]+))[^< ]*',
+              '<div class="video video-youtube"><iframe width="420" height="315" src="//www.youtube.com/embed/$2" frameborder="0" allowfullscreen></iframe></div><div class="plain_url">$1</div>',
+            ),
+            array(
+              'https{0,1}:\/\/w{0,3}\.*youtu\.be\/([A-Za-z0-9_-]+)[^< ]*',
+              '<div class="video video-youtube"><iframe width="420" height="315" src="//www.youtube.com/embed/$2" frameborder="0" allowfullscreen></iframe></div><div class="plain_url">$1</div>',
+            ),
+          ),
+        );
+        foreach ($types as $t => $ra) {
+            foreach ($ra as $r) {
+                $text = preg_replace('/<div class="plain_url">'.$r[0].'<\/div>/i', $r[1], $text);
+            }
+        }
+
+        $videoPlayer = file_get_contents(MEDIUM_EDITOR_DIR . '/html/video-player.html');
+        $video = array(
+          '\<div class=\"video-transloadit-id\"\>\[uploaded-video=\"([A-Za-z0-9_-]+)\"\]\<\/div\>',
+          $videoPlayer
+        );
+        $text = preg_replace('/' . $video[0] . '/i',$video[1],$text);
+
+        return $text;
+    }
 
     public function read_post($fieldname)
     {
         $html = qa_post_text($fieldname);
+
         return array(
             'format' => 'html',
             'content' => qa_sanitize_html($html, false, true),
