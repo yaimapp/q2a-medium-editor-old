@@ -102,7 +102,7 @@ class qa_medium_editor
         $html = '';
         $placeholder = '';
 
-        $content = $this->embed_replace($content);
+        $content = medium_editor_embed_replace($content);
         if(empty($format)) {
             $content = nl2br($content);
         }
@@ -116,7 +116,6 @@ class qa_medium_editor
         $embed_placeholder = qa_lang_html('q2a_medium_editor_lang/placeholder_embed');
 
         $maxfilesize = qa_opt('medium_editor_upload_max_size');
-        $filesize =
         $params = array(
           '^fieldname' => $fieldname,
           '^placeholder' => $placeholder,
@@ -150,6 +149,7 @@ class qa_medium_editor
         return $jscode;
     }
 
+
     public function read_post($fieldname)
     {
         $html = qa_post_text($fieldname);
@@ -157,41 +157,6 @@ class qa_medium_editor
             'format' => 'html',
             'content' => qa_sanitize_html($html, false, true),
         );
-    }
-
-    /**
-     * 編集時に動画を変換する
-     * @param  [type] $text [description]
-     * @return [type]       [description]
-     */
-    private function embed_replace($text)
-    {
-        $embedTypes = array(
-            'youtube' => array(
-                array(
-                    '(https{0,1}:\/\/w{0,3}\.*youtube\.com\/watch\?\S*v=([A-Za-z0-9_-]+))[^< ]*',
-                    '<div class="video video-youtube"><iframe width="420" height="315" src="//www.youtube.com/embed/$2" frameborder="0" allowfullscreen></iframe></div><div class="plain_url">$1</div>'
-                ),
-                array(
-                    'https{0,1}:\/\/w{0,3}\.*youtu\.be\/([A-Za-z0-9_-]+)[^< ]*',
-                    '<div class="video video-youtube"><iframe width="420" height="315" src="//www.youtube.com/embed/$2" frameborder="0" allowfullscreen></iframe></div><div class="plain_url">$1</div>'
-                ),
-            ),
-        );
-        foreach($embedTypes as $t => $ra) {
-            foreach($ra as $r) {
-                $text = preg_replace('/<div class="plain_url">'.$r[0].'<\/div>/i',$r[1],$text);
-            }
-        }
-
-        $videoPlayer = file_get_contents(MEDIUM_EDITOR_DIR . '/html/video-player.html');
-        $video = array(
-          '\<div class=\"video-transloadit-id\"\>\[uploaded-video=\"([A-Za-z0-9_-]+)\"\]\<\/div\>',
-          $videoPlayer
-        );
-
-        $text = preg_replace('/' . $video[0] . '/i',$video[1],$text);
-        return $text;
     }
 }
 
