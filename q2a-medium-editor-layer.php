@@ -140,7 +140,7 @@ class qa_html_theme_layer extends qa_html_theme_base
         foreach($types as $t => $ra) {
             foreach($ra as $r) {
                 $text = preg_replace('/<a[^>]+>'.$r[0].'<\/a>/i',$r[1],$text);
-                $text = preg_replace('/<a[^>]+>'.$r[0].'<\/a>/i',$r[1],$text);
+                $text = preg_replace('/(?<![\'"=])'.$r[0].'/i',$r[1],$text);
                 $text = preg_replace('/'.$r[0].'/i',$r[1],$text);
             }
         }
