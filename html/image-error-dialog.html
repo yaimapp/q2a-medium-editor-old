@@ -10,6 +10,7 @@
     </div>
 </dialog>
 <script>
+$(function() {
     var errDialog = document.querySelector('#editor-error');
     if (! errDialog.showModal) {
         dialogPolyfill.registerDialog(errDialog);
@@ -17,4 +18,5 @@
     errDialog.querySelector('.ok').addEventListener('click', function() {
         errDialog.close();
     });
+});
 </script>

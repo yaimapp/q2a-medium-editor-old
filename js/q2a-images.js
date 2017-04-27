@@ -259,8 +259,9 @@
 
                 return;
             }
-            
+
             if (this.options.messages.mdlThemeDialog) {
+              var errDialog = document.querySelector('#editor-error');
               errDialog.querySelector('.mdl-dialog__title').textContent = errorTitle;
               errDialog.querySelector('.mdl-dialog__content p').textContent = uploadErrors.join("\n");
               errDialog.showModal();
@@ -345,7 +346,7 @@
      */
 
     Images2.prototype.uploadProgress = function (e, data) {
-        
+
     };
 
     /**
@@ -359,7 +360,7 @@
 
     Images2.prototype.uploadDone = function (e, data) {
         $.proxy(this, 'showImage', data.result.files[0].url, data)();
-        
+
         this.core.clean();
         this.sorting();
     };

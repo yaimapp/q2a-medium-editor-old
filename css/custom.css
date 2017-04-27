@@ -34,7 +34,7 @@ iframe {
   min-height: 100px;
 }
 
-/* form height of comment */ 
+/* form height of comment */
 .qa-c-form .editable {
   min-height: 40px;
 }
@@ -66,3 +66,41 @@ dialog#editor-error {
   display: none;
 }
 */
+
+.video-transloadit-id {
+  display: none;
+}
+
+#video-dialog {
+  width: 740px;
+}
+
+@media (max-width: 415px) {
+  #video-dialog {
+    width: 100%;
+  }
+}
+
+.video-step {
+  font-weight: bold;
+}
+
+#video-size-error {
+  color: #ff0000;
+}
+
+/*
+  hide video download button(chrome)
+  @see http://stackoverflow.com/questions/41115801/in-chrome-55-prevent-showing-download-button-for-html-5-video
+*/
+video::-internal-media-controls-download-button {
+    display:none;
+}
+
+video::-webkit-media-controls-enclosure {
+    overflow:hidden;
+}
+
+video::-webkit-media-controls-panel {
+    width: calc(100% + 30px); /* Adjust as needed */
+}

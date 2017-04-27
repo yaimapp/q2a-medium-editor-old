@@ -33,6 +33,35 @@
     // language file
     qa_register_plugin_phrases('q2a-medium-editor-lang-*.php', 'q2a_medium_editor_lang');
 
+    function medium_editor_embed_replace($text)
+    {
+        $embedTypes = array(
+            'youtube' => array(
+                array(
+                    '(https{0,1}:\/\/w{0,3}\.*youtube\.com\/watch\?\S*v=([A-Za-z0-9_-]+))[^< ]*',
+                    '<div class="video video-youtube"><iframe width="420" height="315" src="//www.youtube.com/embed/$2" frameborder="0" allowfullscreen></iframe></div><div class="plain_url">$1</div>'
+                ),
+                array(
+                    'https{0,1}:\/\/w{0,3}\.*youtu\.be\/([A-Za-z0-9_-]+)[^< ]*',
+                    '<div class="video video-youtube"><iframe width="420" height="315" src="//www.youtube.com/embed/$2" frameborder="0" allowfullscreen></iframe></div><div class="plain_url">$1</div>'
+                ),
+            ),
+        );
+        foreach($embedTypes as $t => $ra) {
+            foreach($ra as $r) {
+                $text = preg_replace('/<div class="plain_url">'.$r[0].'<\/div>/i',$r[1],$text);
+            }
+        }
+
+        $videoPlayer = file_get_contents(MEDIUM_EDITOR_DIR . '/html/video-player.html');
+        $video = array(
+          '\<div class=\"video-transloadit-id\"\>\[uploaded-video=\"([A-Za-z0-9_-]+)\"\]\<\/div\>',
+          $videoPlayer
+        );
+        $text = preg_replace('/' . $video[0] . '/i',$video[1],$text);
+        return $text;
+    }
+
 /*
     Omit PHP closing tag to help avoid accidental output
 */

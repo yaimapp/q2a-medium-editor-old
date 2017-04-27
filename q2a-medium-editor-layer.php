@@ -68,6 +68,10 @@ class qa_html_theme_layer extends qa_html_theme_base
         }
     }
 
+    function medium_editor_embed_replace($text) {
+        return medium_editor_embed_replace($text);
+    }
+
     private function output_css()
     {
         $components = QA_HTML_THEME_LAYER_URLTOROOT . 'bower_components/';
@@ -104,42 +108,24 @@ class qa_html_theme_layer extends qa_html_theme_base
             $this->output('<script src="'. $components . $js . '"></script>');
         }
         $this->output('<script src="'. QA_HTML_THEME_LAYER_URLTOROOT . 'js/q2a-embeds.js' . '"></script>');
+        $this->output('<script src="'. QA_HTML_THEME_LAYER_URLTOROOT . 'js/q2a-videos.js' . '"></script>');
         $this->output('<script src="'. QA_HTML_THEME_LAYER_URLTOROOT . 'js/q2a-editor.js' . '"></script>');
+        $this->output('<script src="'. QA_HTML_THEME_LAYER_URLTOROOT . 'js/override.js' . '"></script>');
+        $this->output('<script src="//assets.transloadit.com/js/jquery.transloadit2-v2-latest.js"></script>');
         if (strpos(qa_opt('site_theme'), 'q2a-material-lite') !== false) {
             $this->output('<script src="'. QA_HTML_THEME_LAYER_URLTOROOT . 'js/q2a-images.js' . '"></script>');
             $this->output('<script src="'. QA_HTML_THEME_LAYER_URLTOROOT . 'js/dialog-polyfill.js' . '"></script>');
         }
     }
 
-    function medium_editor_embed_replace($text)
-    {
-        $types = array(
-            'youtube' => array(
-                array(
-                    'https{0,1}:\/\/w{0,3}\.*youtube\.com\/watch\?\S*v=([A-Za-z0-9_-]+)[^< ]*',
-                    '<iframe width="420" height="315" src="//www.youtube.com/embed/$1" frameborder="0" allowfullscreen></iframe>'
-                ),
-                array(
-                    'https{0,1}:\/\/w{0,3}\.*youtu\.be\/([A-Za-z0-9_-]+)[^< ]*',
-                    '<iframe width="420" height="315" src="//www.youtube.com/embed/$1" frameborder="0" allowfullscreen></iframe>'
-                ),
-            ),
-        );
-
-        foreach($types as $t => $ra) {
-            foreach($ra as $r) {
-                $text = preg_replace('/<a[^>]+>'.$r[0].'<\/a>/i',$r[1],$text);
-                $text = preg_replace('/(?<![\'"=])'.$r[0].'/i',$r[1],$text);
-            }
-        }
-        $text = preg_replace('/class="plain_url"/i','class="video video-youtube"',$text);
-        return $text;
-    }
-
     function output_dialog()
     {
-        $html = file_get_contents(MEDIUM_EDITOR_DIR . '/html/image-error-dialog.html');
-        $this->output($html);
+        $imageErrorDialog = file_get_contents(MEDIUM_EDITOR_DIR . '/html/image-error-dialog.html');
+        $videoDialog= strtr(
+          file_get_contents(MEDIUM_EDITOR_DIR . '/html/video-dialog.html'),
+          array('^maxFileSizeMB' => 100)
+        );
+        $this->output($imageErrorDialog . $videoDialog);
     }
 
 } // end qa_html_theme_layer
