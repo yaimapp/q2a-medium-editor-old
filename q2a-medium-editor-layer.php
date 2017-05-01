@@ -12,13 +12,15 @@ class qa_html_theme_layer extends qa_html_theme_base
 
     private function is_medium_editor_active()
     {
-        if (($this->template === 'ask' && qa_opt('editor_for_qs') === self::EDITOR_NAME)
-        || ($this->template === 'question' && qa_opt('editor_for_as') === self::EDITOR_NAME)
-        || ($this->template === 'question' && qa_opt('editor_for_cs') === self::EDITOR_NAME)
-        || ($this->template === 'blog-new' && qa_opt('qas_blog_editor_for_ps') === self::EDITOR_NAME)
-        || ($this->template === 'blog' && qa_opt('qas_blog_editor_for_cs') === self::EDITOR_NAME)
-        || ($this->template === 'message')) {
-            return true;
+        if (qa_is_logged_in()) {
+          if (($this->template === 'ask' && qa_opt('editor_for_qs') === self::EDITOR_NAME)
+          || ($this->template === 'question' && qa_opt('editor_for_as') === self::EDITOR_NAME)
+          || ($this->template === 'question' && qa_opt('editor_for_cs') === self::EDITOR_NAME)
+          || ($this->template === 'blog-new' && qa_opt('qas_blog_editor_for_ps') === self::EDITOR_NAME)
+          || ($this->template === 'blog' && qa_opt('qas_blog_editor_for_cs') === self::EDITOR_NAME)
+          || ($this->template === 'message')) {
+              return true;
+          }
         }
 
         return false;
@@ -125,7 +127,7 @@ class qa_html_theme_layer extends qa_html_theme_base
         $components = QA_HTML_THEME_LAYER_URLTOROOT.'bower_components/';
         // JS files
         $js_files = array(
-            'medium-editor/dist/js/medium-editor.js',
+            'medium-editor/dist/js/medium-editor.min.js',
             'handlebars/handlebars.runtime.min.js',
             'jquery-sortable/source/js/jquery-sortable-min.js',
             'jquery-sortable/source/js/jquery-sortable-min.js',
