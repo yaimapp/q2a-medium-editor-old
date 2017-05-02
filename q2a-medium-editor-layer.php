@@ -134,7 +134,7 @@ class qa_html_theme_layer extends qa_html_theme_base
             'jquery-sortable/source/js/jquery-sortable-min.js',
             'blueimp-file-upload/js/vendor/jquery.ui.widget.js',
             'blueimp-file-upload/js/jquery.iframe-transport.js',
-            'blueimp-file-upload/js/jquery.fileupload.js',
+            '../js/jquery.fileupload.min.js',
             'medium-editor-insert-plugin/dist/js/medium-editor-insert-plugin.min.js',
         );
         foreach ($js_files as $js) {
