@@ -17,11 +17,14 @@ class qa_html_theme_layer extends qa_html_theme_base
           || ($this->template === 'question' && qa_opt('editor_for_as') === self::EDITOR_NAME)
           || ($this->template === 'question' && qa_opt('editor_for_cs') === self::EDITOR_NAME)
           || ($this->template === 'blog' && qa_opt('qas_blog_editor_for_cs') === self::EDITOR_NAME)
+          || ($this->template === 'blog-new' && qa_opt('qas_blog_editor_for_ps') === self::EDITOR_NAME)
           || ($this->template === 'message')) {
               return true;
           }
-        } elseif ($this->template === 'blog-new' && qa_opt('qas_blog_editor_for_ps') === self::EDITOR_NAME) {
-          return true;
+        } else {
+          if ($this->template === 'blog-new' && qa_opt('qas_blog_editor_for_ps') === self::EDITOR_NAME) {
+            return true;
+          }
         }
 
         return false;
