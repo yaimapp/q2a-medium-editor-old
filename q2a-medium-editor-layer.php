@@ -20,7 +20,7 @@ class qa_html_theme_layer extends qa_html_theme_base
           || ($this->template === 'message')) {
               return true;
           }
-        } elseif ($this->template === 'blog-new' && qa_opt('qas_blog_editor_for_qs') === self::EDITOR_NAME) {
+        } elseif ($this->template === 'blog-new' && qa_opt('qas_blog_editor_for_ps') === self::EDITOR_NAME) {
           return true;
         }
 
