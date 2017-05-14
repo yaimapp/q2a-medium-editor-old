@@ -39,6 +39,11 @@ iframe {
   min-height: 40px;
 }
 
+/* form height of message */
+.qa-template-message .medium-editor-element {
+  min-height: 100px;
+}
+
 /* error dialog */
 dialog#editor-error {
   width: 350px;
