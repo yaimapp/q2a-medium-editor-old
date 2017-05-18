@@ -33,6 +33,10 @@ class qa_html_theme_layer extends qa_html_theme_base
     public function head_script()
     {
         qa_html_theme_base::head_script();
+        if (strpos(qa_opt('site_theme'), 'q2a-material-lite') !== false) {
+            $this->output('<link rel="stylesheet" type="text/css" href="'.QA_HTML_THEME_LAYER_URLTOROOT.'css/dialog-polyfill.css" />');
+            $this->output('<script src="'.QA_HTML_THEME_LAYER_URLTOROOT.'js/dialog-polyfill.js'.'"></script>');
+        }
         if ($this->is_medium_editor_active()) {
             $this->output_css();
             $this->output_js();
@@ -121,9 +125,6 @@ class qa_html_theme_layer extends qa_html_theme_base
             $this->output('<link rel="stylesheet" type="text/css" href="'.$components.$css.'" />');
         }
         $this->output('<link rel="stylesheet" type="text/css" href="'.QA_HTML_THEME_LAYER_URLTOROOT.'css/custom.css" />');
-        if (strpos(qa_opt('site_theme'), 'q2a-material-lite') !== false) {
-            $this->output('<link rel="stylesheet" type="text/css" href="'.QA_HTML_THEME_LAYER_URLTOROOT.'css/dialog-polyfill.css" />');
-        }
     }
 
     private function output_js()
@@ -150,7 +151,6 @@ class qa_html_theme_layer extends qa_html_theme_base
         $this->output('<script src="//assets.transloadit.com/js/jquery.transloadit2-v2-latest.js"></script>');
         if (strpos(qa_opt('site_theme'), 'q2a-material-lite') !== false) {
             $this->output('<script src="'.QA_HTML_THEME_LAYER_URLTOROOT.'js/q2a-images.js'.'"></script>');
-            $this->output('<script src="'.QA_HTML_THEME_LAYER_URLTOROOT.'js/dialog-polyfill.js'.'"></script>');
         }
     }
 
