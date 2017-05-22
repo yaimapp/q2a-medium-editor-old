@@ -111,7 +111,11 @@ class qa_medium_editor
         if (strpos($fieldname, 'a_') !== false) {
             $placeholder = qa_lang_html('q2a_medium_editor_lang/placeholder_a');
         } elseif (preg_match("/^c\d+/", $fieldname) > 0) {
+          if (strpos(qa_request(), 'blog') === false) {
+            $placeholder = qa_lang_html('q2a_medium_editor_lang/placeholder_blog_c');
+          } else {
             $placeholder = qa_lang_html('q2a_medium_editor_lang/placeholder_c');
+          }
         } else {
             $placeholder = qa_lang_html('q2a_medium_editor_lang/placeholder');
         }
