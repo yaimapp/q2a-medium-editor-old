@@ -12,7 +12,7 @@ return array(
     'upload_max_img_width' => '最大アップロード画像横幅:',
     'placeholder' => 'ここに詳細文を記入してください。画像、動画の投稿は + マークを押してください。',
     'placeholder_a' => 'ここに回答を記入してください。',
-    'placeholder_c' => '回答へのコメント。新たに質問が浮かんだ時は、質問を新規投稿してください。',
+    'placeholder_c' => '回答へのコメント。質問が浮かんだ時は、新規の質問を投稿してください。',
     'placeholder_blog_c' => '飼育日誌へのコメント',
     'placeholder_embed' => 'YoutubeのURLを貼り付けてエンターキーを押してください',
 );
