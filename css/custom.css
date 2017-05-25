@@ -109,3 +109,19 @@ video::-webkit-media-controls-enclosure {
 video::-webkit-media-controls-panel {
     width: calc(100% + 30px); /* Adjust as needed */
 }
+
+.medium-insert-videos {
+  position: relative;
+}
+
+.medium-insert-videos .medium-insert-videos-overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.medium-insert-videos-selected video {
+  border: 2px solid #000;
+}
