@@ -27,7 +27,19 @@ $(function() {
                     mdlThemeDialog: ^is_mdl
                 }
             },
-            videos: true,
+            videos: {
+                actions: {
+                    remove: {
+                        label: '<span class="fa fa-times"></span>',
+                        clicked: function () {
+                            var $event = $.Event('keydown');
+
+                            $event.which = 8;
+                            $(document).trigger($event);
+                        }
+                    }
+                },
+            },
             embeds: false,
             embeds2: {
                 styles: null,
