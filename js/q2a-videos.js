@@ -280,6 +280,25 @@
             }
         });
         
+        this.core.triggerInput();
+    }
+
+    /**
+     * Fires toolbar2 action
+     * 
+     * @param {Event} e
+     * @returns {void}
+     */
+
+    Videos.prototype.toolbar2Action = function (e) {
+        var $button = $(e.target).is('button') ? $(e.target) : $(e.target).closest('button'),
+            callback = this.options.actions[$button.data('action')].clicked;
+        
+        if (callback) {
+            callback(this.$el.find('.medium-insert-videos-selected'));
+        }
+        
+        this.core.triggerInput();
     }
 
     /**
