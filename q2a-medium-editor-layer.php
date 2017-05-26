@@ -46,7 +46,8 @@ class qa_html_theme_layer extends qa_html_theme_base
     public function q_view_content($q_view)
     {
         if (isset($q_view['content'])) {
-            $q_view['content'] = $this->medium_editor_embed_replace($q_view['content']);
+            $tmp = $this->remove_progressbar($q_view['content']);
+            $q_view['content'] = $this->medium_editor_embed_replace($tmp);
         }
         qa_html_theme_base::q_view_content($q_view);
     }
@@ -54,7 +55,8 @@ class qa_html_theme_layer extends qa_html_theme_base
     public function a_item_content($a_item)
     {
         if (isset($a_item['content'])) {
-            $a_item['content'] = $this->medium_editor_embed_replace($a_item['content']);
+            $tmp = $this->remove_progressbar($a_item['content']);
+            $a_item['content'] = $this->medium_editor_embed_replace($tmp);
         }
         qa_html_theme_base::a_item_content($a_item);
     }
@@ -62,7 +64,8 @@ class qa_html_theme_layer extends qa_html_theme_base
     public function c_item_content($c_item)
     {
         if (isset($c_item['content'])) {
-            $c_item['content'] = $this->medium_editor_embed_replace($c_item['content']);
+            $tmp = $this->remove_progressbar($c_item['content']);
+            $c_item['content'] = $this->medium_editor_embed_replace($tmp);
         }
         qa_html_theme_base::c_item_content($c_item);
     }
@@ -91,7 +94,7 @@ class qa_html_theme_layer extends qa_html_theme_base
                   '<iframe width="420" height="315" src="//www.youtube.com/embed/$1" frameborder="0" allowfullscreen></iframe>',
               ),
           ),
-      );
+        );
         foreach ($types as $t => $ra) {
             foreach ($ra as $r) {
                 $text = preg_replace('/<a[^>]+>'.$r[0].'<\/a>/i', $r[1], $text);
@@ -162,6 +165,17 @@ class qa_html_theme_layer extends qa_html_theme_base
           array('^maxFileSizeMB' => 100)
         );
         $this->output($imageErrorDialog.$videoDialog);
+    }
+    
+    /*
+     * プログレスバーが残っている場合に削除する
+     */
+    private function remove_progressbar($content)
+    {
+        $regex = "/\<div\s?class=\"[^\"]*bar[^\"]*\"[^>]*><\/div>/Us";
+        $regex2 = "/\<div\s?class=\"mdl-progress\s?[^\"]*\"[^>]*><\/div>/Us";
+        $tmp = preg_replace($regex, "", $content);
+        return preg_replace($regex2, "", $tmp);
     }
 } // end qa_html_theme_layer
 
