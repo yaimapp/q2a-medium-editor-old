@@ -104,7 +104,6 @@ class qa_medium_editor
         $html = '';
         $placeholder = '';
 
-        $content = $this->remove_progressbar($content);
         $content = $this->embed_replace($content);
         if (empty($format)) {
             $content = nl2br($content);
@@ -197,16 +196,6 @@ class qa_medium_editor
         );
     }
 
-    /*
-     * プログレスバーが残っている場合に削除する
-     */
-    private function remove_progressbar($content)
-    {
-        $regex = "/\<div\s?class=\"[^\"]*bar[^\"]*\"[^>]*><\/div>/Us";
-        $regex2 = "/\<div\s?class=\"mdl-progress\s?[^\"]*\"[^>]*><\/div>/Us";
-        $tmp = preg_replace($regex, "", $content);
-        return preg_replace($regex2, "", $tmp);
-    }
 }
 
 /*
