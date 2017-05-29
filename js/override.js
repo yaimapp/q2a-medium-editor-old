@@ -8,6 +8,7 @@ function get_content(name) {
         var content = allContents[editorId].value;
         content = content.replace(/<div class=\"video video-youtube\">.*?<\/div>/g, '');
         content = content.replace(/medium-insert-embeds-selected/g, '');
+        content = content.replace(/<div class="medium-insert-buttons".*>.*<\/div>/g, '');
     } else {
         content = '';
     }
