@@ -33,6 +33,9 @@
     // language file
     qa_register_plugin_phrases('q2a-medium-editor-lang-*.php', 'q2a_medium_editor_lang');
 
+    // filter module
+    qa_register_plugin_module('filter', 'q2a-medium-editor-filter.php', 'q2a_medium_editor_filter', 'Medium Editor Filter');
+
 /*
     Omit PHP closing tag to help avoid accidental output
 */
