@@ -77,6 +77,7 @@ class qa_html_theme_layer extends qa_html_theme_base
         if ($this->is_medium_editor_active()) {
             if (strpos(qa_opt('site_theme'), 'q2a-material-lite') !== false) {
                 $this->output_dialog();
+                $this->output_js_warn();
             }
         }
     }
@@ -176,6 +177,16 @@ class qa_html_theme_layer extends qa_html_theme_base
         $regex2 = "/\<div\s?class=\"mdl-progress\s?[^\"]*\"[^>]*><\/div>/Us";
         $tmp = preg_replace($regex, "", $content);
         return preg_replace($regex2, "", $tmp);
+    }
+    
+    private function output_js_warn()
+    {
+      $warn_message = qa_lang_html('q2a_medium_editor_lang/warn_message');
+      $script = QA_HTML_THEME_LAYER_URLTOROOT.'js/warn-on-leave.js';
+      $this->output('<script>');
+      $this->output('var warn_message ="'.$warn_message.'";');
+      $this->output('</script>');
+      $this->output('<script src="'.$script.'"></script>');
     }
 } // end qa_html_theme_layer
 
