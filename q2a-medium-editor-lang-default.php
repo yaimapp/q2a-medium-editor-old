@@ -15,6 +15,7 @@ return array(
     'placeholder_c' => '回答へのコメント。質問が浮かんだ時は、新規の質問を投稿してください。',
     'placeholder_blog_c' => '飼育日誌へのコメント',
     'placeholder_embed' => 'YoutubeのURLを貼り付けてエンターキーを押してください',
+    'warn_message' => '本当に移動しますか？',
 );
 
 
