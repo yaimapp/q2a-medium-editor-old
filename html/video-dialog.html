@@ -1,11 +1,9 @@
 <dialog id="video-dialog" class="mdl-dialog">
-    <h4 class="mdl-dialog__title">動画の公開 (ベータ版)</h4>
+    <h4 class="mdl-dialog__title">動画のアップロード</h4>
     <div class="mdl-dialog__content">
         <div id="upload-section">
             <p>動画を添付することで、非常に分かりやすくなります。ぜひご活用ください。</p>
-            <p>動画の最大サイズは<strong>^maxFileSizeMB MB (30秒程度)</strong>です。これより長い動画は、YouTubeをご利用ください。アップロードには<strong>10分程度</strong>かかる場合があります</p>
-            <h6>スマホから投稿される方へ</h6>
-            <p>スマホで撮影した動画を簡単にアップロードできます。データ通信量が大変大きいため、<strong>WiFi</strong>に接続の上、ご投稿ください。</p>
+            <p>動画は、<strong>30秒まで</strong>です。これより長い動画は、自動的に30秒で切断されます。また、^maxFileSizeMB以上のファイルは大きすぎるためアップロードできません。長い動画はYouTubeをご利用ください。アップロードには<strong>10分程度</strong>かかる場合があります</p>
             <form id="upload-form" action="" enctype="multipart/form-data" method="POST" onsubmit="return false">
                 <div>
                     <span class="video-step">1. ファイルを選択してください。</span>
@@ -13,14 +11,14 @@
                         動画ファイル: <input type="file" id="movie-file" name="my_file" accept="video/*" />
                     </div>
                     <div id="video-size-section" style="display:none;">
-                        動画サイズ: <span id="video-size">0</span> MB (最大 ^maxFileSizeMB MB)
+                        動画サイズ: <span id="video-size">0</span> MB (最大サイズ ^maxFileSizeMB MB)
                         <span id="video-size-error"></span>
                     </div>
                 </div>
                 <br/>
                 <div>
                     <div>
-                        <span class="video-step">2. 動画サイズを確認の上、アップロードしてください</span>
+                        <span class="video-step">2. アップロードしてください</span>
                     </div>
                     <button id="upload-button" type="submit" class="mdl-button mdl-js-button mdl-js-repple-effect mdl-color-text--white mdl-button--raised mdl-button--colored" data-upgraded=",MaterialButton" disabled>
                         アップロードする
