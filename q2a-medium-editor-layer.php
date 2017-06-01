@@ -9,6 +9,7 @@ require_once MEDIUM_EDITOR_DIR.'/qa-plugin.php';
 class qa_html_theme_layer extends qa_html_theme_base
 {
     const EDITOR_NAME = 'Medium Editor';
+    const MAX_FILE_SIZE_MB = 100;
 
     private function is_medium_editor_active()
     {
@@ -161,9 +162,11 @@ class qa_html_theme_layer extends qa_html_theme_base
     public function output_dialog()
     {
         $imageErrorDialog = file_get_contents(MEDIUM_EDITOR_DIR.'/html/image-error-dialog.html');
+        $videoDialogTmpl = file_get_contents(MEDIUM_EDITOR_DIR.'/html/video-dialog.html');
+        $params = $this->create_params();
         $videoDialog = strtr(
-          file_get_contents(MEDIUM_EDITOR_DIR.'/html/video-dialog.html'),
-          array('^maxFileSizeMB' => 100)
+          $videoDialogTmpl,
+          $params
         );
         $this->output($imageErrorDialog.$videoDialog);
     }
@@ -187,6 +190,30 @@ class qa_html_theme_layer extends qa_html_theme_base
       $this->output('var warn_message ="'.$warn_message.'";');
       $this->output('</script>');
       $this->output('<script src="'.$script.'"></script>');
+    }
+    
+    private function create_params()
+    {
+      return array(
+        '^maxFileSizeMB' => self::MAX_FILE_SIZE_MB,
+        '^title' => qa_lang_html('q2a_medium_editor_lang/title'),
+        '^message' => qa_lang_sub('q2a_medium_editor_lang/message', self::MAX_FILE_SIZE_MB),
+        '^select_file' => qa_lang_html('q2a_medium_editor_lang/select_file'),
+        '^video_file' => qa_lang_html('q2a_medium_editor_lang/video_file'),
+        '^video_size' => qa_lang_html('q2a_medium_editor_lang/video_size'),
+        '^video_note' => qa_lang_html_sub('q2a_medium_editor_lang/video_note', self::MAX_FILE_SIZE_MB),
+        '^upload' => qa_lang_html('q2a_medium_editor_lang/upload'),
+        '^do_upload' => qa_lang_html('q2a_medium_editor_lang/do_upload'),
+        '^progress' => qa_lang_html('q2a_medium_editor_lang/preogress'),
+        '^cancel' => qa_lang_html('q2a_medium_editor_lang/cancel'),
+        '^too_big' => qa_lang_html('q2a_medium_editor_lang/too_big'),
+        '^upload_message' => qa_lang_html('q2a_medium_editor_lang/upload_message'),
+        '^uploading_message' => qa_lang_html('q2a_medium_editor_lang/uploading_message'),
+        '^uploaded_message' => qa_lang_html('q2a_medium_editor_lang/uploaded_message'),
+        '^error_message' => qa_lang_html('q2a_medium_editor_lang/error_message'),
+        '^disconnect_message' => qa_lang_html('q2a_medium_editor_lang/disconnect_message'),
+        '^only_one_message' => qa_lang_html('q2a_medium_editor_lang/only_one_message'),
+      );
     }
 } // end qa_html_theme_layer
 

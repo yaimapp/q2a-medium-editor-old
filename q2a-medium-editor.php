@@ -130,6 +130,8 @@ class qa_medium_editor
           '^max_image_filesize' => $maxfilesize,
           '^max_image_filesize_mb' => $this->bytes_to_mega_html($maxfilesize),
           '^site_url' => qa_opt('site_url'),
+          '^image_type_error' => qa_lang_html('q2a_medium_editor_lang/image_type_error'),
+          '^image_size_error' => qa_lang_html_sub('q2a_medium_editor_lang/image_size_error', $this->bytes_to_mega_html($maxfilesize)),
         );
 
         $js = file_get_contents(MEDIUM_EDITOR_DIR.'/js/medium-editor-settings.js');
