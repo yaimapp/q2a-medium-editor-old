@@ -1,33 +1,32 @@
 <dialog id="video-dialog" class="mdl-dialog">
-    <h4 class="mdl-dialog__title">動画のアップロード</h4>
+    <h4 class="mdl-dialog__title">^title</h4>
     <div class="mdl-dialog__content">
         <div id="upload-section">
-            <p>動画を添付することで、非常に分かりやすくなります。ぜひご活用ください。</p>
-            <p>動画は、<strong>30秒まで</strong>です。これより長い動画は、自動的に30秒で切断されます。また、^maxFileSizeMB以上のファイルは大きすぎるためアップロードできません。長い動画はYouTubeをご利用ください。アップロードには<strong>10分程度</strong>かかる場合があります</p>
+            ^message
             <form id="upload-form" action="" enctype="multipart/form-data" method="POST" onsubmit="return false">
                 <div>
-                    <span class="video-step">1. ファイルを選択してください。</span>
+                    <span class="video-step">^select_file</span>
                     <div>
-                        動画ファイル: <input type="file" id="movie-file" name="my_file" accept="video/*" />
+                        ^video_file<input type="file" id="movie-file" name="my_file" accept="video/*" />
                     </div>
                     <div id="video-size-section" style="display:none;">
-                        動画サイズ: <span id="video-size">0</span> MB (最大サイズ ^maxFileSizeMB MB)
+                        ^video_size<span id="video-size">0</span>^video_note
                         <span id="video-size-error"></span>
                     </div>
                 </div>
                 <br/>
                 <div>
                     <div>
-                        <span class="video-step">2. アップロードしてください</span>
+                        <span class="video-step">^upload</span>
                     </div>
                     <button id="upload-button" type="submit" class="mdl-button mdl-js-button mdl-js-repple-effect mdl-color-text--white mdl-button--raised mdl-button--colored" data-upgraded=",MaterialButton" disabled>
-                        アップロードする
+                        ^do_upload
                     </button>
                 </div>
             </form>
             <br/>
             <div id="video-progress-section" style="display:none;">
-                <span class="video-step">3. アップロード中 (完了すると自動でダイアログを閉じます)</span>
+                <span class="video-step">^progress</span>
                 <div>
                     <span id="v-upload-message"></span>
                 </div>
@@ -36,7 +35,7 @@
         </div> <!--// upload-section -->
     </div> <!--// mdl-dialog__content -->
     <div class="mdl-dialog__actions">
-        <button type="button" class="mdl-button ok">キャンセル</button>
+        <button type="button" class="mdl-button ok">^cancel</button>
     </div>
 </dialog>
 <script>
@@ -75,7 +74,7 @@
                 var fileSizeMB = (file.size / (1024 * 1024)).toFixed(0);
                 $videoSize.text(fileSizeMB);
                 if (file.size > Const.MAX_FILE_SIZE_MB * 1024 * 1024) {
-                    $videoSizeError.text('サイズが大きすぎます。');
+                    $videoSizeError.text('^too_big');
                     uploadDisableFlg = true;
                 } else {
                     uploadDisableFlg = false;
@@ -89,7 +88,7 @@
         $uploadButton.click(function() {
             $videoProgressSection.show();
 
-            $vUploadMessage.text('アップロードの準備をしています...(数分かかることがあります)');
+            $vUploadMessage.text('^upload_message');
             $('#v-upload-progress').addClass("mdl-progress__indeterminate");
         });
 
@@ -110,7 +109,7 @@
                 },
                 onStart: function(assembly) {
                     console.log(">>> onStart", assembly);
-                    $vUploadMessage.text('アップロード中です。数分かかることがあります。');
+                    $vUploadMessage.text('^uploading_message');
                     $uploadButton.prop('disabled', true);
                     $('#v-upload-progress').removeClass("mdl-progress__indeterminate");
                 },
@@ -146,19 +145,19 @@
                 onUpload: function(uploadedFile) {
                     console.log('>>Upload added', uploadedFile);
                     $('#v-upload-progress').addClass("mdl-progress__indeterminate");
-                    $vUploadMessage.text('アップロードが完了しました。動画を処理しています。この処理には数分から10分かかることがあります');
+                    $vUploadMessage.text('^uploaded_message');
                 },
                 onResult: function(stepName, result) {
                     console.log('Result added', stepName, result);
                     uploadedData[stepName] = result['ssl_url'];
                 },
                 onError: function(error) {
-                  $vUploadMessage.text('エラーが発生しました。通信環境の良い場所でもう一度お試しいただくか、運営にお問い合わせください。')
+                  $vUploadMessage.text('^error_message')
                   $('#v-upload-progress').hide();
                 },
                 onDisconnect: function() {
                     console.log('Disconnected!');
-                    $vUploadMessage.text('インターネット接続が失われました。通信環境の良い場所で再度お試しください。')
+                    $vUploadMessage.text('^disconnect_message')
                     $('#v-upload-progress').hide();
                 },
                 onReconnect: function(error) {
@@ -169,7 +168,7 @@
 
         function dialogSecond() {
             $uploadSection.hide();
-            $('.mdl-dialog__content').append('動画のアップロードは1つの投稿につき1動画のみです');
+            $('.mdl-dialog__content').append('^only_one_message');
         }
 
         function resetDialog() {

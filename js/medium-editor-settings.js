@@ -22,8 +22,8 @@ $(function() {
                     maxFileSize: ^max_image_filesize
                 },
                 messages: {
-                    acceptFileTypesError: 'サポートしていないフォーマットです: ',
-                    maxFileSizeError: 'ファイルサイズが大きすぎます\\n ^max_image_filesize_mb MB以下でお願いします: ',
+                    acceptFileTypesError: '^image_type_error',
+                    maxFileSizeError: '^image_size_error',
                     mdlThemeDialog: ^is_mdl
                 }
             },
