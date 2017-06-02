@@ -185,7 +185,11 @@ class qa_html_theme_layer extends qa_html_theme_base
     private function output_js_warn()
     {
       $warn_message = qa_lang_html('q2a_medium_editor_lang/warn_message');
-      $script = QA_HTML_THEME_LAYER_URLTOROOT.'js/warn-on-leave.js';
+      if(qa_is_mobile_probably()) {
+        $script = QA_HTML_THEME_LAYER_URLTOROOT.'js/medium-editor-util-mobile.js';
+      } else {
+        $script = QA_HTML_THEME_LAYER_URLTOROOT.'js/medium-editor-util.js';
+      }
       $this->output('<script>');
       $this->output('var warn_message ="'.$warn_message.'";');
       $this->output('</script>');
