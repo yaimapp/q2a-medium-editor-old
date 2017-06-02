@@ -204,7 +204,7 @@ class qa_html_theme_layer extends qa_html_theme_base
         '^video_note' => qa_lang_html_sub('q2a_medium_editor_lang/video_note', self::MAX_FILE_SIZE_MB),
         '^upload' => qa_lang_html('q2a_medium_editor_lang/upload'),
         '^do_upload' => qa_lang_html('q2a_medium_editor_lang/do_upload'),
-        '^progress' => qa_lang_html('q2a_medium_editor_lang/preogress'),
+        '^progress' => qa_lang_html('q2a_medium_editor_lang/progress'),
         '^cancel' => qa_lang_html('q2a_medium_editor_lang/cancel'),
         '^too_big' => qa_lang_html('q2a_medium_editor_lang/too_big'),
         '^upload_message' => qa_lang_html('q2a_medium_editor_lang/upload_message'),
