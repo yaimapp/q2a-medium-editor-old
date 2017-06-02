@@ -185,15 +185,15 @@ class qa_html_theme_layer extends qa_html_theme_base
     private function output_js_warn()
     {
       $warn_message = qa_lang_html('q2a_medium_editor_lang/warn_message');
-      if(qa_is_mobile_probably()) {
-        $script = QA_HTML_THEME_LAYER_URLTOROOT.'js/medium-editor-util-mobile.js';
-      } else {
-        $script = QA_HTML_THEME_LAYER_URLTOROOT.'js/medium-editor-util.js';
-      }
+      $script = QA_HTML_THEME_LAYER_URLTOROOT.'js/medium-editor-util.js';
+      $script_mobile = QA_HTML_THEME_LAYER_URLTOROOT.'js/medium-editor-util-mobile.js';
       $this->output('<script>');
       $this->output('var warn_message ="'.$warn_message.'";');
       $this->output('</script>');
       $this->output('<script src="'.$script.'"></script>');
+      if(qa_is_mobile_probably()) {
+        $this->output('<script src="'.$script_mobile.'"></script>');
+      }
     }
     
     private function create_params()
