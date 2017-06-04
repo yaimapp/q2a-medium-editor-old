@@ -185,11 +185,15 @@ class qa_html_theme_layer extends qa_html_theme_base
     private function output_js_warn()
     {
       $warn_message = qa_lang_html('q2a_medium_editor_lang/warn_message');
-      $script = QA_HTML_THEME_LAYER_URLTOROOT.'js/warn-on-leave.js';
+      $script = QA_HTML_THEME_LAYER_URLTOROOT.'js/medium-editor-util.js';
+      $script_mobile = QA_HTML_THEME_LAYER_URLTOROOT.'js/medium-editor-util-mobile.js';
       $this->output('<script>');
       $this->output('var warn_message ="'.$warn_message.'";');
       $this->output('</script>');
       $this->output('<script src="'.$script.'"></script>');
+      if(qa_is_mobile_probably()) {
+        $this->output('<script src="'.$script_mobile.'"></script>');
+      }
     }
     
     private function create_params()
@@ -204,7 +208,7 @@ class qa_html_theme_layer extends qa_html_theme_base
         '^video_note' => qa_lang_html_sub('q2a_medium_editor_lang/video_note', self::MAX_FILE_SIZE_MB),
         '^upload' => qa_lang_html('q2a_medium_editor_lang/upload'),
         '^do_upload' => qa_lang_html('q2a_medium_editor_lang/do_upload'),
-        '^progress' => qa_lang_html('q2a_medium_editor_lang/preogress'),
+        '^progress' => qa_lang_html('q2a_medium_editor_lang/progress'),
         '^cancel' => qa_lang_html('q2a_medium_editor_lang/cancel'),
         '^too_big' => qa_lang_html('q2a_medium_editor_lang/too_big'),
         '^upload_message' => qa_lang_html('q2a_medium_editor_lang/upload_message'),
