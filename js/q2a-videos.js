@@ -32,6 +32,11 @@
 
         this._defaults = defaults;
         this._name = pluginName;
+        
+        if (this.core.getEditor()) {
+            this.core.getEditor()._serializePreVideos = this.core.getEditor().serialize;
+            this.core.getEditor().serialize = this.editorSerialize;
+        }
 
         this.init();
     }
@@ -73,6 +78,20 @@
             .on('click', '.medium-insert-videos-overlay', $.proxy(this, 'clickVideo'))
     };
 
+    Videos.prototype.editorSerialize = function() {
+        var data = this._serializePreVideos();
+        
+        $.each(data, function(key) {
+            var $data = $('<div />').html(data[key].value);
+            
+            $data.find('.medium-insert-videos').removeAttr('contenteditable');
+            $data.find('.medium-insert-videos-overlay').remove();
+            
+            data[key].value = $data.html();
+        });
+        
+        return data;
+    }
 
     Videos.prototype.selectVideo = function(e) {
 
