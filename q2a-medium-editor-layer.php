@@ -48,6 +48,7 @@ class qa_html_theme_layer extends qa_html_theme_base
     {
         if (isset($q_view['content'])) {
             $tmp = $this->remove_progressbar($q_view['content']);
+            $tmp = $this->remove_overlay($tmp);
             $q_view['content'] = $this->medium_editor_embed_replace($tmp);
         }
         qa_html_theme_base::q_view_content($q_view);
@@ -57,6 +58,7 @@ class qa_html_theme_layer extends qa_html_theme_base
     {
         if (isset($a_item['content'])) {
             $tmp = $this->remove_progressbar($a_item['content']);
+            $tmp = $this->remove_overlay($tmp);
             $a_item['content'] = $this->medium_editor_embed_replace($tmp);
         }
         qa_html_theme_base::a_item_content($a_item);
@@ -66,6 +68,7 @@ class qa_html_theme_layer extends qa_html_theme_base
     {
         if (isset($c_item['content'])) {
             $tmp = $this->remove_progressbar($c_item['content']);
+            $tmp = $this->remove_overlay($tmp);
             $c_item['content'] = $this->medium_editor_embed_replace($tmp);
         }
         qa_html_theme_base::c_item_content($c_item);
@@ -181,6 +184,15 @@ class qa_html_theme_layer extends qa_html_theme_base
         $tmp = preg_replace($regex, "", $content);
         return preg_replace($regex2, "", $tmp);
     }
+    
+		/*
+		 * Overlayを消す
+		 */
+		private function remove_overlay($content)
+		{
+			$overlay = '<div class="medium-insert-videos-overlay"></div>';
+			return str_replace($overlay, "", $content);
+		}
     
     private function output_js_warn()
     {
