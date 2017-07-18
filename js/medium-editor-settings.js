@@ -7,6 +7,7 @@ var editor = new MediumEditor('#^fieldname', {
         forcePlainText: true,
     },
     spellcheck: false,
+    toolbar: false,
 });
 $(function() {
     $('#^fieldname').mediumInsert({
@@ -16,6 +17,7 @@ $(function() {
             images2: {
                 preview: false,
                 captions: false,
+                styles: false,
                 fileUploadOptions: {
                     url: '^site_urlmedium-editor-upload',
                     acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
