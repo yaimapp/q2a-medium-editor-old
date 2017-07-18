@@ -7,6 +7,7 @@ var editor = new MediumEditor('#^fieldname', {
         forcePlainText: true,
     },
     spellcheck: false,
+    toolbar: false,
 });
 $(function() {
     $('#^fieldname').mediumInsert({
