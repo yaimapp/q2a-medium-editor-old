@@ -626,7 +626,9 @@
 
         this.repositionToolbars();
 
-        $toolbar.fadeIn();
+        if (this.options.styles) {
+            $toolbar.fadeIn();
+        }
         $toolbar2.fadeIn();
     };
 
