@@ -17,7 +17,7 @@ $(function() {
             images2: {
                 preview: false,
                 captions: false,
-                styles: null,
+                styles: false,
                 fileUploadOptions: {
                     url: '^site_urlmedium-editor-upload',
                     acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
