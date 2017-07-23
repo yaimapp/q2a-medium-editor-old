@@ -13,6 +13,10 @@ class qa_html_theme_layer extends qa_html_theme_base
 
     private function is_medium_editor_active()
     {
+        if($this->mdl_is_android_app()) {
+          return false;
+        }
+
         if (qa_is_logged_in()) {
           if (($this->template === 'ask' && qa_opt('editor_for_qs') === self::EDITOR_NAME)
           || ($this->template === 'question' && qa_opt('editor_for_as') === self::EDITOR_NAME)
@@ -173,7 +177,7 @@ class qa_html_theme_layer extends qa_html_theme_base
         );
         $this->output($imageErrorDialog.$videoDialog);
     }
-    
+
     /*
      * プログレスバーが残っている場合に削除する
      */
@@ -184,7 +188,7 @@ class qa_html_theme_layer extends qa_html_theme_base
         $tmp = preg_replace($regex, "", $content);
         return preg_replace($regex2, "", $tmp);
     }
-    
+
 		/*
 		 * Overlayを消す
 		 */
@@ -193,7 +197,7 @@ class qa_html_theme_layer extends qa_html_theme_base
 			$overlay = '<div class="medium-insert-videos-overlay"></div>';
 			return str_replace($overlay, "", $content);
 		}
-    
+
     private function output_js_warn()
     {
       $warn_message = qa_lang_html('q2a_medium_editor_lang/warn_message');
@@ -207,7 +211,7 @@ class qa_html_theme_layer extends qa_html_theme_base
         $this->output('<script src="'.$script_mobile.'"></script>');
       }
     }
-    
+
     private function create_params()
     {
       return array(
