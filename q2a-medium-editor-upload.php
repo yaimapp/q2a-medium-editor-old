@@ -41,6 +41,7 @@ class qa_medium_editor_upload
                 }
             }
             $upload_max_size = qa_opt('medium_editor_upload_max_size');
+            $this->file_rotate($filetmp, $filetype);
             $upload = qa_upload_file(
                 $filetmp,
                 $filename,
@@ -79,5 +80,34 @@ class qa_medium_editor_upload
         }
         echo json_encode($response);
 
+    }
+
+    /*
+     * EXIF情報のOrientationによって画像を回転
+     */
+    private function file_rotate($filetmp, $filetype)
+    {
+        // EXIF情報取得
+        $exif = exif_read_data($filetmp, 0, true);
+        // jpeg 画像でEXIF情報が存在する場合
+        if($filtype === 'image/jpeg' && isset($exif["IFD0"]["Orientation"])){
+            $content=file_get_contents($filetmp);
+            $image=@imagecreatefromstring($content);
+            // Orientation によって画像を回転
+            switch($exif["IFD0"]["Orientation"]){
+                case 3:
+                    $image = imagerotate($image, 180, 0);
+                    break;
+                case 6:
+                    $image = imagerotate($image, 270, 0);
+                    break;
+                case 8:
+                    $image = imagerotate($image, 90, 0);
+                    break;
+            }
+            // 回転した画像を元のtmpファイル名で上書き
+            imagejpeg($image, $filetmp, 100);
+            imagedestroy($image);
+        }
     }
 }
