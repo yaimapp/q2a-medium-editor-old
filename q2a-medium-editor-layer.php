@@ -51,9 +51,7 @@ class qa_html_theme_layer extends qa_html_theme_base
     public function q_view_content($q_view)
     {
         if (isset($q_view['content'])) {
-            $tmp = $this->remove_progressbar($q_view['content']);
-            $tmp = $this->remove_overlay($tmp);
-            $q_view['content'] = $this->medium_editor_embed_replace($tmp);
+            $q_view['content'] = $this->filter_content($q_view['content']);
         }
         qa_html_theme_base::q_view_content($q_view);
     }
@@ -61,9 +59,7 @@ class qa_html_theme_layer extends qa_html_theme_base
     public function a_item_content($a_item)
     {
         if (isset($a_item['content'])) {
-            $tmp = $this->remove_progressbar($a_item['content']);
-            $tmp = $this->remove_overlay($tmp);
-            $a_item['content'] = $this->medium_editor_embed_replace($tmp);
+            $a_item['content'] = $this->filter_content($a_item['content']);
         }
         qa_html_theme_base::a_item_content($a_item);
     }
@@ -71,9 +67,7 @@ class qa_html_theme_layer extends qa_html_theme_base
     public function c_item_content($c_item)
     {
         if (isset($c_item['content'])) {
-            $tmp = $this->remove_progressbar($c_item['content']);
-            $tmp = $this->remove_overlay($tmp);
-            $c_item['content'] = $this->medium_editor_embed_replace($tmp);
+            $c_item['content'] = $this->filter_content($c_item['content']);
         }
         qa_html_theme_base::c_item_content($c_item);
     }
@@ -178,17 +172,6 @@ class qa_html_theme_layer extends qa_html_theme_base
         $this->output($imageErrorDialog.$videoDialog);
     }
 
-    /*
-     * プログレスバーが残っている場合に削除する
-     */
-    private function remove_progressbar($content)
-    {
-        $regex = "/\<div\s?class=\"[^\"]*bar[^\"]*\"[^>]*><\/div>/Us";
-        $regex2 = "/\<div\s?class=\"mdl-progress\s?[^\"]*\"[^>]*><\/div>/Us";
-        $tmp = preg_replace($regex, "", $content);
-        return preg_replace($regex2, "", $tmp);
-    }
-
 		/*
 		 * Overlayを消す
 		 */
@@ -234,6 +217,18 @@ class qa_html_theme_layer extends qa_html_theme_base
         '^disconnect_message' => qa_lang_html('q2a_medium_editor_lang/disconnect_message'),
         '^only_one_message' => qa_lang_html('q2a_medium_editor_lang/only_one_message'),
       );
+    }
+
+    /*
+     * 不要なタグの削除や
+     * 埋め込みタグの変換を行う
+     */
+    private function filter_content($content)
+    {
+        $tmp = qme_remove_progressbar($content);
+        $tmp = qme_remove_style('span', $tmp);
+        $tmp = $this->remove_overlay($tmp);
+        return $this->medium_editor_embed_replace($tmp);
     }
 } // end qa_html_theme_layer
 

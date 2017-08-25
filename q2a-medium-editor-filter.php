@@ -35,24 +35,18 @@
 			}
 		}
 
+		/*
+		 * 不要なタグの削除
+		 */
 		private function remove_tags($content) {
 			// remove progressbar
-			$tmp = $this->remove_progressbar($content);
+			$tmp = qme_remove_progressbar($content);
+			// remove span style
+			$tmp = qme_remove_style('span', $tmp);
 			// remove br tags at the end of contents
 			$new_content = $this->remove_br_tags($tmp);
 
 			return $new_content;
-		}
-
-		/*
-		 * プログレスバーが残っている場合に削除する
-		 */
-		private function remove_progressbar($content)
-		{
-			$regex = "/\<div\s?class=\"[^\"]*bar[^\"]*\"[^>]*><\/div>/Us";
-			$regex2 = "/\<div\s?class=\"mdl-progress\s?[^\"]*\"[^>]*><\/div>/Us";
-			$tmp = preg_replace($regex, "", $content);
-			return preg_replace($regex2, "", $tmp);
 		}
 
 		/*

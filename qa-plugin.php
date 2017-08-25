@@ -21,6 +21,8 @@
 
     @define( 'MEDIUM_EDITOR_DIR', dirname( __FILE__ ) );
 
+    require_once(MEDIUM_EDITOR_DIR.'/util/functions.php');
+
     // editor module
     qa_register_plugin_module('editor', 'q2a-medium-editor.php', 'qa_medium_editor', 'Medium Editor');
 
