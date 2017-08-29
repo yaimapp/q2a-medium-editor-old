@@ -227,6 +227,7 @@ class qa_html_theme_layer extends qa_html_theme_base
     {
         $tmp = qme_remove_progressbar($content);
         $tmp = qme_remove_style('span', $tmp);
+        $tmp = qme_remove_br_tags_in_div($tmp);
         $tmp = $this->remove_overlay($tmp);
         return $this->medium_editor_embed_replace($tmp);
     }
