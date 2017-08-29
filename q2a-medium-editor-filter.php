@@ -44,21 +44,10 @@
 			// remove span style
 			$tmp = qme_remove_style('span', $tmp);
 			// remove br tags at the end of contents
-			$new_content = $this->remove_br_tags($tmp);
-
+			$new_content = qme_remove_br_tags($tmp);
 			return $new_content;
 		}
 
-		/*
-		 * 本文末尾の改行を削除
-		 */
-		private function remove_br_tags($content)
-		{
-			$regex = "/<p class=\"medium-insert-active\">(<br>)*<\/p>/Us";
-			$regex2 = "/(<p class=\"\">(<br>)*<\/p>)*$/Us";
-			$tmp = preg_replace($regex, "", $content);
-			return preg_replace($regex2, "", $tmp);
-		}
 
 	}
 
