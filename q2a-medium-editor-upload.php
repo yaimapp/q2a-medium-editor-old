@@ -90,7 +90,7 @@ class qa_medium_editor_upload
         // EXIF情報取得
         $exif = exif_read_data($filetmp, 0, true);
         // jpeg 画像でEXIF情報が存在する場合
-        if($filtype === 'image/jpeg' && isset($exif["IFD0"]["Orientation"])){
+        if($filetype === 'image/jpeg' && isset($exif["IFD0"]["Orientation"])){
             $content=file_get_contents($filetmp);
             $image=@imagecreatefromstring($content);
             // Orientation によって画像を回転
