@@ -88,26 +88,28 @@ class qa_medium_editor_upload
     private function file_rotate($filetmp, $filetype)
     {
         // EXIF情報取得
-        $exif = exif_read_data($filetmp, 0, true);
         // jpeg 画像でEXIF情報が存在する場合
-        if($filetype === 'image/jpeg' && isset($exif["IFD0"]["Orientation"])){
-            $content=file_get_contents($filetmp);
-            $image=@imagecreatefromstring($content);
-            // Orientation によって画像を回転
-            switch($exif["IFD0"]["Orientation"]){
-                case 3:
-                    $image = imagerotate($image, 180, 0);
-                    break;
-                case 6:
-                    $image = imagerotate($image, 270, 0);
-                    break;
-                case 8:
-                    $image = imagerotate($image, 90, 0);
-                    break;
+        if($filetype === 'image/jpeg'){
+            $exif = exif_read_data($filetmp, 0, true);
+            if(isset($exif["IFD0"]["Orientation"])) {
+                $content=file_get_contents($filetmp);
+                $image=@imagecreatefromstring($content);
+                // Orientation によって画像を回転
+                switch($exif["IFD0"]["Orientation"]){
+                    case 3:
+                        $image = imagerotate($image, 180, 0);
+                        break;
+                    case 6:
+                        $image = imagerotate($image, 270, 0);
+                        break;
+                    case 8:
+                        $image = imagerotate($image, 90, 0);
+                        break;
+                }
+                // 回転した画像を元のtmpファイル名で上書き
+                imagejpeg($image, $filetmp, 100);
+                imagedestroy($image);
             }
-            // 回転した画像を元のtmpファイル名で上書き
-            imagejpeg($image, $filetmp, 100);
-            imagedestroy($image);
         }
     }
 }
