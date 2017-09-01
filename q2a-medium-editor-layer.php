@@ -37,6 +37,12 @@ class qa_html_theme_layer extends qa_html_theme_base
 
     public function head_script()
     {
+        // DEBUG用
+        $trackerjs = <<<EOS
+        <script type="text/javascript">window._trackJs = { token: 'c0da98f324c24d4ab0afe6b67bf29ed6' };</script>
+        <script type="text/javascript" src="https://cdn.trackjs.com/releases/current/tracker.js"></script>
+EOS;
+        $this->output($trackerjs);
         qa_html_theme_base::head_script();
         if (strpos(qa_opt('site_theme'), 'q2a-material-lite') !== false) {
             $this->output('<link rel="stylesheet" type="text/css" href="'.QA_HTML_THEME_LAYER_URLTOROOT.'css/dialog-polyfill.css" />');
