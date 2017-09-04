@@ -132,6 +132,9 @@ class qa_medium_editor
           '^site_url' => qa_opt('site_url'),
           '^image_type_error' => qa_lang_html('q2a_medium_editor_lang/image_type_error'),
           '^image_size_error' => qa_lang_html_sub('q2a_medium_editor_lang/image_size_error', $this->bytes_to_mega_html($maxfilesize)),
+          '^image_type_error_title' => qa_lang_html('q2a_medium_editor_lang/image_type_error_title'),
+          '^image_size_error_title' => qa_lang_html('q2a_medium_editor_lang/image_size_error_title'),
+          '^image_upload_error_title' => qa_lang_html('q2a_medium_editor_lang/image_upload_error_title'),
         );
 
         $js = file_get_contents(MEDIUM_EDITOR_DIR.'/js/medium-editor-settings.js');

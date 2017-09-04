@@ -247,10 +247,10 @@
         var errorTitle;
 
         if (acceptFileTypes && !acceptFileTypes.test(file.type)) {
-            errorTitle = '画像ファイルではありません';
+            errorTitle = this.options.messages.acceptFileTypesErrorTtitle;
             uploadErrors.push(this.options.messages.acceptFileTypesError + file.name);
         } else if (maxFileSize && file.size > maxFileSize) {
-            errorTitle = 'ファルサイズが大きすぎます'
+            errorTitle = this.options.messages.maxFileSizeErrorTitle;
             uploadErrors.push(this.options.messages.maxFileSizeError + file.name);
         }
         if (uploadErrors.length > 0) {
@@ -365,7 +365,7 @@
         } else {
             if (this.options.messages.mdlThemeDialog) {
               var errDialog = document.querySelector('#editor-error');
-              errDialog.querySelector('.mdl-dialog__title').textContent = 'アップロード失敗';
+              errDialog.querySelector('.mdl-dialog__title').textContent = this.options.messages.uploadErrorTtitle;
               errDialog.querySelector('.mdl-dialog__content p').textContent = data.result.files[0].error;
               if(!errDialog.hasAttribute('open')) {
                 errDialog.showModal();
