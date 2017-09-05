@@ -247,10 +247,10 @@
         var errorTitle;
 
         if (acceptFileTypes && !acceptFileTypes.test(file.type)) {
-            errorTitle = '画像ファイルではありません';
+            errorTitle = this.options.messages.acceptFileTypesErrorTtitle;
             uploadErrors.push(this.options.messages.acceptFileTypesError + file.name);
         } else if (maxFileSize && file.size > maxFileSize) {
-            errorTitle = 'ファルサイズが大きすぎます'
+            errorTitle = this.options.messages.maxFileSizeErrorTitle;
             uploadErrors.push(this.options.messages.maxFileSizeError + file.name);
         }
         if (uploadErrors.length > 0) {
@@ -359,7 +359,21 @@
      */
 
     Images2.prototype.uploadDone = function (e, data) {
-        $.proxy(this, 'showImage', data.result.files[0].url, data)();
+        if (data.result.files[0].error === undefined) {
+            // エラーがなければプレビューを表示する
+            $.proxy(this, 'showImage', data.result.files[0].url, data)();
+        } else {
+            if (this.options.messages.mdlThemeDialog) {
+              var errDialog = document.querySelector('#editor-error');
+              errDialog.querySelector('.mdl-dialog__title').textContent = this.options.messages.uploadErrorTtitle;
+              errDialog.querySelector('.mdl-dialog__content p').textContent = data.result.files[0].error;
+              if(!errDialog.hasAttribute('open')) {
+                errDialog.showModal();
+              }
+            } else {
+              alert(uploadErrors.join("\n"));
+            }
+        }
 
         this.core.clean();
         this.sorting();
@@ -403,7 +417,7 @@
 
             $place.find('br').remove();
 
-            if (this.options.autoGrid && $place.find('figure').length >= this.options.autoGrid) {
+            if (this.options.styles && this.options.autoGrid && $place.find('figure').length >= this.options.autoGrid) {
                 $.each(this.options.styles, function (style, options) {
                     var className = 'medium-insert-images-' + style;
 
