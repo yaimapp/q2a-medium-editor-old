@@ -190,7 +190,7 @@ class qa_medium_editor
 
         $imagetag = file_get_contents(MEDIUM_EDITOR_DIR . '/html/image-url.html');
         $image = array(
-            "/\<div class=\"image-url\"\>\[image=\"([^\"\]]+)\"\]\<\/div\>/i",
+            "/\<div class=\"medium-insert-images\">(.*)\<div class=\"image-url\"\>\[image=\"([^\"\]]+)\"\]\<\/div\>(.*)<\/div\>/is",
             $imagetag
         );
         $text = preg_replace($image[0], $image[1], $text);
