@@ -115,15 +115,12 @@ class qa_html_theme_layer extends qa_html_theme_base
         $text = preg_replace('/' . $video[0] . '/i',$video[1],$text);
 
         // 画像タグの変換
-        error_log("DEUBG embed replace layer");
         $imagetag = file_get_contents(MEDIUM_EDITOR_DIR . '/html/image-url.html');
         $image = array(
             "/\<div class=\"medium-insert-images\">(.*)\<div class=\"image-url\"\>\[image=\"\<a href=[^\>]+\>([^\"\]]+)\"\<\/a\>\]\<\/div\>(.*?)<\/div\>/is",
             $imagetag
         );
         preg_match($image[0], $text, $matches);
-        error_log($text);
-        error_log(print_r($matches, true));
         $text = preg_replace($image[0], $image[1], $text);
 
         return $text;
