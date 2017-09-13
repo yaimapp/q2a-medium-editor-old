@@ -181,6 +181,8 @@
             var $data = $('<div />').html(data[key].value);
 
             $data.find('.medium-insert-images').find('figcaption, figure').removeAttr('contenteditable');
+            $data.find('.medium-insert-images').find('figure').find('img').remove();
+            $data.find('.medium-insert-images').find('img').remove();
             $data.find('.medium-insert-images-progress').remove();
 
             data[key].value = $data.html();
@@ -441,6 +443,10 @@
                 this.options.uploadCompleted(data.context, data);
             }
         }
+        // 画像URL用のタグを追加
+        var $imgurl = $('<div>').attr('class','image-url');
+        $imgurl.html('[image="'+img+'"]');
+        $imgurl.appendTo($place);
 
         this.core.triggerInput();
 

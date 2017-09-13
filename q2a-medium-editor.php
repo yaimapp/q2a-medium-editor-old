@@ -188,6 +188,13 @@ class qa_medium_editor
         );
         $text = preg_replace('/' . $video[0] . '/i',$video[1],$text);
 
+        $imagetag = file_get_contents(MEDIUM_EDITOR_DIR . '/html/image-url.html');
+        $image = array(
+            "/\<div class=\"image-url\"\>\[image=\"([^\"\]]+)\"\]\<\/div\>/i",
+            $imagetag
+        );
+        $text = preg_replace($image[0], $image[1], $text);
+
         return $text;
     }
 

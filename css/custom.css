@@ -125,3 +125,8 @@ video::-webkit-media-controls-panel {
 .medium-insert-videos-selected video {
   border: 2px solid #000;
 }
+
+/* replaced image tag */
+.medium-insert-images .image-url {
+  display: none;
+}
