@@ -13,7 +13,8 @@ class qa_html_theme_layer extends qa_html_theme_base
 
     private function is_medium_editor_active()
     {
-        if($this->mdl_is_android_app()) {
+        
+        if(method_exists('qa_html_theme_layer', 'mdl_is_android_app') &&  $this->mdl_is_android_app()) {
           return false;
         }
 
