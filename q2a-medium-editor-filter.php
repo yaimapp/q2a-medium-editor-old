@@ -43,6 +43,10 @@
 			$tmp = qme_remove_progressbar($content);
 			// remove span style
 			$tmp = qme_remove_style('span', $tmp);
+			// remove img tag
+			$tmp = qme_remove_tag('img', $tmp);
+			// remove medium buttons
+			$tmp = qme_remove_tag('div.medium-insert-buttons', $tmp);
 			// remove br tags at the end of contents
 			$new_content = qme_remove_br_tags($tmp);
 			return $new_content;

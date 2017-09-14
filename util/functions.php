@@ -86,3 +86,22 @@ function qme_remove_br_tags_in_div($content)
 
     return $pq->html();
 }
+
+/*
+ * 指定したタグを削除する
+ * $tag: 'img', 'div.medium-insert-buttons' など
+ */
+function qme_remove_tag($tag, $content)
+{
+    $pq = phpQuery::newDocument($content);
+
+    $elements = $pq[$tag];
+
+    foreach ($elements as $elem) {
+        pq($elem)->remove();
+    }
+
+    $html = $pq->html();
+    $pq = null;
+    return $html;
+}
