@@ -118,7 +118,7 @@ class qa_html_theme_layer extends qa_html_theme_base
         // 画像タグの変換
         $imagetag = file_get_contents(MEDIUM_EDITOR_DIR . '/html/image-url.html');
         $image = array(
-            "/\<div class=\"medium-insert-images\">(.*)\<div class=\"image-url\"\>\[image=\"\<a href=[^\>]+\>([^\"\]]+)\"\<\/a\>\]\<\/div\>(.*?)<\/div\>/is",
+            "/\<div class=\"medium-insert-images\">(.*)\<div class=\"image-url\"\>\[image=\"\<a href=[^\>]+\>([^\"\]]+)\"\<\/a\>\]\<\/div\>(.*)<\/div\>/isU",
             $imagetag
         );
         preg_match($image[0], $text, $matches);

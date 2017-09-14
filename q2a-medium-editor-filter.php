@@ -17,21 +17,24 @@
 		function filter_question(&$question, &$errors, $oldquestion)
 		{
 			if (qa_opt('editor_for_qs') === 'Medium Editor') {
-				$question['content'] = $this->remove_tags($question['content']);
+				$tmp = $this->remove_tags($question['content']);
+				$question['content'] = qme_wrapping_images($tmp);
 			}
 		}
 
 		function filter_answer(&$answer, &$errors, $question, $oldanswer)
 		{
 			if (qa_opt('editor_for_as') === 'Medium Editor') {
-				$answer['content'] = $this->remove_tags($answer['content']);
+				$tmp = $this->remove_tags($answer['content']);
+				$answer['content'] = qme_wrapping_images($tmp);
 			}
 		}
 
 		function filter_comment(&$comment, &$errors, $question, $parent, $oldcomment)
 		{
 			if (qa_opt('editor_for_cs') === 'Medium Editor') {
-				$comment['content'] = $this->remove_tags($comment['content']);
+				$tmp = $this->remove_tags($comment['content']);
+				$comment['content'] = qme_wrapping_images($tmp);
 			}
 		}
 
