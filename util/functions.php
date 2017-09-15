@@ -86,3 +86,43 @@ function qme_remove_br_tags_in_div($content)
 
     return $pq->html();
 }
+
+/*
+ * 指定したタグを削除する
+ * $tag: 'img', 'div.medium-insert-buttons' など
+ */
+function qme_remove_tag($tag, $content)
+{
+    $pq = phpQuery::newDocument($content);
+
+    $elements = $pq[$tag];
+
+    foreach ($elements as $elem) {
+        pq($elem)->remove();
+    }
+
+    $html = $pq->html();
+    $pq = null;
+    return $html;
+}
+
+/*
+ * div.image-url が div.medium-insert-images で囲まれていない場合があるので対処
+ */
+function qme_wrapping_images($content)
+{
+    $pq = phpQuery::newDocument($content);
+
+    $elements = $pq['div.image-url'];
+
+    foreach ($elements as $elem) {
+        if (strpos(pq($elem)->parent()->attr('class'), 'medium-insert-images') === false) {
+            $element = pq($elem);
+            $element->replaceWith('<div class="medium-insert-images">'.$element.'</div>');
+        }
+    }
+
+    $html = $pq->html();
+    $pq = null;
+    return $html;
+}
