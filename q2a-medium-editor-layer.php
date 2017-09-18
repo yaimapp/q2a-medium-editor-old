@@ -47,6 +47,7 @@ class qa_html_theme_layer extends qa_html_theme_base
             $this->output_css();
             $this->output_js();
         }
+        $this->output('<link rel="stylesheet" type="text/css" href="'.QA_HTML_THEME_LAYER_URLTOROOT.'css/custom.css" />');
     }
 
     public function q_view_content($q_view)
@@ -140,7 +141,6 @@ class qa_html_theme_layer extends qa_html_theme_base
         foreach ($css_files as $css) {
             $this->output('<link rel="stylesheet" type="text/css" href="'.$components.$css.'" />');
         }
-        $this->output('<link rel="stylesheet" type="text/css" href="'.QA_HTML_THEME_LAYER_URLTOROOT.'css/custom.css" />');
     }
 
     private function output_js()
