@@ -47,7 +47,16 @@ class qa_html_theme_layer extends qa_html_theme_base
             $this->output_css();
             $this->output_js();
         }
-        $this->output('<link rel="stylesheet" type="text/css" href="'.QA_HTML_THEME_LAYER_URLTOROOT.'css/custom.css" />');
+        $allow_templates(
+            'ask',
+            'question',
+            'blog',
+            'blog-new',
+            'message'
+        );
+        if (in_array($this->template, $allow_templates)) {
+            $this->output('<link rel="stylesheet" type="text/css" href="'.QA_HTML_THEME_LAYER_URLTOROOT.'css/custom.css" />');
+        }
     }
 
     public function q_view_content($q_view)
