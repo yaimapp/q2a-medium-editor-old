@@ -47,7 +47,7 @@ class qa_html_theme_layer extends qa_html_theme_base
             $this->output_css();
             $this->output_js();
         }
-        $allow_templates(
+        $allow_templates = array(
             'ask',
             'question',
             'blog',
