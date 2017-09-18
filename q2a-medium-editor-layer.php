@@ -128,11 +128,10 @@ class qa_html_theme_layer extends qa_html_theme_base
         // 画像タグの変換
         $imagetag = file_get_contents(MEDIUM_EDITOR_DIR . '/html/image-url.html');
         $image = array(
-            "/\<div class=\"medium-insert-images\">(.*)\<div class=\"image-url\"\>\[image=\"\<a href=[^\>]+\>([^\"\]]+)\"\<\/a\>\]\<\/div\>(.*)<\/div\>/isU",
-            $imagetag
+            "/\<div class=\"medium-insert-images\">(.*)\<div class=\"image-url\"\>\[image=\"?([^\"\]]+)\"?\]\<\/div\>(.*)<\/div\>/isU",
         );
-        preg_match($image[0], $text, $matches);
-        $text = preg_replace($image[0], $image[1], $text);
+        $text = qme_remove_anchor($text);
+        $text = preg_replace($image[0], $imagetag, $text);
 
         return $text;
     }

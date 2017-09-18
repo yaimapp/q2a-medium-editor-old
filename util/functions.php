@@ -126,3 +126,20 @@ function qme_wrapping_images($content)
     $pq = null;
     return $html;
 }
+
+/*
+ * [image="{src}"] の {src}に a タグが付くので削除する
+ */
+function qme_remove_anchor($content)
+{
+  $pq = phpQuery::newDocument($content);
+  
+  $elements = $pq['div.image-url a'];
+  
+  foreach ($elements as $elem) {
+    pq($elem)->contentsUnwrap();
+  }
+  $html = $pq->html();
+  $pq=null;
+  return $html;
+}
