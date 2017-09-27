@@ -304,7 +304,8 @@
                     reader.onload = function (e) {
                         $.proxy(that, 'showImage', e.target.result, data)();
                     };
-
+                    var images = document.querySelectorAll('.lazyload');
+                    lazyload(images);
                     reader.readAsDataURL(data.files[0]);
                 } else {
                     data.submit();
@@ -364,6 +365,8 @@
         if (data.result.files[0].error === undefined) {
             // エラーがなければプレビューを表示する
             $.proxy(this, 'showImage', data.result.files[0].url, data)();
+            var images = document.querySelectorAll('.lazyload');
+            lazyload(images);
         } else {
             if (this.options.messages.mdlThemeDialog) {
               var errDialog = document.querySelector('#editor-error');
@@ -418,7 +421,11 @@
             })).appendTo($place);
 
             $place.find('br').remove();
-
+            var $imgtag = $place.find('figure').find('img');
+            $imgtag.addClass('lazyload');
+            $imgtag.attr('src', '/qa-theme/q2a-material-lite/images/editor-lazy-bg.png');
+            $imgtag.attr('data-src', img);
+            
             if (this.options.styles && this.options.autoGrid && $place.find('figure').length >= this.options.autoGrid) {
                 $.each(this.options.styles, function (style, options) {
                     var className = 'medium-insert-images-' + style;
