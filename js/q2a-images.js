@@ -423,7 +423,7 @@
             $place.find('br').remove();
             var $imgtag = $place.find('figure').find('img');
             $imgtag.addClass('lazyload');
-            $imgtag.attr('src', '/qa-theme/q2a-material-lite/images/editor-lazy-bg.png');
+            $imgtag.attr('src', '/qa-theme/q2a-material-lite/images/editor-lazy-bg.gif');
             $imgtag.attr('data-src', img);
             
             if (this.options.styles && this.options.autoGrid && $place.find('figure').length >= this.options.autoGrid) {
