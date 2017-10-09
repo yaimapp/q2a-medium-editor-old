@@ -41,24 +41,26 @@
     /* custom function */
 
     // check if GIF is animated, credits go to http://php.net/manual/en/function.imagecreatefromgif.php#104473
-    function gif_is_animated($filename) {
-        if(!($fh = @fopen($filename, 'rb')))
-            return false;
+    if (!function_exists('gif_is_animated')) {
+        function gif_is_animated($filename) {
+            if(!($fh = @fopen($filename, 'rb')))
+                return false;
 
-        $count = 0;
-        // an animated gif contains multiple "frames", with each frame having a header made up of:
-        // * a static 4-byte sequence (\x00\x21\xF9\x04)
-        // * 4 variable bytes
-        // * a static 2-byte sequence (\x00\x2C)
+            $count = 0;
+            // an animated gif contains multiple "frames", with each frame having a header made up of:
+            // * a static 4-byte sequence (\x00\x21\xF9\x04)
+            // * 4 variable bytes
+            // * a static 2-byte sequence (\x00\x2C)
 
-        // read through the file till we reach the end of the file, or we have found at least 2 frame headers
-        while(!feof($fh) && $count < 2) {
-            $chunk = fread($fh, 1024 * 100); // read 100kb at a time
-            $count += preg_match_all('#\x00\x21\xF9\x04.{4}\x00\x2C#s', $chunk, $matches);
+            // read through the file till we reach the end of the file, or we have found at least 2 frame headers
+            while(!feof($fh) && $count < 2) {
+                $chunk = fread($fh, 1024 * 100); // read 100kb at a time
+                $count += preg_match_all('#\x00\x21\xF9\x04.{4}\x00\x2C#s', $chunk, $matches);
+            }
+
+            fclose($fh);
+            return $count > 1;
         }
-
-        fclose($fh);
-        return $count > 1;
     }
 /*
     Omit PHP closing tag to help avoid accidental output
