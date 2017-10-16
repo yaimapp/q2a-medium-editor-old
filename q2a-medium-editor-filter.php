@@ -18,7 +18,7 @@
 		{
 			if (qa_opt('editor_for_qs') === 'Medium Editor') {
 				$tmp = $this->remove_tags($question['content']);
-				$question['content'] = qme_wrapping_images($tmp);
+				$question['content'] = qme_unwrapping_images($tmp);
 			}
 		}
 
@@ -26,7 +26,7 @@
 		{
 			if (qa_opt('editor_for_as') === 'Medium Editor') {
 				$tmp = $this->remove_tags($answer['content']);
-				$answer['content'] = qme_wrapping_images($tmp);
+				$answer['content'] = qme_unwrapping_images($tmp);
 			}
 		}
 
@@ -34,7 +34,7 @@
 		{
 			if (qa_opt('editor_for_cs') === 'Medium Editor') {
 				$tmp = $this->remove_tags($comment['content']);
-				$comment['content'] = qme_wrapping_images($tmp);
+				$comment['content'] = qme_unwrapping_images($tmp);
 			}
 		}
 

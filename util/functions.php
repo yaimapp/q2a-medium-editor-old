@@ -143,3 +143,22 @@ function qme_remove_anchor($content)
   $pq=null;
   return $html;
 }
+
+/*
+ * div.insert-images を消す
+ */
+function qme_unwrapping_images($content)
+{
+    $pq = phpQuery::newDocument($content);
+
+    $elements = $pq['div.insert-images'];
+
+    foreach ($elements as $elem) {
+        pq($elem)->contentsUnwrap();
+        break;
+    }
+
+    $html = $pq->html();
+    $pq = null;
+    return $html;
+}

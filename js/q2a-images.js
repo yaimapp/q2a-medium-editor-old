@@ -184,6 +184,8 @@
             $data.find('.medium-insert-images').find('figure').find('img').remove();
             $data.find('.medium-insert-images').find('img').remove();
             $data.find('.medium-insert-images-progress').remove();
+            $data.find('.meidum-insert-images').find('#p1').remove();
+            $data.find('.meidum-insert-images').find('.mdl-progress').remove();
 
             data[key].value = $data.html();
         });
@@ -287,8 +289,7 @@
             }
         }
 
-        $place.addClass('medium-insert-images');
-
+        $place.addClass('insert-images');
         if (this.options.preview === false && $place.find('progress').length === 0 && (new XMLHttpRequest().upload)) {
             // $place.append(this.templates['src/js/templates/images-progressbar.hbs']());
             $place.append('<div id="p1" class="mdl-progress mdl-js-progress"></div>');
@@ -392,13 +393,13 @@
      */
 
     Images2.prototype.showImage = function (img, data) {
-        var $place = this.$el.find('.medium-insert-active'),
+        var $place = this.$el.find('.insert-images'),
             domImage,
             that;
 
         // Hide editor's placeholder
         $place.click();
-
+        $place.find('br').remove();
         // If preview is allowed and preview image already exists,
         // replace it with uploaded image
         that = this;
@@ -415,17 +416,29 @@
             }.bind(this);
             domImage.src = img;
         } else {
-            data.context = $(this.templates['src/js/templates/images-image.hbs']({
+            // data.context = $(this.templates['src/js/templates/images-image.hbs']({
+            //     img: img,
+            //     progress: this.options.preview
+            // })).appendTo($place);
+            var image = $(this.templates['src/js/templates/images-image.hbs']({
                 img: img,
                 progress: this.options.preview
-            })).appendTo($place);
-
-            $place.find('br').remove();
-            var $imgtag = $place.find('figure').find('img');
+            }));
+            // lazyload
+            var $imgtag = image.find('figure').find('img');
             $imgtag.addClass('lazyload');
             $imgtag.attr('src', '/qa-theme/q2a-material-lite/images/editor-lazy-bg.gif');
             $imgtag.attr('data-src', img);
+            // medium-insert-imagesで囲む
+            var $div = $('<div>').attr('class','medium-insert-images');
+            image.appendTo($div);
+            // 画像URL用のタグを追加
+            var $imgurl = $('<div>').attr('class','image-url');
+            $imgurl.html('[image="'+img+'"]');
+            $imgurl.appendTo($div);
             
+            data.context = $div.appendTo($place);
+
             if (this.options.styles && this.options.autoGrid && $place.find('figure').length >= this.options.autoGrid) {
                 $.each(this.options.styles, function (style, options) {
                     var className = 'medium-insert-images-' + style;
@@ -450,10 +463,6 @@
                 this.options.uploadCompleted(data.context, data);
             }
         }
-        // 画像URL用のタグを追加
-        var $imgurl = $('<div>').attr('class','image-url');
-        $imgurl.html('[image="'+img+'"]');
-        $imgurl.appendTo($place);
 
         this.core.triggerInput();
 
