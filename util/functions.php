@@ -158,6 +158,29 @@ function qme_unwrapping_images($content)
     }
 
     $html = $pq->html();
+    $html = qme_remove_images_class($html);
     $pq = null;
     return $html;
+}
+
+/*
+ * div.medium-insert-images 直下に div.image-url がない場合は class を削除
+ */
+function qme_remove_images_class($content)
+{
+  $pq = phpQuery::newDocument($content);
+  
+  $elements = $pq['div.medium-insert-images'];
+  
+  foreach ($elements as $elem) {
+    $element = pq($elem);
+    $imgtag = $element['>div.image-url'];
+    if ($imgtag == '') {
+      $element->attr('class', '');
+    }
+  }
+  
+  $html = $pq->html();
+  $pq = null;
+  return $html;
 }
