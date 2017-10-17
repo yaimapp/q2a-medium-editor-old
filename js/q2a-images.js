@@ -424,11 +424,6 @@
                 img: img,
                 progress: this.options.preview
             }));
-            // lazyload
-            var $imgtag = image.find('figure').find('img');
-            $imgtag.addClass('lazyload');
-            $imgtag.attr('src', '/qa-theme/q2a-material-lite/images/editor-lazy-bg.gif');
-            $imgtag.attr('data-src', img);
             // medium-insert-imagesで囲む
             var $div = $('<div>').attr('class','medium-insert-images');
             image.appendTo($div);
@@ -436,6 +431,11 @@
             var $imgurl = $('<div>').attr('class','image-url');
             $imgurl.html('[image="'+img+'"]');
             $imgurl.appendTo($div);
+            // lazyload
+            var $imgtag = $div.find('figure').find('img');
+            $imgtag.addClass('lazyload');
+            $imgtag.attr('src', '/qa-theme/q2a-material-lite/images/editor-lazy-bg.gif');
+            $imgtag.attr('data-src', img);
             
             data.context = $div.appendTo($place);
 
