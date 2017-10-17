@@ -126,6 +126,7 @@ class qa_html_theme_layer extends qa_html_theme_base
         $text = preg_replace('/' . $video[0] . '/i',$video[1],$text);
 
         // 画像タグの変換
+        $text = qme_remove_images_class($text);
         $imagetag = file_get_contents(MEDIUM_EDITOR_DIR . '/html/image-url.html');
         $image = array(
             "/\<div class=\"medium-insert-images\">(.*)\<div class=\"image-url\"\>\[image=\"?([^\"\]]+)\"?\]\<\/div\>(.*)<\/div\>/isU",

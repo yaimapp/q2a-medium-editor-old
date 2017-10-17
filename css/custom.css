@@ -130,3 +130,7 @@ video::-webkit-media-controls-panel {
 .medium-insert-images .image-url {
   display: none;
 }
+
+.medium-insert-images img {
+  max-width: 100%;
+}

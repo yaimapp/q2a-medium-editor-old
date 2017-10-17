@@ -143,3 +143,44 @@ function qme_remove_anchor($content)
   $pq=null;
   return $html;
 }
+
+/*
+ * div.insert-images を消す
+ */
+function qme_unwrapping_images($content)
+{
+    $pq = phpQuery::newDocument($content);
+
+    $elements = $pq['div.insert-images'];
+
+    foreach ($elements as $elem) {
+        pq($elem)->contentsUnwrap();
+    }
+
+    $html = $pq->html();
+    $html = qme_remove_images_class($html);
+    $pq = null;
+    return $html;
+}
+
+/*
+ * div.medium-insert-images 直下に div.image-url がない場合は class を削除
+ */
+function qme_remove_images_class($content)
+{
+  $pq = phpQuery::newDocument($content);
+  
+  $elements = $pq['div.medium-insert-images'];
+  
+  foreach ($elements as $elem) {
+    $element = pq($elem);
+    $imgtag = $element['>div.image-url'];
+    if ($imgtag == '') {
+      $element->attr('class', '');
+    }
+  }
+  
+  $html = $pq->html();
+  $pq = null;
+  return $html;
+}
