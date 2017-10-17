@@ -393,7 +393,7 @@
      */
 
     Images2.prototype.showImage = function (img, data) {
-        var $place = this.$el.find('.insert-images'),
+        var $place = this.$el.find('.insert-images').last(),
             domImage,
             that;
 

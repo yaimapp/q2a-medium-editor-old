@@ -155,7 +155,6 @@ function qme_unwrapping_images($content)
 
     foreach ($elements as $elem) {
         pq($elem)->contentsUnwrap();
-        break;
     }
 
     $html = $pq->html();
