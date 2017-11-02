@@ -8,6 +8,7 @@ var editor = new MediumEditor('#^fieldname', {
     },
     spellcheck: false,
     toolbar: false,
+    autoLink: false
 });
 $(function() {
     $('#^fieldname').mediumInsert({

@@ -190,9 +190,10 @@ class qa_medium_editor
 
         $imagetag = file_get_contents(MEDIUM_EDITOR_DIR . '/html/image-url.html');
         $image = array(
-            "/\<div class=\"medium-insert-images\">(.*)\<div class=\"image-url\"\>\[image=\"([^\"\]]+)\"\]\<\/div\>(.*)<\/div\>/isU",
+            "/\<div class=\"medium-insert-images\">(.*)\<div class=\"image-url\"\>\[image=\"?([^\"\]]+)\"?\]\<\/div\>(.*)<\/div\>/isU",
             $imagetag
         );
+        $text = qme_remove_anchor($text);
         $text = preg_replace($image[0], $image[1], $text);
 
         return $text;
