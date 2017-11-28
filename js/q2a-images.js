@@ -201,7 +201,7 @@
 
     Images2.prototype.add = function () {
         var that = this,
-            $file = $(this.templates['src/js/templates/images-fileupload.hbs']()),
+            $file = $('<input type="file" accept="image/png,image/jpeg,image/gif" multiple>'),
             fileUploadOptions = {
                 dataType: 'json',
                 add: function (e, data) {
