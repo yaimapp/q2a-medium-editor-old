@@ -400,6 +400,12 @@
         // Hide editor's placeholder
         $place.click();
         $place.find('br').remove();
+        $ptag = $place.find('p.br');
+        $ptag.each(function(idx) {
+            console.log(idx);
+            $(this).append('<br>');
+        });
+
         // If preview is allowed and preview image already exists,
         // replace it with uploaded image
         that = this;
@@ -436,7 +442,11 @@
             $imgtag.addClass('lazyload');
             $imgtag.attr('src', '/qa-theme/q2a-material-lite/images/editor-lazy-bg.gif');
             $imgtag.attr('data-src', img);
-            
+            // 画像の前に改行を追加
+            var $ptag =$('<p>');
+            $ptag.append('<br>');
+            $ptag.attr('class', 'br');
+            $ptag.appendTo($place);
             data.context = $div.appendTo($place);
 
             if (this.options.styles && this.options.autoGrid && $place.find('figure').length >= this.options.autoGrid) {
