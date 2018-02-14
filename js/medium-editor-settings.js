@@ -37,7 +37,7 @@ $(function() {
             videos: {
                 actions: {
                     remove: {
-                        label: '<span class="fa fa-times"></span>',
+                        label: '<span class="fas fa-times"></span>',
                         clicked: function () {
                             var $event = $.Event('keydown');
 
