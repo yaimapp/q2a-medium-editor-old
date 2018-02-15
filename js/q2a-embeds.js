@@ -6,31 +6,31 @@
     var pluginName = 'mediumInsert',
         addonName = 'Embeds2', // first char is uppercase
         defaults = {
-            label: '<span class="fa fa-youtube"></span>',
+            label: '<span class="fab fa-youtube"></span>',
             placeholder: 'YouTubeの動画URLを貼ってください。',
             captions: false,
             captionPlaceholder: 'Type caption (optional)',
             storeMeta: false,
             styles: {
                 wide: {
-                    label: '<span class="fa fa-align-justify"></span>'
+                    label: '<span class="fas fa-align-justify"></span>'
                     // added: function ($el) {},
                     // removed: function ($el) {}
                 },
                 left: {
-                    label: '<span class="fa fa-align-left"></span>'
+                    label: '<span class="fas fa-align-left"></span>'
                     // added: function ($el) {},
                     // removed: function ($el) {}
                 },
                 right: {
-                    label: '<span class="fa fa-align-right"></span>'
+                    label: '<span class="fas fa-align-right"></span>'
                     // added: function ($el) {},
                     // removed: function ($el) {}
                 }
             },
             actions: {
                 remove: {
-                    label: '<span class="fa fa-times"></span>',
+                    label: '<span class="fas fa-times"></span>',
                     clicked: function () {
                         var $event = $.Event('keydown');
 

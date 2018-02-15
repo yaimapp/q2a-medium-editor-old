@@ -6,7 +6,7 @@
     var pluginName = 'mediumInsert',
         addonName = 'Videos', // first char is uppercase
         defaults = {
-            label: '<span class="fa fa-video-camera"></span>',
+            label: '<span class="fas fa-video"></span>',
         };
 
 
