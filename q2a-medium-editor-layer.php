@@ -105,7 +105,7 @@ class qa_html_theme_layer extends qa_html_theme_base
               ),
               array(
                   'https{0,1}:\/\/w{0,3}\.*youtu\.be\/([A-Za-z0-9_-]+)[^< ]*',
-                  '<div class="youtube-video"><iframe width="420" height="315" src="//www.youtube.com/embed/$1" frameborder="0" allowfullscreen></iframe></video>',
+                  '<div class="youtube-video"><iframe width="420" height="315" src="//www.youtube.com/embed/$1" frameborder="0" allowfullscreen></iframe></div>',
               ),
           ),
         );
