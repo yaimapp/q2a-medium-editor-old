@@ -9,6 +9,11 @@
 .medium-insert-images figure img, .mediumInsert figure img {
   max-width: 400px;
 }
+@media (max-width: 460px) {
+  .medium-insert-images figure img, .mediumInsert figure img {
+    max-width: 100%;
+  }
+}
 
 /* custom embed addon */
 .medium-insert-embed .plain_url {
