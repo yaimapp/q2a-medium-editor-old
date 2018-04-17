@@ -12,6 +12,7 @@
 @media (max-width: 460px) {
   .medium-insert-images figure img, .mediumInsert figure img {
     max-width: 100%;
+    max-height: 200px;
   }
 }
 
