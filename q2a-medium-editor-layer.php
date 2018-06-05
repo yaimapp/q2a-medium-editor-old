@@ -97,7 +97,7 @@ class qa_html_theme_layer extends qa_html_theme_base
 
     public function medium_editor_embed_replace($text)
     {
-        if ($this->template !== 'print') {
+        if (strpos($this->template, 'print') === false) {
             $types = array(
             'youtube' => array(
                 array(
