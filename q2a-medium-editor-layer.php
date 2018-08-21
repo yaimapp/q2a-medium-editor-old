@@ -53,7 +53,8 @@ class qa_html_theme_layer extends qa_html_theme_base
             'question',
             'blog',
             'blog-new',
-            'message'
+            'message',
+            'groupmsg'
         );
         if (in_array($this->template, $allow_templates)) {
             $this->output('<link rel="stylesheet" type="text/css" href="'.QA_HTML_THEME_LAYER_URLTOROOT.'css/custom.css" />');
