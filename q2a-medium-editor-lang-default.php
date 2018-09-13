@@ -39,6 +39,10 @@ return array(
     'image_size_error_title' => 'ファイルサイズが大きすぎます',
     'image_upload_error_title' => 'アップロード失敗',
     'image_upload_error_message' => 'エラーが発生しました。時間を置いて再度お試しください。',
+    // Options
+    'upload_video_key' => '動画アップロードサービス KEY：',
+    'upload_video_template_id' => '動画アップロードサービス TEMPLATE ID：',
+
 );
 
 
