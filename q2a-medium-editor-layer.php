@@ -238,6 +238,8 @@ class qa_html_theme_layer extends qa_html_theme_base
         '^error_message' => qa_lang_html('q2a_medium_editor_lang/error_message'),
         '^disconnect_message' => qa_lang_html('q2a_medium_editor_lang/disconnect_message'),
         '^only_one_message' => qa_lang_html('q2a_medium_editor_lang/only_one_message'),
+        '^upload_video_key' => qa_opt('medium_editor_upload_video_key'),
+        '^upload_video_tmpl_id' => qa_opt('medium_editor_upload_video_tmpl_id'),
       );
     }
 
