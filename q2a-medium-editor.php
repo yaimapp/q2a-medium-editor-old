@@ -48,6 +48,7 @@ class qa_medium_editor
             qa_opt('medium_editor_upload_maximgwidth', (int) qa_post_text('medium_editor_upload_maximgwidth'));
             qa_opt('medium_editor_upload_video_key', qa_post_text('medium_editor_upload_video_key'));
             qa_opt('medium_editor_upload_video_tmpl_id', qa_post_text('medium_editor_upload_video_tmpl_id'));
+            qa_opt('medium_editor_upload_video_url', qa_post_text('medium_editor_upload_video_url'));
 
             $ok = qa_lang('admin/options_saved');
         }
@@ -91,6 +92,13 @@ class qa_medium_editor
             'label' => qa_lang('q2a_medium_editor_lang/upload_video_template_id'),
             'tags' => 'name="medium_editor_upload_video_tmpl_id" id="medium_editor_upload_video_tmpl_id"',
             'value' => qa_opt('medium_editor_upload_video_tmpl_id'),
+        );
+        $fields[] = array(
+            'type' => 'text',
+            'id' => 'medium_editor_upload_video_url',
+            'label' => qa_lang('q2a_medium_editor_lang/upload_video_url'),
+            'tags' => 'name="medium_editor_upload_video_url" id="medium_editor_upload_video_url"',
+            'value' => qa_opt('medium_editor_upload_video_url'),
         );
 
         return array(
