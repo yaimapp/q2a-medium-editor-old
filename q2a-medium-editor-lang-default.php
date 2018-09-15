@@ -42,6 +42,7 @@ return array(
     // Options
     'upload_video_key' => '動画アップロードサービス KEY：',
     'upload_video_template_id' => '動画アップロードサービス TEMPLATE ID：',
+    'upload_video_url' => '動画アップロードサービスの投稿先URL：',
 
 );
 
