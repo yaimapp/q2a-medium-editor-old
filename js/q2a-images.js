@@ -372,11 +372,13 @@
             $.proxy(this, 'showImage', data.result.files[0].url, data)();
             var images = document.querySelectorAll('.lazyload');
             lazyload(images);
-            // プログレスバー削除
+            // プログレスバー削除(複数あっても全て削除)
             this.imageCount = this.imageCount - 1;
-            var progressbar = document.querySelector('#p1');
-            if (progressbar && this.imageCount <= 0) {
-                progressbar.remove();
+            var progressbar = document.querySelectorAll('#p1');
+            if (progressbar.length > 0 && this.imageCount <= 0) {
+                for (var i=0; i < progressbar.length; i++) {
+                    progressbar[i].remove();
+                }
             }
         } else {
             if (this.options.messages.mdlThemeDialog) {
