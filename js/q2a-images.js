@@ -101,6 +101,8 @@
         this._defaults = defaults;
         this._name = pluginName;
 
+        this.imageCount = 0;
+
         // Allow image preview only in browsers, that support's that
         if (this.options.preview && !window.FileReader) {
             this.options.preview = false;
@@ -275,6 +277,7 @@
             }
             return;
         }
+        this.imageCount = this.imageCount + 1;
 
         this.core.hideButtons();
 
@@ -334,7 +337,7 @@
             progressbar = this.el.querySelector('#p1');
             progressbar.MaterialProgress.setProgress(progress);
             progressbar.MaterialProgress.setBuffer(87);
-            if (progress == 100) {
+            if (progress >= 100) {
                 progressbar.parentNode.removeChild(progressbar);
                 // this.$el.find('#p1').remove();
             }
@@ -369,6 +372,17 @@
             $.proxy(this, 'showImage', data.result.files[0].url, data)();
             var images = document.querySelectorAll('.lazyload');
             lazyload(images);
+            // プログレスバー削除(複数あっても全て削除)
+            this.imageCount = this.imageCount - 1;
+            var progressbar = document.querySelectorAll('#p1');
+            if (progressbar.length > 0 && this.imageCount <= 0) {
+                for (var i=0; i < progressbar.length; i++) {
+                    var prg = progressbar[i];
+                    if (prg.parentNode) {
+                        prg.parentNode.removeChild(prg);
+                    }
+                }
+            }
         } else {
             if (this.options.messages.mdlThemeDialog) {
               var errDialog = document.querySelector('#editor-error');
@@ -403,7 +417,6 @@
         $place.find('br').remove();
         $ptag = $place.find('p.br');
         $ptag.each(function(idx) {
-            console.log(idx);
             $(this).append('<br>');
         });
 
@@ -423,10 +436,6 @@
             }.bind(this);
             domImage.src = img;
         } else {
-            // data.context = $(this.templates['src/js/templates/images-image.hbs']({
-            //     img: img,
-            //     progress: this.options.preview
-            // })).appendTo($place);
             var image = $(this.templates['src/js/templates/images-image.hbs']({
                 img: img,
                 progress: this.options.preview
