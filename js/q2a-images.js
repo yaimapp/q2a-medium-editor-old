@@ -377,7 +377,10 @@
             var progressbar = document.querySelectorAll('#p1');
             if (progressbar.length > 0 && this.imageCount <= 0) {
                 for (var i=0; i < progressbar.length; i++) {
-                    progressbar[i].remove();
+                    var prg = progressbar[i];
+                    if (prg.parentNode) {
+                        prg.parentNode.removeChild(prg);
+                    }
                 }
             }
         } else {
@@ -433,10 +436,6 @@
             }.bind(this);
             domImage.src = img;
         } else {
-            // data.context = $(this.templates['src/js/templates/images-image.hbs']({
-            //     img: img,
-            //     progress: this.options.preview
-            // })).appendTo($place);
             var image = $(this.templates['src/js/templates/images-image.hbs']({
                 img: img,
                 progress: this.options.preview
