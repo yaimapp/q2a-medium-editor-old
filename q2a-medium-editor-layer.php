@@ -10,8 +10,7 @@ class qa_html_theme_layer extends qa_html_theme_base
 {
     const EDITOR_NAME = 'Medium Editor';
     const MAX_FILE_SIZE_MB = 100;
-    const JS_VERSION = '1.0.1';
-    const CSS_VERSION = '1.0.0';
+    const FILE_VERSION = '1.0.1';
 
     private function is_medium_editor_active()
     {
@@ -59,7 +58,7 @@ class qa_html_theme_layer extends qa_html_theme_base
             'groupmsg'
         );
         if (in_array($this->template, $allow_templates)) {
-            $this->output('<link rel="stylesheet" type="text/css" href="'.QA_HTML_THEME_LAYER_URLTOROOT.'css/custom.css?ver='.self::CSS_VERSION.'" />');
+            $this->output('<link rel="stylesheet" type="text/css" href="'.QA_HTML_THEME_LAYER_URLTOROOT.'css/custom.css?ver='.self::FILE_VERSION.'" />');
         }
     }
 
@@ -176,13 +175,13 @@ class qa_html_theme_layer extends qa_html_theme_base
         foreach ($js_files as $js) {
             $this->output('<script src="'.$components.$js.'"></script>');
         }
-        $this->output('<script src="'.QA_HTML_THEME_LAYER_URLTOROOT.'js/q2a-embeds.js?ver='.self::JS_VERSION.'"></script>');
-        $this->output('<script src="'.QA_HTML_THEME_LAYER_URLTOROOT.'js/q2a-videos.js?ver='.self::JS_VERSION.'"></script>');
-        $this->output('<script src="'.QA_HTML_THEME_LAYER_URLTOROOT.'js/q2a-editor.js?ver='.self::JS_VERSION.'"></script>');
-        $this->output('<script src="'.QA_HTML_THEME_LAYER_URLTOROOT.'js/override.js?ver='.self::JS_VERSION.'"></script>');
+        $this->output('<script src="'.QA_HTML_THEME_LAYER_URLTOROOT.'js/q2a-embeds.js?ver='.self::FILE_VERSION.'"></script>');
+        $this->output('<script src="'.QA_HTML_THEME_LAYER_URLTOROOT.'js/q2a-videos.js?ver='.self::FILE_VERSION.'"></script>');
+        $this->output('<script src="'.QA_HTML_THEME_LAYER_URLTOROOT.'js/q2a-editor.js?ver='.self::FILE_VERSION.'"></script>');
+        $this->output('<script src="'.QA_HTML_THEME_LAYER_URLTOROOT.'js/override.js?ver='.self::FILE_VERSION.'"></script>');
         $this->output('<script src="//assets.transloadit.com/js/jquery.transloadit2-v2-latest.js"></script>');
         if (strpos(qa_opt('site_theme'), 'q2a-material-lite') !== false) {
-            $this->output('<script src="'.QA_HTML_THEME_LAYER_URLTOROOT.'js/q2a-images.js?ver='.self::JS_VERSION.'"></script>');
+            $this->output('<script src="'.QA_HTML_THEME_LAYER_URLTOROOT.'js/q2a-images.js?ver='.self::FILE_VERSION.'"></script>');
         }
     }
 
@@ -210,8 +209,8 @@ class qa_html_theme_layer extends qa_html_theme_base
     private function output_js_warn()
     {
       $warn_message = qa_lang_html('q2a_medium_editor_lang/warn_message');
-      $script = QA_HTML_THEME_LAYER_URLTOROOT.'js/medium-editor-util.js?ver='.self::JS_VERSION;
-      $script_mobile = QA_HTML_THEME_LAYER_URLTOROOT.'js/medium-editor-util-mobile.js?ver='.self::JS_VERSION;
+      $script = QA_HTML_THEME_LAYER_URLTOROOT.'js/medium-editor-util.js?ver='.self::FILE_VERSION;
+      $script_mobile = QA_HTML_THEME_LAYER_URLTOROOT.'js/medium-editor-util-mobile.js?ver='.self::FILE_VERSION;
       $this->output('<script>');
       $this->output('var warn_message ="'.$warn_message.'";');
       $this->output('</script>');
