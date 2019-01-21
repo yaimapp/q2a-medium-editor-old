@@ -56,8 +56,10 @@ function qme_remove_br_tags($content)
     $tmp = $pq->html();
     $regex = "/<p class=\"medium-insert-active\">(<br>|\s|　)*<\/p>/Us";
     $regex2 = "/(<p class=\"\">(<br>|\s|　)*<\/p>|\s)*$/Us";
+    $regex3 = "/(<p>(<br>|\s|　)*<\/p>|\s)*$/Us";
     $tmp = preg_replace($regex, "", $tmp);
-    return preg_replace($regex2, "", $tmp);
+    $tmp = preg_replace($regex2, "", $tmp);
+    return preg_replace($regex3, "", $tmp);
 }
 
 /*
