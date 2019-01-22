@@ -501,6 +501,7 @@
      */
 
     Images2.prototype.selectImage = function (e) {
+        console.log('select image called');
         var that = this,
             $image;
 
@@ -566,7 +567,7 @@
             $selectedImage = this.$el.find('.medium-insert-image-active'),
             $parent, $empty, selection, range, current, caretPosition, $current, $sibling, selectedHtml, i;
 
-        if (e.which === 8 || e.which === 46) {
+        if (e.key == 'Backspace' || e.key == 'Delete') {
             if ($selectedImage.length) {
                 images.push($selectedImage);
             }
@@ -580,19 +581,21 @@
                 caretPosition = MediumEditor.selection.getCaretOffsets(current).left;
 
                 // Is backspace pressed and caret is at the beginning of a paragraph, get previous element
-                if (e.which === 8 && caretPosition === 0) {
+                if (e.key === 'Backspace' && caretPosition === 0) {
                     $sibling = $current.prev();
                 // Is del pressed and caret is at the end of a paragraph, get next element
-                } else if (e.which === 46 && caretPosition === $current.text().length) {
+                } else if (e.key === 'Delete' && caretPosition === $current.text().length) {
                     $sibling = $current.next();
                 }
 
-                if ($sibling && $sibling.hasClass('medium-insert-images')) {
+                if ($sibling && ($sibling.hasClass('medium-insert-images') || $sibling.hasClass('insert-images'))) {
+                    $sibling.find('img').click();
+                    e.preventDefault();
                     images.push($sibling.find('img'));
                 }
 
                 // If text is selected, find images in the selection
-                selectedHtml = MediumEditor.selection.getSelectionHtml(document);
+                // selectedHtml = MediumEditor.selection.getSelectionHtml(document);
                 if (selectedHtml) {
                     $('<div></div>').html(selectedHtml).find('.medium-insert-images img').each(function () {
                         images.push($(this));
@@ -601,21 +604,6 @@
             }
 
             if (images.length) {
-                for (i = 0; i < images.length; i++) {
-                    this.deleteFile(images[i].attr('src'));
-
-                    $parent = images[i].closest('.medium-insert-images');
-                    images[i].closest('figure').remove();
-
-                    if ($parent.find('figure').length === 0) {
-                        $empty = $parent.next();
-                        if ($empty.is('p') === false || $empty.text() !== '') {
-                            $empty = $(this.templates['src/js/templates/core-empty-line.hbs']().trim());
-                            $parent.before($empty);
-                        }
-                        $parent.remove();
-                    }
-                }
 
                 // Hide addons
                 this.core.hideAddons();
