@@ -49,7 +49,6 @@
                         var $event = $.Event('keydown');
 
                         $event.which = 8;
-                        $event.key = 'Backspace';
                         $(document).trigger($event);
                     }
                 }
@@ -567,44 +566,9 @@
             $selectedImage = this.$el.find('.medium-insert-image-active'),
             $parent, $empty, selection, range, current, caretPosition, $current, $sibling, selectedHtml, i;
 
-        if (e.which === 8 || e.which === 46) {
+        if (this.isDeleteKey(e) || this.isBackspaceKey(e)) {
             if ($selectedImage.length) {
                 images.push($selectedImage);
-            }
-
-            // Remove image even if it's not selected, but backspace/del is pressed in text
-            selection = window.getSelection();
-            if (selection && selection.rangeCount) {
-                range = selection.getRangeAt(0);
-                current = range.commonAncestorContainer;
-                $current = current.nodeName === '#text' ? $(current).parent() : $(current);
-                caretPosition = MediumEditor.selection.getCaretOffsets(current).left;
-
-                // Is backspace pressed and caret is at the beginning of a paragraph, get previous element
-                if (e.which === 8 && caretPosition === 0) {
-                    $sibling = $current.prev();
-                // Is del pressed and caret is at the end of a paragraph, get next element
-                } else if (e.which === 46 && caretPosition === $current.text().length) {
-                    $sibling = $current.next();
-                }
-
-                if ($sibling && ($sibling.hasClass('medium-insert-images') || $sibling.hasClass('insert-images'))) {
-                    $sibling.find('img').click();
-                    e.preventDefault();
-                    return;
-                }
-
-                // If text is selected, find images in the selection
-                // selectedHtml = MediumEditor.selection.getSelectionHtml(document);
-                if (selectedHtml) {
-                    $('<div></div>').html(selectedHtml).find('.medium-insert-images img').each(function () {
-                        images.push($(this));
-                    });
-                }
-            }
-
-            if (images.length) {
-                console.log('images remove?');
                 for (i = 0; i < images.length; i++) {
                     this.deleteFile(images[i].attr('src'));
 
@@ -631,6 +595,39 @@
                 $('.medium-insert-images-toolbar, .medium-insert-images-toolbar2').remove();
                 this.core.triggerInput();
             }
+
+            // Remove image even if it's not selected, but backspace/del is pressed in text
+            selection = window.getSelection();
+            if (selection && selection.rangeCount) {
+                range = selection.getRangeAt(0);
+                current = range.commonAncestorContainer;
+                $current = (current.nodeName === '#text' || current.nodeName === 'BR') ? $(current).parent() : $(current);
+
+                caretPosition = MediumEditor.selection.getCaretOffsets(current).left;
+
+                // Is backspace pressed and caret is at the beginning of a paragraph, get previous element
+                if (this.isBackspaceKey(e) && caretPosition === 0) {
+                    $sibling = $current.prev();
+                // Is del pressed and caret is at the end of a paragraph, get next element
+                } else if (this.isDeleteKey(e) && caretPosition === $current.text().length) {
+                    $sibling = $current.next();
+                }
+
+                if ($sibling && ($sibling.hasClass('medium-insert-images') || $sibling.hasClass('insert-images'))) {
+                    $sibling.find('img').click();
+                    e.preventDefault();
+                    return;
+                }
+
+                // If text is selected, find images in the selection
+                // selectedHtml = MediumEditor.selection.getSelectionHtml(document);
+                if (selectedHtml) {
+                    $('<div></div>').html(selectedHtml).find('.medium-insert-images img').each(function () {
+                        images.push($(this));
+                    });
+                }
+            }
+
         }
     };
 
@@ -829,6 +826,14 @@
     Images2.prototype.sorting = function () {
         $.proxy(this.options.sorting, this)();
     };
+
+    Images2.prototype.isDeleteKey = function (e) {
+        return (e.key === 'Delete' || e.which === 46);
+    }
+
+    Images2.prototype.isBackspaceKey = function (e) {
+        return (e.key === 'Backspace' || e.which === 8);
+    }
 
     /** Plugin initialization */
 
