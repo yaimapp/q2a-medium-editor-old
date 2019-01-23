@@ -10,7 +10,7 @@ class qa_html_theme_layer extends qa_html_theme_base
 {
     const EDITOR_NAME = 'Medium Editor';
     const MAX_FILE_SIZE_MB = 100;
-    const FILE_VERSION = '1.0.1';
+    const FILE_VERSION = '1.0.2';
 
     private function is_medium_editor_active()
     {
