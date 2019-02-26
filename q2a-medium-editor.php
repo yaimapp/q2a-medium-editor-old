@@ -208,7 +208,9 @@ class qa_medium_editor
             }
         }
 
-        $videoPlayer = file_get_contents(MEDIUM_EDITOR_DIR . '/html/video-player.html');
+        $videoPlayerTmpl = file_get_contents(MEDIUM_EDITOR_DIR . '/html/video-player.html');
+        $base_url = qa_opt('medium_editor_upload_video_url');
+        $videoPlayer = strtr($videoPlayerTmpl, array('^base_url' => $base_url));
         $video = array(
           '\<div class=\"video-transloadit-id\"\>\[uploaded-video=\"([A-Za-z0-9_-]+)\"\]\<\/div\>',
           $videoPlayer
