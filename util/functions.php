@@ -186,3 +186,23 @@ function qme_remove_images_class($content)
   $pq = null;
   return $html;
 }
+
+function qme_filter_and_mask_email($content)
+{
+    // filter and mask email address
+    $pattern = '/[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}/';
+    $replacement = qa_lang('q2apro_stopspam_lang/emails_notallowed');
+    $content = preg_replace($pattern, $replacement, $content);
+
+    return $content;
+}
+
+function qme_filter_and_mask_phone_number($content)
+{
+    // filter and mask phone number
+    $pattern = '/((([0０]([0-9０-９]{1}[-(－]?[0-9０-９]{4}|[0-9０-９]{2}[-(－]?[0-9０-９]{3}|[0-9０-９]{3}[-(－]?[0-9０-９]{2}|[0-9０-９]{4}[-(－]?[0-9０-９]{1}|[256789２５６７８９][0０][-(－]?[0-9０-９]{4})[-)－]?)|[0-9０-９]{1,4}\-?)[0-9０-９]{4}|(0120|０１２０)[-(－]?[0-9０-９]{3}[-)－]?[0-9０-９]{3})/u';
+    $replacement = qa_lang('q2a_medium_editor_lang/phone_number_notallowed');
+    $content = preg_replace($pattern, $replacement, $content);
+
+    return $content;
+}

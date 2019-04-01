@@ -18,6 +18,8 @@
 		{
 			if (qa_opt('editor_for_qs') === 'Medium Editor') {
 				$tmp = $this->remove_tags($question['content']);
+				$tmp = qme_filter_and_mask_email($tmp);
+				$tmp = qme_filter_and_mask_phone_number($tmp);
 				$question['content'] = qme_unwrapping_images($tmp);
 			}
 		}
@@ -26,6 +28,8 @@
 		{
 			if (qa_opt('editor_for_as') === 'Medium Editor') {
 				$tmp = $this->remove_tags($answer['content']);
+				$tmp = qme_filter_and_mask_email($tmp);
+				$tmp = qme_filter_and_mask_phone_number($tmp);
 				$answer['content'] = qme_unwrapping_images($tmp);
 			}
 		}
@@ -34,6 +38,8 @@
 		{
 			if (qa_opt('editor_for_cs') === 'Medium Editor') {
 				$tmp = $this->remove_tags($comment['content']);
+				$tmp = qme_filter_and_mask_email($tmp);
+				$tmp = qme_filter_and_mask_phone_number($tmp);
 				$comment['content'] = qme_unwrapping_images($tmp);
 			}
 		}
