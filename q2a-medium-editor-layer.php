@@ -256,7 +256,10 @@ class qa_html_theme_layer extends qa_html_theme_base
         $tmp = qme_remove_style('span', $tmp);
         $tmp = qme_remove_br_tags_in_div($tmp);
         $tmp = $this->remove_overlay($tmp);
-        return $this->medium_editor_embed_replace($tmp);
+        $tmp = $this->medium_editor_embed_replace($tmp);
+        $tmp = qme_filter_and_mask_email($tmp);
+        $tmp = qme_filter_and_mask_phone_number($tmp);
+        return $tmp;
     }
 } // end qa_html_theme_layer
 
