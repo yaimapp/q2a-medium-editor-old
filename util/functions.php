@@ -199,10 +199,33 @@ function qme_filter_and_mask_email($content)
 
 function qme_filter_and_mask_phone_number($content)
 {
+    $new_content = '';
     // filter and mask phone number
     $pattern = '/\b((([0０]([0-9０-９]{1}[-(－]?[0-9０-９]{4}|[0-9０-９]{2}[-(－]?[0-9０-９]{3}|[0-9０-９]{3}[-(－]?[0-9０-９]{2}|[0-9０-９]{4}[-(－]?[0-9０-９]{1}|[256789２５６７８９][0０][-(－]?[0-9０-９]{4})[-)－]?)|[0-9０-９]{1,4}\-)[0-9０-９]{4}|(0120|０１２０)[-(－]?[0-9０-９]{3}[-)－]?[0-9０-９]{3})\b/u';
     $replacement = qa_lang('q2a_medium_editor_lang/phone_number_notallowed');
-    $content = preg_replace($pattern, $replacement, $content);
 
-    return $content;
+    $pq = phpQuery::newDocument($content);
+
+    $elements = $pq['p'];
+    if (empty($elements->elements)) {
+        $lines = explode(PHP_EOL, $content);
+        foreach($lines as $line) {
+            if (!empty($line) && preg_match('/^(?!.*(http|https)).+$/u', $line, $matches)) {
+                $new_line = preg_replace($pattern, $replacement, $line);
+                $new_content.= $new_line.' ';
+            } else {
+                $new_content.= $line;
+            }
+        }
+    } else {
+        foreach ($elements as $elem) {
+            $text = pq($elem)->text();
+            if (preg_match('/^(?!.*(http|https)).+$/u', $text, $matches)) {
+                $new_text = preg_replace($pattern, $replacement, $text);
+                pq($elem)->html($new_text);
+            }
+        }
+        $new_content = $pq->html();
+    }
+    return $new_content;
 }
