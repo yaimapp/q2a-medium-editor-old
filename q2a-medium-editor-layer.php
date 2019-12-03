@@ -187,13 +187,21 @@ class qa_html_theme_layer extends qa_html_theme_base
 
     public function output_dialog()
     {
-        $imageErrorDialog = file_get_contents(MEDIUM_EDITOR_DIR.'/html/image-error-dialog.html');
-        $videoDialogTmpl = file_get_contents(MEDIUM_EDITOR_DIR.'/html/video-dialog.html');
-        $params = $this->create_params();
-        $videoDialog = strtr(
-          $videoDialogTmpl,
-          $params
-        );
+        if(qa_opt('medium_editor_upload_images')) {
+            $imageErrorDialog = file_get_contents(MEDIUM_EDITOR_DIR.'/html/image-error-dialog.html');
+        } else {
+            $imageErrorDialog = '';
+        }
+        if(qa_opt('medium_editor_upload_videos')) {
+            $videoDialogTmpl = file_get_contents(MEDIUM_EDITOR_DIR.'/html/video-dialog.html');
+            $params = $this->create_params();
+            $videoDialog = strtr(
+                $videoDialogTmpl,
+                $params
+            );
+        } else {
+            $videoDialog = '';
+        }
         $this->output($imageErrorDialog.$videoDialog);
     }
 

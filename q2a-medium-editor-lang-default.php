@@ -8,6 +8,7 @@ return array(
     // default Japanese
     'default_height' => '規定のエディタの高さ: ',
     'upload_images' => '画像のアップロードを許可',
+    'upload_videos' => '動画のアップロードを許可',
     'upload_max_size' => '最大アップロードファイルサイズ:',
     'upload_max_img_width' => '最大アップロード画像横幅:',
     'placeholder' => 'ここに詳細文を記入してください。画像、動画の投稿は + マークを押してください。',
